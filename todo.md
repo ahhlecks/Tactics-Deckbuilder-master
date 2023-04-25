@@ -14,8 +14,8 @@
 - <s>BT_Left_Right_Targets **</s> 11/10/2022
 - <s>Hexagonal targeting **</s> 11/10/2022
 - BT_Caster_Move_To **
-- BT_Target_Pull **
-- BT_Target_Push **
+- <s>BT_Target_Pull ** </s> 04/24/2023
+- <s>BT_Target_Push ** </s> 04/24/2023
 - <s>Character Models ***</s> 10/15/2022
 - <s>Walking and Jumping Animations ***</s> 10/15/2022
 - <s>Card animations **</s> 10/29/2022
