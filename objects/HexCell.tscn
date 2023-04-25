@@ -1,0 +1,356 @@
+[gd_scene load_steps=37 format=2]
+
+[ext_resource path="res://objects/HexCell.gd" type="Script" id=1]
+[ext_resource path="res://resources/HexagonShape3d.shape" type="Shape" id=2]
+[ext_resource path="res://resources/materials/default_side.material" type="Material" id=3]
+[ext_resource path="res://resources/hexagon/Hexagon2Up.tres" type="ArrayMesh" id=5]
+[ext_resource path="res://resources/hexagon/HexagonTop.tres" type="ArrayMesh" id=6]
+[ext_resource path="res://resources/hexagon/Hexagon2Down.tres" type="ArrayMesh" id=7]
+[ext_resource path="res://resources/hexagon/Hexagon4Up.tres" type="ArrayMesh" id=8]
+[ext_resource path="res://resources/hexagon/Hexagon12Down.tres" type="ArrayMesh" id=11]
+[ext_resource path="res://resources/materials/grass_side.material" type="Material" id=13]
+[ext_resource path="res://resources/hexagon/Hexagon10Down.tres" type="ArrayMesh" id=14]
+[ext_resource path="res://resources/hexagon/Hexagon10Up.tres" type="ArrayMesh" id=15]
+[ext_resource path="res://resources/hexagon/Hexagon6Up.tres" type="ArrayMesh" id=16]
+[ext_resource path="res://resources/hexagon/Hexagon12Up.tres" type="ArrayMesh" id=18]
+[ext_resource path="res://resources/hexagon/Hexagon4Down.tres" type="ArrayMesh" id=19]
+[ext_resource path="res://resources/hexagon/Hexagon8Up.tres" type="ArrayMesh" id=20]
+[ext_resource path="res://resources/hexagon/HexagonMeshOutline.tres" type="ArrayMesh" id=21]
+[ext_resource path="res://resources/hexagon/Hexagon6Down.tres" type="ArrayMesh" id=22]
+[ext_resource path="res://resources/HexagonShape.shape" type="Shape" id=23]
+
+[sub_resource type="ArrayMesh" id=1]
+resource_local_to_scene = true
+surfaces/0 = {
+"aabb": AABB( -0.866025, 0, -1, 1.73205, 1e-05, 2 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 126, 0, 0, 127, 200, 176, 0, 59, 200, 176, 0, 59, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 200, 176, 0, 48, 200, 176, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 200, 176, 0, 48, 200, 176, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 180, 0, 56, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 180, 0, 56, 0, 180, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 48, 153, 60, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 48, 153, 60, 0, 48, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 59, 153, 60, 0, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 59, 153, 60, 0, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 61, 0, 56, 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 56, 0, 56, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 61, 0, 56, 0, 61, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 126, 0, 0, 127, 200, 176, 0, 59, 200, 176, 0, 59, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 126, 0, 0, 127, 200, 176, 0, 59, 200, 176, 0, 59, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 60, 219, 181, 0, 60, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 200, 176, 0, 48, 200, 176, 0, 48, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 200, 176, 0, 48, 200, 176, 0, 48, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 60, 219, 181, 0, 60, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 0, 219, 181, 0, 0, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 200, 176, 0, 48, 200, 176, 0, 48, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 0, 219, 181, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 180, 0, 56, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 180, 0, 56, 0, 180, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 0, 219, 181, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 184, 0, 56, 0, 184, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 180, 0, 56, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 184, 0, 56, 0, 184, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 48, 153, 60, 0, 48, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 48, 153, 60, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 184, 0, 56, 0, 184, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 0, 118, 61, 0, 0, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 190, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 48, 153, 60, 0, 48, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 0, 118, 61, 0, 0, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 59, 153, 60, 0, 59, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 59, 153, 60, 0, 59, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 0, 118, 61, 0, 0, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 60, 118, 61, 0, 60, 225, 70, 38, 63, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 127, 0, 0, 127, 153, 60, 0, 59, 153, 60, 0, 59, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 60, 118, 61, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 61, 0, 56, 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 61, 0, 56, 0, 61, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 118, 61, 0, 60, 118, 61, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 62, 0, 56, 0, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 61, 0, 56, 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 62, 0, 56, 0, 62, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 126, 0, 0, 127, 200, 176, 0, 59, 200, 176, 0, 59, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 0, 127, 0, 0, 126, 0, 0, 127, 200, 176, 0, 59, 200, 176, 0, 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 127, 0, 0, 127, 0, 0, 127, 0, 56, 0, 62, 0, 56, 0, 62, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 0, 127, 0, 0, 127, 0, 0, 127, 219, 181, 0, 60, 219, 181, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 54
+}
+
+[sub_resource type="ArrayMesh" id=2]
+resource_local_to_scene = true
+surfaces/0 = {
+"aabb": AABB( -0.866025, -0.5, 0.375, 0.216506, 0.50001, 0.12501 ),
+"array_data": PoolByteArray( 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 193, 0, 147, 0, 147, 0, 63, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 0, 191, 0, 0, 0, 63, 193, 0, 147, 0, 147, 0, 63, 127, 0, 60, 0, 60, 0, 60, 0, 60, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 193, 0, 147, 0, 147, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 62, 63, 0, 109, 0, 109, 0, 193, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 0, 191, 0, 0, 0, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"material": ExtResource( 13 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="ArrayMesh" id=3]
+surfaces/0 = {
+"aabb": AABB( -0.866025, -1, -0.5, 1.00136e-05, 1.00001, 1.00001 ),
+"array_data": PoolByteArray( 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 129, 0, 0, 0, 0, 0, 127, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 63, 129, 0, 0, 0, 0, 0, 127, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 129, 0, 0, 0, 0, 0, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 129, 0, 0, 0, 0, 0, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 63, 129, 0, 0, 0, 0, 0, 127, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 191, 129, 0, 0, 0, 0, 0, 127, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.478431, 0.411765, 0.298039, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+width = 256
+
+[sub_resource type="SpatialMaterial" id=6]
+params_diffuse_mode = 2
+params_specular_mode = 4
+albedo_texture = SubResource( 5 )
+roughness = 0.8
+uv1_offset = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=7]
+surfaces/0 = {
+"aabb": AABB( -0.866025, -1, 0.5, 0.866035, 1.00001, 0.50001 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 60, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 63, 193, 0, 109, 0, 109, 0, 63, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="SpatialMaterial" id=8]
+params_diffuse_mode = 2
+params_specular_mode = 4
+albedo_texture = SubResource( 5 )
+roughness = 0.8
+uv1_offset = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=9]
+surfaces/0 = {
+"aabb": AABB( 0, -1, 0.5, 0.866035, 1.00001, 0.5 ),
+"array_data": PoolByteArray( 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 63, 0, 109, 0, 109, 0, 193, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="SpatialMaterial" id=10]
+params_diffuse_mode = 2
+params_specular_mode = 4
+albedo_texture = SubResource( 5 )
+roughness = 0.8
+uv1_offset = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=11]
+surfaces/0 = {
+"aabb": AABB( 0.866025, -1, -0.5, 1.00136e-05, 1.00001, 1 ),
+"array_data": PoolByteArray( 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 127, 0, 0, 0, 0, 0, 129, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 191, 127, 0, 0, 0, 0, 0, 129, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 127, 0, 0, 0, 0, 0, 129, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 63, 127, 0, 0, 0, 0, 0, 129, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 191, 127, 0, 0, 0, 0, 0, 129, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 63, 127, 0, 0, 0, 0, 0, 129, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="SpatialMaterial" id=12]
+params_diffuse_mode = 2
+params_specular_mode = 4
+albedo_texture = SubResource( 5 )
+roughness = 0.8
+uv1_offset = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=13]
+surfaces/0 = {
+"aabb": AABB( 0, -1, -1, 0.866025, 1.00001, 0.5 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 60, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 63, 0, 0, 0, 0, 0, 0, 0, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 60, 0, 60, 0, 60, 0, 60, 215, 179, 93, 63, 0, 0, 128, 191, 0, 0, 0, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="SpatialMaterial" id=14]
+params_diffuse_mode = 2
+params_specular_mode = 4
+albedo_texture = SubResource( 5 )
+roughness = 0.8
+uv1_offset = Vector3( 1, 1, 1 )
+
+[sub_resource type="ArrayMesh" id=15]
+surfaces/0 = {
+"aabb": AABB( -0.866025, -1, -1, 0.866025, 1.00001, 0.50001 ),
+"array_data": PoolByteArray( 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 128, 191, 0, 0, 0, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 60, 0, 60, 0, 60, 0, 60, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 191, 193, 0, 147, 0, 147, 0, 63, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}
+
+[sub_resource type="ViewportTexture" id=16]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=17]
+flags_transparent = true
+flags_unshaded = true
+params_diffuse_mode = 4
+albedo_color = Color( 0.25098, 0.94902, 0.239216, 1 )
+
+[sub_resource type="ArrayMesh" id=18]
+surfaces/0 = {
+"aabb": AABB( -0.866025, 1, -1, 1.73205, 1.00136e-05, 2 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 63, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 172, 92, 49, 191, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 191, 0, 127, 0, 0, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 191, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 191, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 190, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 191, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 172, 92, 49, 63, 0, 0, 128, 63, 205, 204, 204, 62, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 63, 0, 127, 0, 0, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 63, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 127, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 205, 204, 76, 63, 0, 127, 0, 0 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97283,
+"index_count": 0,
+"material": SubResource( 17 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 36
+}
+
+[node name="HexCell" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 56, 14 )
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Viewport"]
+margin_right = 56.0
+margin_bottom = 14.0
+text = "Text"
+
+[node name="Top" type="MeshInstance" parent="."]
+visible = false
+cast_shadow = 0
+mesh = ExtResource( 6 )
+
+[node name="SlopedTop" type="MeshInstance" parent="."]
+cast_shadow = 0
+mesh = SubResource( 1 )
+
+[node name="InnerSides" type="Spatial" parent="."]
+
+[node name="Down" type="Spatial" parent="InnerSides"]
+
+[node name="8" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = SubResource( 2 )
+
+[node name="10" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = ExtResource( 14 )
+
+[node name="12" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = ExtResource( 11 )
+
+[node name="2" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = ExtResource( 7 )
+
+[node name="4" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = ExtResource( 19 )
+
+[node name="6" type="MeshInstance" parent="InnerSides/Down"]
+visible = false
+mesh = ExtResource( 22 )
+
+[node name="Up" type="Spatial" parent="InnerSides"]
+
+[node name="8" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 20 )
+
+[node name="10" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 15 )
+
+[node name="12" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 18 )
+
+[node name="2" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 5 )
+
+[node name="4" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 8 )
+
+[node name="6" type="MeshInstance" parent="InnerSides/Up"]
+visible = false
+mesh = ExtResource( 16 )
+
+[node name="EdgePositions" type="Spatial" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0 )
+
+[node name="W" type="Position3D" parent="EdgePositions"]
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, -0.6928, 1, 0 )
+
+[node name="SW" type="Position3D" parent="EdgePositions"]
+transform = Transform( 0.4, 0, 0.69282, 0, 1, 0, -0.69282, 0, 0.4, -0.3464, 1, 0.599982 )
+
+[node name="SE" type="Position3D" parent="EdgePositions"]
+transform = Transform( -0.4, 0, 0.69282, 0, 1, 0, -0.69282, 0, -0.4, 0.3464, 1, 0.599982 )
+
+[node name="E" type="Position3D" parent="EdgePositions"]
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0.6928, 1, 0 )
+
+[node name="NE" type="Position3D" parent="EdgePositions"]
+transform = Transform( 0.4, 0, 0.69282, 0, 1, 0, -0.69282, 0, 0.4, 0.3464, 1, -0.599982 )
+
+[node name="NW" type="Position3D" parent="EdgePositions"]
+transform = Transform( -0.4, 0, 0.69282, 0, 1, 0, -0.69282, 0, -0.4, -0.3464, 1, -0.599982 )
+
+[node name="CellBody" type="StaticBody" parent="."]
+input_ray_pickable = false
+
+[node name="Sides" type="Spatial" parent="CellBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="W" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 3 )
+material/0 = SubResource( 6 )
+
+[node name="SW" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="SE" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="E" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
+
+[node name="NE" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 13 )
+material/0 = SubResource( 14 )
+
+[node name="NW" type="MeshInstance" parent="CellBody/Sides"]
+mesh = SubResource( 15 )
+material/0 = ExtResource( 3 )
+
+[node name="Sprite3D" type="Sprite3D" parent="CellBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
+cast_shadow = 0
+flip_v = true
+pixel_size = 0.02
+axis = 1
+double_sided = false
+texture = SubResource( 16 )
+
+[node name="Select" type="MeshInstance" parent="CellBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+visible = false
+cast_shadow = 0
+use_in_baked_light = true
+mesh = SubResource( 18 )
+
+[node name="Outline" type="MeshInstance" parent="CellBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+visible = false
+cast_shadow = 0
+use_in_baked_light = true
+mesh = ExtResource( 21 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CellBody"]
+visible = false
+shape = ExtResource( 2 )
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+shape = ExtResource( 23 )
+__meta__ = {
+"_edit_lock_": true
+}

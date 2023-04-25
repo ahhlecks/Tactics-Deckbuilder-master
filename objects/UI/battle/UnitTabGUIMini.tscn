@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=1]
+[ext_resource path="res://objects/UI/battle/UnitTabGUIMini.gd" type="Script" id=2]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/HP_Bar.png-062d256201e6c2217fdd162c6ef8bdd0.stex"
+
+[sub_resource type="StreamTexture" id=2]
+flags = 4
+load_path = "res://.import/HP_Bar_Under.png-5e447dce3615d1a835a4f8eaa0d64100.stex"
+
+[node name="UnitTabGUIMini" type="Control"]
+pause_mode = 2
+margin_right = 472.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 472, 20 )
+mouse_filter = 1
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="UnitName" type="Label" parent="."]
+margin_right = 136.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 136, 0 )
+rect_clip_content = true
+text = "Michelangelo"
+clip_text = true
+
+[node name="HP2" type="TextureProgress" parent="."]
+margin_left = 136.0
+margin_right = 272.0
+margin_bottom = 20.0
+mouse_filter = 2
+value = 100.0
+texture_progress = SubResource( 1 )
+tint_progress = Color( 0.364706, 0, 0, 1 )
+
+[node name="HP" type="TextureProgress" parent="."]
+margin_left = 136.0
+margin_right = 272.0
+margin_bottom = 20.0
+mouse_filter = 2
+value = 50.0
+texture_under = SubResource( 2 )
+texture_progress = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HP_Label" type="Label" parent="HP"]
+margin_right = 136.0
+margin_bottom = 20.0
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100/100"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Damage" type="Label" parent="."]
+pause_mode = 2
+margin_left = 272.0
+margin_right = 336.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 64, 20 )
+rect_clip_content = true
+mouse_filter = 1
+text = "100 Dmg"
+align = 2
+clip_text = true
+
+[node name="HitRate" type="Label" parent="."]
+pause_mode = 2
+margin_left = 340.0
+margin_right = 404.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 64, 20 )
+rect_clip_content = true
+mouse_filter = 1
+text = "100% Hit"
+align = 2
+clip_text = true
+
+[node name="CritRate" type="Label" parent="."]
+pause_mode = 2
+margin_left = 408.0
+margin_right = 472.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 64, 20 )
+rect_clip_content = true
+mouse_filter = 1
+text = "100% Crit"
+align = 2
+clip_text = true

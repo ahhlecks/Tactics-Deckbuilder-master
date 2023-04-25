@@ -1,0 +1,185 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://objects/HexUnit.gd" type="Script" id=1]
+[ext_resource path="res://resources/materials/DirectionMaterial.tres" type="SphereMesh" id=2]
+[ext_resource path="res://objects/UnitMovement.gd" type="Script" id=3]
+[ext_resource path="res://objects/traits/Perseverance.gd" type="Script" id=4]
+
+[sub_resource type="CubeMesh" id=14]
+resource_local_to_scene = true
+size = Vector3( 2, 3, 2 )
+
+[sub_resource type="PrismMesh" id=13]
+resource_local_to_scene = true
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="CylinderShape" id=3]
+height = 3.0
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.5
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.2, 1.6, 0.8 )
+
+[node name="HexUnit" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+script = ExtResource( 1 )
+
+[node name="UnitMovement" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+visible = false
+mesh = SubResource( 14 )
+
+[node name="Front" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.323, 0, 0 )
+visible = false
+mesh = SubResource( 13 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+shape = SubResource( 3 )
+
+[node name="Directions" type="Spatial" parent="."]
+transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
+
+[node name="DirectionForward" type="StaticBody" parent="Directions"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.904, 1.5, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionForward"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionForward"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="DirectionForwardRight" type="StaticBody" parent="Directions"]
+transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 1.452, 1.5, 2.51494 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionForwardRight"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionForwardRight"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="DirectionBackwardRight" type="StaticBody" parent="Directions"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -1.452, 1.5, 2.51494 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionBackwardRight"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionBackwardRight"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="DirectionBackward" type="StaticBody" parent="Directions"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.904, 1.5, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionBackward"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionBackward"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="DirectionBackwardLeft" type="StaticBody" parent="Directions"]
+transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -1.452, 1.5, -2.51494 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionBackwardLeft"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionBackwardLeft"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="DirectionForwardLeft" type="StaticBody" parent="Directions"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 1.452, 1.5, -2.51494 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Directions/DirectionForwardLeft"]
+visible = false
+mesh = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Directions/DirectionForwardLeft"]
+visible = false
+shape = SubResource( 6 )
+disabled = true
+
+[node name="Sides" type="Spatial" parent="."]
+transform = Transform( 0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0, 0 )
+
+[node name="SideForward" type="StaticBody" parent="Sides"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.6, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideForward"]
+shape = SubResource( 7 )
+
+[node name="SideForwardRight" type="StaticBody" parent="Sides"]
+transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0.6, 0.6, 1.039 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideForwardRight"]
+shape = SubResource( 8 )
+
+[node name="SideBackwardRight" type="StaticBody" parent="Sides"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -0.6, 0.6, 1.039 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideBackwardRight"]
+shape = SubResource( 9 )
+
+[node name="SideBackward" type="StaticBody" parent="Sides"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0.6, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideBackward"]
+shape = SubResource( 10 )
+
+[node name="SideBackwardLeft" type="StaticBody" parent="Sides"]
+transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -0.6, 0.6, -1.039 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideBackwardLeft"]
+shape = SubResource( 11 )
+
+[node name="SideForwardLeft" type="StaticBody" parent="Sides"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 0.6, 0.6, -1.039 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Sides/SideForwardLeft"]
+shape = SubResource( 12 )
+
+[node name="Traits" type="Node" parent="."]
+
+[node name="Perserverance" type="Node" parent="Traits"]
+script = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="damaged" from="." to="." method="_on_HexUnit_damaged"]
+[connection signal="evaded" from="." to="." method="_on_HexUnit_evaded"]
+[connection signal="select_tile" from="." to="." method="_on_HexUnit_select_tile"]
+[connection signal="select_unit" from="." to="." method="_on_HexUnit_select_unit"]

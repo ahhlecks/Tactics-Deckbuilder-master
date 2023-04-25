@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/LongSword_SwordAttack.efkefc-adfdedbe893d48006b78759c0d65ee51.res"
+
+[deps]
+
+source_file="res://assets/effects/LongSword_SwordAttack.efkefc"
+dest_files=[ "res://.import/LongSword_SwordAttack.efkefc-adfdedbe893d48006b78759c0d65ee51.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

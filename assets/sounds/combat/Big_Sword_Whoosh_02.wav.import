@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Big_Sword_Whoosh_02.wav-0c6c0888ebb0a9793d0dfbe349e7bcec.sample"
+
+[deps]
+
+source_file="res://assets/sounds/combat/Big_Sword_Whoosh_02.wav"
+dest_files=[ "res://.import/Big_Sword_Whoosh_02.wav-0c6c0888ebb0a9793d0dfbe349e7bcec.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

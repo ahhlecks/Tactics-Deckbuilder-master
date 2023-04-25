@@ -1,0 +1,18 @@
+[gd_resource type="ArrayMesh" load_steps=2 format=2]
+
+[ext_resource path="res://resources/materials/grass_side.material" type="Material" id=1]
+
+[resource]
+resource_local_to_scene = true
+surfaces/0 = {
+"aabb": AABB( -0.866025, -0.5, -0.5, 0.216506, 0.50001, 0.125 ),
+"array_data": PoolByteArray( 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 0, 191, 0, 0, 0, 191, 63, 0, 147, 0, 147, 0, 193, 127, 0, 60, 0, 60, 0, 60, 0, 60, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 63, 0, 147, 0, 147, 0, 193, 127, 0, 0, 0, 0, 0, 0, 0, 0, 215, 179, 93, 191, 0, 0, 0, 0, 0, 0, 0, 191, 193, 0, 109, 0, 109, 0, 63, 127, 0, 0, 0, 0, 0, 0, 0, 0, 225, 70, 38, 191, 0, 0, 0, 0, 0, 0, 192, 190, 193, 0, 109, 0, 109, 0, 63, 127, 0, 60, 0, 0, 0, 60, 0, 0, 215, 179, 93, 191, 0, 0, 0, 191, 0, 0, 0, 191, 193, 0, 109, 0, 109, 0, 63, 127, 0, 0, 0, 60, 0, 0, 0, 60 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97335,
+"index_count": 0,
+"material": ExtResource( 1 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}

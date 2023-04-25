@@ -1,0 +1,109 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://resources/fonts/GUI_Font_16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/images/ui/unit/Tab.png" type="Texture" id=3]
+[ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=5]
+[ext_resource path="res://objects/UI/battle/CardTabGUI.gd" type="Script" id=6]
+[ext_resource path="res://assets/images/ui/ActButtonMini.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://resources/fonts/Fenix-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
+Label/colors/font_color = Color( 1, 1, 1, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 2 )
+Label/styles/normal = null
+
+[node name="CardTabGUI" type="Control" groups=["cards"]]
+anchor_right = 0.2
+anchor_bottom = 0.0694444
+margin_bottom = -3.8147e-06
+theme = ExtResource( 5 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Tab" type="Sprite" parent="."]
+modulate = Color( 0.85, 0.81, 0.73, 0.33 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="UnitName" type="Label" parent="."]
+margin_right = 128.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 126, 0 )
+rect_clip_content = true
+theme = SubResource( 3 )
+text = "Michelangelo"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CardName" type="Label" parent="."]
+margin_top = 31.0
+margin_right = 128.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 126, 0 )
+rect_clip_content = true
+theme = SubResource( 3 )
+text = "Fireball III"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Target" type="Label" parent="."]
+margin_left = 128.0
+margin_right = 256.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 126, 0 )
+rect_clip_content = true
+theme = SubResource( 3 )
+text = "Ground"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Damage" type="Label" parent="."]
+margin_left = 168.0
+margin_top = 31.0
+margin_right = 216.0
+margin_bottom = 50.0
+rect_clip_content = true
+mouse_filter = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActButton" type="TextureRect" parent="."]
+margin_left = 116.0
+margin_top = 13.0
+margin_right = 140.0
+margin_bottom = 37.0
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

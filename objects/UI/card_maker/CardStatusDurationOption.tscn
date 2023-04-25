@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/UI/card_maker/CardStatusDurationOption.gd" type="Script" id=1]
+
+[node name="CardStatusDurationOption" type="OptionButton"]
+margin_right = 29.0
+margin_bottom = 20.0
+script = ExtResource( 1 )
+
+[node name="SpinBox" type="SpinBox" parent="."]
+margin_top = 24.0
+margin_right = 74.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

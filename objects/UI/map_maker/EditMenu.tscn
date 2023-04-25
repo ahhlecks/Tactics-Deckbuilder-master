@@ -1,0 +1,214 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://objects/UI/HeightValue.gd" type="Script" id=2]
+[ext_resource path="res://objects/UI/SaveMap.gd" type="Script" id=3]
+[ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=4]
+[ext_resource path="res://objects/UI/map_maker/EditMenu.gd" type="Script" id=5]
+[ext_resource path="res://objects/UI/LoadMap.gd" type="Script" id=6]
+[ext_resource path="res://objects/UI/unit_maker/AddUnitButton.gd" type="Script" id=7]
+[ext_resource path="res://objects/UI/SurfaceType.gd" type="Script" id=8]
+[ext_resource path="res://objects/UI/map_maker/UnitList.gd" type="Script" id=9]
+
+[node name="EditMenu" type="Panel"]
+anchor_top = 0.0183333
+anchor_bottom = 0.0183333
+margin_top = 1.0
+margin_right = 360.0
+margin_bottom = 150.0
+theme = ExtResource( 4 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="UI" type="VBoxContainer" parent="."]
+anchor_left = 0.0221111
+anchor_top = 0.0404228
+anchor_right = 0.0332222
+anchor_bottom = 0.0404228
+margin_left = 0.04
+margin_top = -0.0229998
+margin_right = 332.04
+margin_bottom = 135.977
+focus_mode = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBox1" type="HBoxContainer" parent="UI"]
+margin_right = 336.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SurfaceTypeLabel" type="Label" parent="UI/HBox1"]
+margin_right = 85.0
+margin_bottom = 19.0
+text = "Surface Type"
+
+[node name="SurfaceType" type="OptionButton" parent="UI/HBox1"]
+margin_left = 89.0
+margin_right = 113.0
+margin_bottom = 19.0
+align = 1
+script = ExtResource( 8 )
+
+[node name="Height" type="CheckBox" parent="UI/HBox1"]
+margin_left = 117.0
+margin_right = 189.0
+margin_bottom = 19.0
+text = "Height"
+align = 1
+
+[node name="HeightValue" type="SpinBox" parent="UI/HBox1"]
+margin_left = 193.0
+margin_right = 257.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 30.0
+value = 1.0
+script = ExtResource( 2 )
+
+[node name="HBox2" type="HBoxContainer" parent="UI"]
+margin_top = 27.0
+margin_right = 336.0
+margin_bottom = 59.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Add" type="CheckButton" parent="UI/HBox2"]
+margin_right = 130.0
+margin_bottom = 32.0
+focus_mode = 1
+enabled_focus_mode = 1
+keep_pressed_outside = true
+text = "Add Tile"
+
+[node name="Delete" type="CheckButton" parent="UI/HBox2"]
+margin_left = 134.0
+margin_right = 279.0
+margin_bottom = 32.0
+focus_mode = 1
+enabled_focus_mode = 1
+text = "Delete Tile"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox3" type="HBoxContainer" parent="UI"]
+margin_top = 67.0
+margin_right = 336.0
+margin_bottom = 99.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddUnit" type="CheckButton" parent="UI/HBox3"]
+margin_right = 135.0
+margin_bottom = 32.0
+text = "Add Unit"
+
+[node name="DeleteUnit" type="CheckButton" parent="UI/HBox3"]
+margin_left = 139.0
+margin_right = 289.0
+margin_bottom = 32.0
+text = "Delete Unit"
+
+[node name="CharacterStatsButton" type="Button" parent="UI/HBox3"]
+margin_left = 293.0
+margin_right = 336.0
+margin_bottom = 32.0
+text = "Units"
+script = ExtResource( 7 )
+
+[node name="HBox4" type="HBoxContainer" parent="UI"]
+margin_top = 107.0
+margin_right = 336.0
+margin_bottom = 126.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveMap" type="Button" parent="UI/HBox4"]
+margin_right = 71.0
+margin_bottom = 19.0
+text = "Save Map"
+script = ExtResource( 3 )
+
+[node name="LoadMap" type="Button" parent="UI/HBox4"]
+margin_left = 75.0
+margin_right = 147.0
+margin_bottom = 19.0
+text = "Load Map"
+script = ExtResource( 6 )
+
+[node name="LoadMapFileDialog" type="FileDialog" parent="UI/HBox4"]
+margin_left = 151.0
+margin_right = 501.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 350, 250 )
+window_title = "Open a File"
+mode = 0
+filters = PoolStringArray( "*.map" )
+
+[node name="SaveMapFileDialog" type="FileDialog" parent="UI/HBox4"]
+margin_top = -126.0
+margin_right = 350.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 350, 250 )
+access = 1
+filters = PoolStringArray( "*.map" )
+
+[node name="Units" type="Panel" parent="."]
+anchor_right = 0.778
+anchor_bottom = 4.738
+margin_top = 154.0
+margin_right = -0.0800171
+margin_bottom = 0.0379639
+rect_min_size = Vector2( 256, 448 )
+script = ExtResource( 9 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Units"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -6.0
+margin_bottom = 151.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Units/VBoxContainer"]
+margin_right = 265.0
+margin_bottom = 19.0
+
+[node name="Owned" type="CheckBox" parent="Units/VBoxContainer/HBoxContainer"]
+margin_right = 120.0
+margin_bottom = 19.0
+size_flags_horizontal = 0
+pressed = true
+text = "Player Owned"
+
+[node name="Units" type="ScrollContainer" parent="Units/VBoxContainer"]
+margin_top = 27.0
+margin_right = 265.0
+margin_bottom = 535.0
+rect_min_size = Vector2( 0, 508 )
+follow_focus = true
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Units/VBoxContainer/Units"]
+margin_right = 264.0
+margin_bottom = 508.0
+rect_min_size = Vector2( 264, 508 )
+
+[connection signal="mouse_exited" from="UI/HBox1/HeightValue" to="UI/HBox1/HeightValue" method="_on_HeightValue_mouse_exited"]
+[connection signal="pressed" from="UI/HBox3/CharacterStatsButton" to="." method="_on_CharacterStatsButton_pressed"]
+[connection signal="file_selected" from="UI/HBox4/LoadMapFileDialog" to="." method="_on_LoadMapFileDialog_file_selected"]
+[connection signal="dir_selected" from="UI/HBox4/SaveMapFileDialog" to="." method="_on_SaveMapFileDialog_dir_selected"]
+[connection signal="file_selected" from="UI/HBox4/SaveMapFileDialog" to="." method="_on_SaveMapFileDialog_file_selected"]
+[connection signal="toggled" from="Units/VBoxContainer/HBoxContainer/Owned" to="Units" method="_on_Owned_toggled"]

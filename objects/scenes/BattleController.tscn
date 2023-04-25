@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/UI/battle/BattleGUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/logic/TurnQueue.gd" type="Script" id=2]
+[ext_resource path="res://objects/logic/BattleController.gd" type="Script" id=3]
+
+[node name="BattleController" type="Node"]
+script = ExtResource( 3 )
+
+[node name="BattleGUI" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[node name="TurnQueue" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="match_ended" from="." to="." method="_on_BattleController_match_ended"]
+[connection signal="match_started" from="." to="TurnQueue" method="_on_BattleController_match_started"]
+[connection signal="round_ended" from="." to="." method="_on_BattleController_round_ended"]
+[connection signal="round_started" from="." to="." method="_on_BattleController_round_started"]
+[connection signal="turn_ended" from="." to="." method="_on_BattleController_turn_ended"]
+[connection signal="turn_started" from="." to="." method="_on_BattleController_turn_started"]
+[connection signal="turn_started" from="." to="BattleGUI" method="_on_BattleController_turn_started"]
+[connection signal="unit_acted" from="." to="." method="_on_BattleController_unit_acted"]
+[connection signal="unit_charging" from="." to="." method="_on_BattleController_unit_charging"]
+[connection signal="unit_moved" from="." to="." method="_on_BattleController_unit_moved"]
+[connection signal="unit_moved" from="." to="BattleGUI" method="_on_BattleController_unit_moved"]
+[connection signal="unit_react" from="." to="." method="_on_BattleController_unit_react"]
+[connection signal="unit_selected" from="." to="BattleGUI" method="_on_BattleController_unit_selected"]
+[connection signal="unit_turned" from="." to="BattleGUI" method="_on_BattleController_unit_turned"]

@@ -1,0 +1,244 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/ui/9slice.png" type="Texture" id=2]
+[ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends NinePatchRect
+
+onready var UnitTabGUIMini = preload(\"res://objects/UI/battle/UnitTabGUIMini.tscn\")
+
+export var message:String
+onready var vBox = $VBoxContainer
+onready var vBox_container = $VBoxContainer/Container/
+onready var options = $VBoxContainer/Options
+onready var message_node = $VBoxContainer/Container/Label
+var close_time:float = 0
+var pulsing_time:float = 0
+var timer = 0
+var fade:bool
+var top:bool
+var bottom:bool
+var centered:bool
+var pos:Vector2
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+# warning-ignore:return_value_discarded
+	rect_global_position.x = get_viewport().size.x*.5 - (rect_size.x/2)
+	rect_global_position.y = get_viewport().size.y*.1
+#	UI_Sounds.createSound(UI_Sounds.popup)
+	get_tree().get_root().connect(\"size_changed\", self, \"update_position\")
+	update_position()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	if close_time != 0:
+		if timer <= 1:
+			if fade:
+				modulate.a = (1 + (0 - 1) * timer)
+			timer += delta / close_time
+		else:
+			clear()
+	if pulsing_time != 0:
+		if timer <= .5:
+			modulate.a = (1 + (0 - 1) * timer)
+			timer += delta / pulsing_time
+		if timer > .5:
+			modulate.a = (0 + (1 - 0) * timer)
+			timer += delta / pulsing_time
+		if timer > 1:
+			timer = 0
+
+
+func update_position() -> void:
+#	yield(get_tree().create_timer(.001),\"timeout\")
+#	yield(get_tree(),\"idle_frame\")
+	rect_size = vBox.rect_size + Vector2(16,16)
+	
+	if centered:
+		rect_global_position.x = get_viewport().size.x*.5 - (rect_size.x/2)
+		rect_global_position.y = get_viewport().size.y*.5 - (rect_size.y/2)
+	else:
+		rect_global_position.x = get_viewport().size.x*.5 - (rect_size.x/2)
+		rect_global_position.y = get_viewport().size.y*.1
+	if pos != Vector2(0,0):
+		rect_global_position += pos
+
+
+func setup(new_message:String, new_pos:Vector2 = Vector2(0,0)) -> void:
+	pos = new_pos
+	$VBoxContainer/Container/Label.text = new_message
+
+
+func setupOptions(option1:String = \"\", option2:String = \"\", option1_signal_node:Node = null, option2_signal_node:Node = null, option1_signal = null, option2_signal = null, option1_params = [], option2_params = []) -> void:
+	if option1 != \"\" or option2 != \"\":
+		pause_mode = PAUSE_MODE_PROCESS
+		get_tree().paused = true
+	if option1 != \"\":
+		options.visible = true
+		options.get_child(0).visible = true
+		options.get_child(0).text = option1
+		if option1_signal != null and option1_signal_node != null:
+			options.get_child(0).set_meta(\"node\", option1_signal_node)
+			options.get_child(0).set_meta(\"signal\", option1_signal)
+			options.get_child(0).set_meta(\"params\", option1_params)
+			options.get_child(0).grab_focus()
+	if option2 != \"\":
+		options.visible = true
+		options.get_child(2).visible = true
+		options.get_child(2).text = option2
+		if option2_signal != null and option2_signal_node != null:
+			options.get_child(2).set_meta(\"node\", option2_signal_node)
+			options.get_child(2).set_meta(\"signal\", option2_signal)
+			options.get_child(2).set_meta(\"params\", option2_params)
+
+
+func _on_Option1_pressed():
+	get_tree().paused = false
+	var signal_node:Node = options.get_child(0).get_meta(\"node\")
+	var signal_string = options.get_child(0).get_meta(\"signal\")
+	var signal_params:Array = options.get_child(0).get_meta(\"params\")
+	if signal_node != null and signal_string != null and !signal_params.empty():
+		signal_node.callv(signal_string,signal_params)
+	elif signal_node != null and signal_string != null:
+		signal_node.call(signal_string)
+	if get_parent() != null and self != null:
+		get_parent().remove_child(self)
+	clear()
+
+
+func _on_Option2_pressed():
+	get_tree().paused = false
+	var signal_node:Node = options.get_child(2).get_meta(\"node\")
+	var signal_string = options.get_child(2).get_meta(\"signal\")
+	var signal_params = options.get_child(2).get_meta(\"params\")
+	if signal_node != null and signal_string != null and !signal_params.empty():
+		signal_node.callv(signal_string,signal_params)
+	elif signal_node != null and signal_string != null:
+		signal_node.call(signal_string)
+	if get_parent() != null and self != null:
+		get_parent().remove_child(self)
+	clear()
+
+
+func _on_Options_minimum_size_changed():
+	update_position()
+
+func addUnitTabMini(results:Array):
+	for result in results:
+		var unit_tab = UnitTabGUIMini.instance()
+		unit_tab.updateGUI(result)
+		vBox_container.add_child(unit_tab)
+		unit_tab.size_flags_horizontal = SIZE_SHRINK_CENTER
+		unit_tab.pause_mode = PAUSE_MODE_PROCESS
+#		print(unit_tab.rect_size.x)
+		vBox_container.rect_min_size.x = unit_tab.rect_size.x
+		vBox.rect_min_size.x = vBox_container.rect_min_size.x
+	update_position()
+
+
+func _on_Label_minimum_size_changed():
+	update_position()
+
+
+func _on_VBoxContainer_minimum_size_changed():
+	update_position()
+
+func clear() -> void:
+	for unit_tabs in vBox_container.get_children():
+		unit_tabs.call_deferred(\"queue_free\")
+		vBox_container.remove_child(unit_tabs)
+	
+	queue_free()
+"
+
+[node name="CustomNinePatch" type="NinePatchRect"]
+pause_mode = 2
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+theme = ExtResource( 3 )
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 64, 64 )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+script = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 8.0
+margin_bottom = -8.0
+rect_min_size = Vector2( 64, 19 )
+mouse_filter = 2
+alignment = 1
+
+[node name="Container" type="VBoxContainer" parent="VBoxContainer"]
+pause_mode = 2
+margin_top = 14.0
+margin_right = 64.0
+margin_bottom = 33.0
+rect_min_size = Vector2( 64, 0 )
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/Container"]
+pause_mode = 2
+margin_right = 64.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 48, 19 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+margin_top = 28.0
+margin_right = 133.0
+margin_bottom = 47.0
+alignment = 1
+
+[node name="Option1" type="Button" parent="VBoxContainer/Options"]
+margin_right = 52.0
+margin_bottom = 19.0
+focus_neighbour_left = NodePath("../Option2")
+focus_neighbour_right = NodePath("../Option2")
+focus_next = NodePath("../Option2")
+custom_colors/font_color_hover = Color( 0.223529, 0.156863, 0.0313726, 1 )
+text = "Accept"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Options"]
+margin_left = 56.0
+margin_right = 72.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 16, 0 )
+
+[node name="Option2" type="Button" parent="VBoxContainer/Options"]
+margin_left = 76.0
+margin_right = 133.0
+margin_bottom = 19.0
+focus_neighbour_left = NodePath("../Option1")
+focus_neighbour_right = NodePath("../Option1")
+focus_next = NodePath("../Option1")
+custom_colors/font_color_hover = Color( 0.223529, 0.156863, 0.0313726, 1 )
+text = "Decline"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="minimum_size_changed" from="VBoxContainer" to="." method="_on_VBoxContainer_minimum_size_changed"]
+[connection signal="minimum_size_changed" from="VBoxContainer/Container/Label" to="." method="_on_Label_minimum_size_changed"]
+[connection signal="minimum_size_changed" from="VBoxContainer/Options" to="." method="_on_Options_minimum_size_changed"]
+[connection signal="pressed" from="VBoxContainer/Options/Option1" to="." method="_on_Option1_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options/Option2" to="." method="_on_Option2_pressed"]

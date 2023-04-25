@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://objects/scenes/Main.gd" type="Script" id=1]
+[ext_resource path="res://objects/scenes/WorldScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/UI/VersionLabel.gd" type="Script" id=3]
+[ext_resource path="res://objects/scenes/MenuScene.gd" type="Script" id=4]
+[ext_resource path="res://assets/images/backgrounds/title_screen_bg2.jpeg" type="Texture" id=5]
+[ext_resource path="res://objects/UI/unit_maker/UnitMaker.tscn" type="PackedScene" id=6]
+[ext_resource path="res://resources/fonts/Fenix-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=8]
+[ext_resource path="res://objects/UI/card_maker/CardMaker.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/UI/FPSLabel.gd" type="Script" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 52
+outline_size = 2
+use_mipmaps = true
+use_filter = true
+extra_spacing_bottom = 60
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+
+[node name="WorldScene" parent="." instance=ExtResource( 2 )]
+visible = false
+map_name = "EmptyHexTest"
+
+[node name="BG" type="TextureRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UnitMaker" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="CardMaker" parent="." instance=ExtResource( 9 )]
+visible = false
+
+[node name="MenuScene" type="Control" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+theme = ExtResource( 8 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MenuControl" type="Control" parent="MenuScene"]
+margin_left = 429.0
+margin_top = 198.0
+margin_right = 851.0
+margin_bottom = 396.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Title" type="Label" parent="MenuScene/MenuControl"]
+margin_right = 422.0
+margin_bottom = 119.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Tactics Deckbuilder"
+align = 1
+
+[node name="Map Editor" type="Button" parent="MenuScene/MenuControl"]
+margin_left = 151.0
+margin_top = 88.0
+margin_right = 271.0
+margin_bottom = 112.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+text = " Map Editor "
+
+[node name="Unit Editor" type="Button" parent="MenuScene/MenuControl"]
+margin_left = 151.0
+margin_top = 122.0
+margin_right = 271.0
+margin_bottom = 146.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+text = " Unit Editor "
+
+[node name="Card Editor" type="Button" parent="MenuScene/MenuControl"]
+margin_left = 151.0
+margin_top = 156.0
+margin_right = 271.0
+margin_bottom = 180.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+text = " Card Editor "
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+volume_db = -12.0
+bus = "BGM"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+bus = "SFX"
+
+[node name="VersionLabel" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource( 3 )
+position = 2
+margin = 10
+
+[node name="FpsLabel" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource( 10 )
+position = 3
+
+[connection signal="pressed" from="MenuScene/MenuControl/Map Editor" to="." method="_on_Map_Editor_pressed"]
+[connection signal="pressed" from="MenuScene/MenuControl/Unit Editor" to="." method="_on_Unit_Editor_pressed"]
+[connection signal="pressed" from="MenuScene/MenuControl/Card Editor" to="." method="_on_Card_Editor_pressed"]

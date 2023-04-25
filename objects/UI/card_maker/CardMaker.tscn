@@ -1,0 +1,372 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://objects/UI/card_maker/CardMaker.gd" type="Script" id=1]
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=2]
+[ext_resource path="res://objects/UI/card_maker/CardTab.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/UI/VersionLabel.gd" type="Script" id=4]
+[ext_resource path="res://assets/images/backgrounds/title_screen_bg3.jpeg" type="Texture" id=5]
+[ext_resource path="res://objects/UI/FPSLabel.gd" type="Script" id=6]
+[ext_resource path="res://objects/UI/card_maker/BTNodeDialog.tscn" type="PackedScene" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="CardMaker" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BG" type="TextureRect" parent="."]
+visible = false
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MenuControl" type="Control" parent="."]
+margin_left = 1087.0
+margin_top = 1.0
+margin_right = 1280.0
+margin_bottom = 192.0
+
+[node name="Menu" type="Button" parent="MenuControl"]
+margin_left = 48.0
+margin_top = 7.0
+margin_right = 186.0
+margin_bottom = 26.0
+text = "Back to Main Menu"
+
+[node name="MenuAcceptDialog" type="AcceptDialog" parent="MenuControl/Menu"]
+margin_right = 83.0
+margin_bottom = 62.0
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 130.0
+margin_bottom = 27.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_right = 122.0
+margin_bottom = 19.0
+text = "Create New Card"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CardListContainer" type="PanelContainer" parent="."]
+anchor_bottom = 1.0
+margin_top = 32.0
+margin_right = 326.0
+margin_bottom = 6.10352e-05
+
+[node name="CardList" type="ScrollContainer" parent="CardListContainer"]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 320.0
+margin_bottom = 682.0
+rect_min_size = Vector2( 314, 676 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CardListContainer/CardList"]
+margin_right = 314.0
+rect_min_size = Vector2( 314, 0 )
+custom_constants/separation = 0
+
+[node name="CardPanel" type="Panel" parent="."]
+anchor_bottom = 1.0
+margin_left = 384.0
+margin_top = 8.0
+margin_right = 960.0
+margin_bottom = -7.99994
+
+[node name="SaveCard" type="Button" parent="CardPanel"]
+margin_left = 8.0
+margin_right = 83.0
+margin_bottom = 21.0
+text = "Save Card"
+
+[node name="TestCard" type="Button" parent="CardPanel"]
+margin_left = 96.0
+margin_right = 171.0
+margin_bottom = 21.0
+text = "Test Card"
+
+[node name="TestCardAcceptDialog" type="AcceptDialog" parent="CardPanel/TestCard"]
+margin_right = 83.0
+margin_bottom = 64.0
+
+[node name="DeleteUnit" type="Button" parent="CardPanel"]
+margin_left = 480.0
+margin_right = 566.0
+margin_bottom = 21.0
+text = "Delete Card"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="CardPanel/DeleteUnit"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+dialog_text = "Are you sure you want to delete?"
+
+[node name="CardName" type="LineEdit" parent="CardPanel"]
+margin_left = 8.0
+margin_top = 23.0
+margin_right = 568.0
+margin_bottom = 42.0
+text = "Card Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CardPanel"]
+margin_left = 8.0
+margin_top = 49.0
+margin_right = 568.0
+margin_bottom = 87.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CardPanel/ScrollContainer"]
+margin_right = 455.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CardClassLabel" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_right = 72.0
+margin_bottom = 19.0
+text = "Card Class"
+
+[node name="CardClass" type="OptionButton" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 78.0
+margin_right = 102.0
+margin_bottom = 19.0
+
+[node name="VSeparator" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 108.0
+margin_right = 112.0
+margin_bottom = 19.0
+
+[node name="CardTypeLabel2" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 185.0
+margin_bottom = 19.0
+text = "Card Type"
+
+[node name="CardType" type="OptionButton" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 191.0
+margin_right = 215.0
+margin_bottom = 19.0
+
+[node name="VSeparator2" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 221.0
+margin_right = 225.0
+margin_bottom = 19.0
+
+[node name="Rarity" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 231.0
+margin_right = 305.0
+margin_bottom = 19.0
+text = "Card Rarity"
+
+[node name="RarityValue" type="SpinBox" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 311.0
+margin_right = 375.0
+margin_bottom = 19.0
+value = 10.0
+
+[node name="VSeparator3" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 381.0
+margin_right = 385.0
+margin_bottom = 19.0
+
+[node name="CardArt" type="Button" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 391.0
+margin_right = 455.0
+margin_bottom = 19.0
+text = "Card Art"
+
+[node name="TabContainer" type="TabContainer" parent="CardPanel"]
+anchor_bottom = 1.011
+margin_left = 8.0
+margin_top = 88.0
+margin_right = 568.0
+margin_bottom = -9.74408
+custom_styles/panel = SubResource( 1 )
+tab_align = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Level 1" parent="CardPanel/TabContainer" instance=ExtResource( 3 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 21.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="AddLevel" type="Button" parent="CardPanel"]
+margin_left = 487.0
+margin_top = 118.0
+margin_right = 511.0
+margin_bottom = 139.0
+hint_tooltip = "Add a level."
+text = " + "
+
+[node name="RemoveLevel" type="Button" parent="CardPanel"]
+margin_left = 519.0
+margin_top = 118.0
+margin_right = 543.0
+margin_bottom = 139.0
+hint_tooltip = "Remove this level."
+text = " - "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_left = 404.0
+margin_top = 192.0
+margin_right = 944.0
+margin_bottom = 350.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="BehaviorTree" type="HBoxContainer" parent="."]
+visible = false
+margin_left = 392.0
+margin_top = 535.0
+margin_right = 736.0
+margin_bottom = 556.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="BehaviorTree"]
+margin_top = 1.0
+margin_right = 91.0
+margin_bottom = 20.0
+hint_tooltip = "Used for more advanced card behaviors."
+mouse_filter = 1
+text = "Behavior Tree"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddItem" type="Button" parent="BehaviorTree"]
+margin_left = 95.0
+margin_right = 166.0
+margin_bottom = 21.0
+text = "Add Node"
+
+[node name="RemoveItem" type="Button" parent="BehaviorTree"]
+margin_left = 170.0
+margin_right = 268.0
+margin_bottom = 21.0
+text = "Remove Node"
+
+[node name="PrintTree" type="Button" parent="BehaviorTree"]
+margin_left = 272.0
+margin_right = 344.0
+margin_bottom = 21.0
+text = "Print Tree"
+
+[node name="Tree" type="Tree" parent="."]
+pause_mode = 2
+visible = false
+anchor_bottom = 1.0
+margin_left = 392.0
+margin_top = 560.0
+margin_right = 952.0
+margin_bottom = -16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BTNodeList" type="WindowDialog" parent="."]
+margin_left = 968.0
+margin_top = 32.0
+margin_right = 1272.0
+margin_bottom = 706.0
+window_title = "Behavior Tree Nodes"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BTNodeList"]
+margin_right = 304.0
+margin_bottom = 674.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BTNodeList/ScrollContainer"]
+margin_right = 292.0
+rect_min_size = Vector2( 292, 0 )
+
+[node name="BTNode" type="WindowDialog" parent="."]
+margin_left = 968.0
+margin_top = 256.0
+margin_right = 1272.0
+margin_bottom = 448.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BTNode"]
+margin_right = 304.0
+margin_bottom = 192.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BTNode/ScrollContainer"]
+margin_right = 304.0
+rect_min_size = Vector2( 304, 0 )
+
+[node name="BTNodeDialog" parent="." instance=ExtResource( 14 )]
+
+[node name="VersionLabel" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource( 4 )
+position = 2
+margin = 10
+
+[node name="FpsLabel" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource( 6 )
+position = 3
+
+[connection signal="pressed" from="MenuControl/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="confirmed" from="MenuControl/Menu/MenuAcceptDialog" to="." method="_on_MenuAcceptDialog_confirmed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="CardPanel/SaveCard" to="." method="_on_SaveCard_pressed"]
+[connection signal="pressed" from="CardPanel/TestCard" to="." method="_on_TestCard_pressed"]
+[connection signal="confirmed" from="CardPanel/TestCard/TestCardAcceptDialog" to="." method="_on_TestCardAcceptDialog_confirmed"]
+[connection signal="pressed" from="CardPanel/DeleteUnit" to="." method="_on_DeleteUnit_pressed"]
+[connection signal="confirmed" from="CardPanel/DeleteUnit/AcceptDialog" to="." method="_on_AcceptDialog_confirmed"]
+[connection signal="pressed" from="CardPanel/ScrollContainer/HBoxContainer/CardArt" to="." method="_on_CardArt_pressed"]
+[connection signal="tab_selected" from="CardPanel/TabContainer" to="." method="_on_TabContainer_tab_selected"]
+[connection signal="pressed" from="CardPanel/AddLevel" to="." method="_on_AddLevel_pressed"]
+[connection signal="pressed" from="CardPanel/RemoveLevel" to="." method="_on_RemoveLevel_pressed"]
+[connection signal="pressed" from="BehaviorTree/AddItem" to="." method="_on_AddItem_pressed"]
+[connection signal="pressed" from="BehaviorTree/RemoveItem" to="." method="_on_RemoveItem_pressed"]
+[connection signal="pressed" from="BehaviorTree/PrintTree" to="." method="_on_PrintTree_pressed"]
+[connection signal="item_activated" from="Tree" to="." method="_on_Tree_item_activated"]
+[connection signal="nothing_selected" from="Tree" to="." method="_on_Tree_nothing_selected"]

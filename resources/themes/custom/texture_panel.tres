@@ -1,0 +1,15 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=2]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/9slice.png-664509d18e1cd2e00237c6bdb6ca852e.stex"
+
+[resource]
+texture = SubResource( 1 )
+region_rect = Rect2( 0, 0, 64, 64 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://behavior_tree/composites/bt_sequence.gd" type="Script" id=1]
+[ext_resource path="res://behavior_tree/leaves/bt_set_splash_targets.gd" type="Script" id=2]
+[ext_resource path="res://behavior_tree/leaves/bt_attack.gd" type="Script" id=3]
+[ext_resource path="res://behavior_tree/leaves/bt_set_status.gd" type="Script" id=4]
+[ext_resource path="res://behavior_tree/leaves/bt_modify_attack.gd" type="Script" id=5]
+
+[node name="Fireball" type="Node"]
+script = ExtResource( 1 )
+
+[node name="SetSplashTargets" type="Node" parent="."]
+script = ExtResource( 2 )
+splash_max_range = 1
+splash_up_vertical_range = 5
+splash_down_vertical_range = 5
+
+[node name="Attack" type="Node" parent="."]
+script = ExtResource( 3 )
+valid_targets = 3
+
+[node name="SetStatus" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="ModifyAttack" type="Node" parent="."]
+script = ExtResource( 5 )
+unit_variable = "none"

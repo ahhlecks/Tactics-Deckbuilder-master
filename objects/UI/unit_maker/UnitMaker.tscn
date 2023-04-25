@@ -1,0 +1,789 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://objects/UI/HealthPointsValue.gd" type="Script" id=1]
+[ext_resource path="res://objects/UI/JumpPointsValue.gd" type="Script" id=2]
+[ext_resource path="res://objects/UI/unit_maker/UnitMaker.gd" type="Script" id=3]
+[ext_resource path="res://objects/UI/TypeOptions.gd" type="Script" id=4]
+[ext_resource path="res://objects/UI/APValue.gd" type="Script" id=5]
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=6]
+[ext_resource path="res://objects/UI/unit_maker/UnitBaseSpeedValue.gd" type="Script" id=7]
+[ext_resource path="res://objects/UI/unit_maker/BasePhysicalEvasionValue.gd" type="Script" id=8]
+[ext_resource path="res://objects/UI/unit_maker/BaseMagicEvasionValue.gd" type="Script" id=9]
+[ext_resource path="res://objects/UI/unit_maker/AIBehaviors.gd" type="Script" id=10]
+[ext_resource path="res://assets/images/backgrounds/title_screen_bg3.jpeg" type="Texture" id=11]
+[ext_resource path="res://objects/UI/unit_maker/JobOptionButton.gd" type="Script" id=12]
+
+[node name="UnitMaker" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+theme = ExtResource( 6 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="BG" type="TextureRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+texture = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MenuControl" type="Control" parent="."]
+margin_left = 1088.0
+margin_right = 1280.0
+margin_bottom = 192.0
+
+[node name="Menu" type="Button" parent="MenuControl"]
+margin_left = 46.0
+margin_top = 8.0
+margin_right = 184.0
+margin_bottom = 27.0
+text = "Back To Main Menu"
+
+[node name="CardEditor" type="Button" parent="MenuControl"]
+visible = false
+margin_left = 46.0
+margin_top = 31.0
+margin_right = 184.0
+margin_bottom = 50.0
+text = "Card Editor"
+
+[node name="TestMap" type="Button" parent="MenuControl"]
+visible = false
+margin_left = 46.0
+margin_top = 54.0
+margin_right = 184.0
+margin_bottom = 73.0
+text = "Test Map"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="MenuControl/TestMap"]
+margin_right = 83.0
+margin_bottom = 62.0
+
+[node name="Units" type="Panel" parent="."]
+anchor_bottom = 1.0
+margin_right = 256.0
+rect_min_size = Vector2( 256, 448 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Units"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -6.0
+margin_bottom = -6.99997
+rect_min_size = Vector2( 230, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Units/VBoxContainer"]
+margin_right = 242.0
+margin_bottom = 19.0
+
+[node name="CreateNew" type="Button" parent="Units/VBoxContainer/HBoxContainer"]
+margin_right = 86.0
+margin_bottom = 19.0
+size_flags_horizontal = 0
+text = "Create New"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="Units/VBoxContainer/HBoxContainer"]
+margin_left = 92.0
+margin_right = 96.0
+margin_bottom = 19.0
+
+[node name="Owned" type="CheckBox" parent="Units/VBoxContainer/HBoxContainer"]
+margin_left = 102.0
+margin_right = 220.0
+margin_bottom = 19.0
+size_flags_horizontal = 0
+pressed = true
+text = "Player Owned"
+
+[node name="Units" type="ScrollContainer" parent="Units/VBoxContainer"]
+margin_top = 25.0
+margin_right = 242.0
+margin_bottom = 685.0
+rect_min_size = Vector2( 230, 660 )
+follow_focus = true
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Units/VBoxContainer/Units"]
+margin_right = 230.0
+margin_bottom = 660.0
+rect_min_size = Vector2( 230, 660 )
+
+[node name="Stats" type="Panel" parent="."]
+anchor_bottom = 1.0
+margin_left = 386.0
+margin_right = 890.0
+rect_min_size = Vector2( 256, 448 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Stats"]
+anchor_right = 1.0
+anchor_bottom = 0.999
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -11.296
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stats/HBoxContainer"]
+margin_right = 236.0
+margin_bottom = 699.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_right = 236.0
+margin_bottom = 19.0
+
+[node name="Name" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Name"]
+margin_right = 38.0
+margin_bottom = 19.0
+text = "Name"
+
+[node name="NameEdit" type="LineEdit" parent="Stats/HBoxContainer/VBoxContainer/Name"]
+margin_left = 44.0
+margin_right = 236.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 192, 0 )
+text = "Hero"
+max_length = 14
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Team" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+visible = false
+margin_top = 25.0
+margin_right = 106.0
+margin_bottom = 44.0
+size_flags_horizontal = 0
+
+[node name="Team" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Team"]
+margin_right = 36.0
+margin_bottom = 19.0
+text = "Team"
+
+[node name="TeamValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/Team"]
+margin_left = 42.0
+margin_right = 106.0
+margin_bottom = 19.0
+max_value = 3.0
+align = 1
+editable = false
+
+[node name="Class" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+visible = false
+margin_top = 25.0
+margin_right = 117.0
+margin_bottom = 44.0
+size_flags_horizontal = 0
+
+[node name="Class" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Class"]
+margin_right = 36.0
+margin_bottom = 19.0
+text = "Class"
+
+[node name="OptionButton" type="OptionButton" parent="Stats/HBoxContainer/VBoxContainer/Class"]
+margin_left = 42.0
+margin_right = 117.0
+margin_bottom = 19.0
+disabled = true
+text = "Warrior"
+script = ExtResource( 4 )
+
+[node name="Job" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 25.0
+margin_right = 54.0
+margin_bottom = 44.0
+size_flags_horizontal = 0
+
+[node name="Job" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Job"]
+margin_right = 24.0
+margin_bottom = 19.0
+text = "Job"
+
+[node name="JobOptionButton" type="OptionButton" parent="Stats/HBoxContainer/VBoxContainer/Job"]
+margin_left = 30.0
+margin_right = 54.0
+margin_bottom = 19.0
+script = ExtResource( 12 )
+
+[node name="Bio" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 50.0
+margin_right = 236.0
+margin_bottom = 98.0
+rect_min_size = Vector2( 0, 48 )
+size_flags_horizontal = 0
+
+[node name="Bio" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Bio"]
+margin_top = 14.0
+margin_right = 20.0
+margin_bottom = 33.0
+text = "Bio"
+
+[node name="BioText" type="TextEdit" parent="Stats/HBoxContainer/VBoxContainer/Bio"]
+margin_left = 26.0
+margin_right = 236.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 210, 0 )
+wrap_enabled = true
+
+[node name="Level" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 104.0
+margin_right = 104.0
+margin_bottom = 123.0
+size_flags_horizontal = 0
+
+[node name="Level" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Level"]
+margin_right = 34.0
+margin_bottom = 19.0
+text = "Level"
+
+[node name="LevelValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/Level"]
+margin_left = 40.0
+margin_right = 104.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+align = 1
+
+[node name="Experience" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 129.0
+margin_right = 185.0
+margin_bottom = 148.0
+size_flags_horizontal = 0
+
+[node name="Experience" type="Label" parent="Stats/HBoxContainer/VBoxContainer/Experience"]
+margin_right = 115.0
+margin_bottom = 19.0
+text = "Experience Points"
+
+[node name="ExperienceValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/Experience"]
+margin_left = 121.0
+margin_right = 185.0
+margin_bottom = 19.0
+max_value = 20.0
+align = 1
+
+[node name="MaxHealthPoints" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 154.0
+margin_right = 145.0
+margin_bottom = 173.0
+size_flags_horizontal = 0
+
+[node name="Health" type="Label" parent="Stats/HBoxContainer/VBoxContainer/MaxHealthPoints"]
+margin_right = 75.0
+margin_bottom = 19.0
+text = "Max Health"
+
+[node name="HealthValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/MaxHealthPoints"]
+margin_left = 81.0
+margin_right = 145.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 999.0
+value = 30.0
+align = 1
+script = ExtResource( 1 )
+
+[node name="MaxAP" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 179.0
+margin_right = 185.0
+margin_bottom = 198.0
+size_flags_horizontal = 0
+
+[node name="MaxAP" type="Label" parent="Stats/HBoxContainer/VBoxContainer/MaxAP"]
+margin_right = 115.0
+margin_bottom = 19.0
+text = "Max Action Points"
+
+[node name="APValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/MaxAP"]
+margin_left = 121.0
+margin_right = 185.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 20.0
+value = 4.0
+align = 1
+script = ExtResource( 5 )
+
+[node name="APRegen" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 204.0
+margin_right = 190.0
+margin_bottom = 223.0
+size_flags_horizontal = 0
+
+[node name="APRegen" type="Label" parent="Stats/HBoxContainer/VBoxContainer/APRegen"]
+margin_right = 120.0
+margin_bottom = 19.0
+text = "Action Point Regen"
+
+[node name="APRegenValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/APRegen"]
+margin_left = 126.0
+margin_right = 190.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 20.0
+value = 2.0
+align = 1
+
+[node name="MaxMovementPoints" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 229.0
+margin_right = 213.0
+margin_bottom = 248.0
+size_flags_horizontal = 0
+
+[node name="MovementPoints" type="Label" parent="Stats/HBoxContainer/VBoxContainer/MaxMovementPoints"]
+margin_right = 143.0
+margin_bottom = 19.0
+text = "Max Movement Points"
+
+[node name="MovementPointsValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/MaxMovementPoints"]
+margin_left = 149.0
+margin_right = 213.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 20.0
+value = 2.0
+align = 1
+
+[node name="MaxJumpPoints" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 254.0
+margin_right = 181.0
+margin_bottom = 273.0
+size_flags_horizontal = 0
+
+[node name="JumpPoints" type="Label" parent="Stats/HBoxContainer/VBoxContainer/MaxJumpPoints"]
+margin_right = 111.0
+margin_bottom = 19.0
+text = "Max Jump Points"
+
+[node name="JumpPointsValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/MaxJumpPoints"]
+margin_left = 117.0
+margin_right = 181.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 30.0
+value = 2.0
+align = 1
+script = ExtResource( 2 )
+
+[node name="UnitBaseSpeed" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 279.0
+margin_right = 236.0
+margin_bottom = 298.0
+
+[node name="UnitBaseSpeed" type="Label" parent="Stats/HBoxContainer/VBoxContainer/UnitBaseSpeed"]
+margin_right = 76.0
+margin_bottom = 19.0
+text = "Base Speed"
+
+[node name="UnitBaseSpeedValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/UnitBaseSpeed"]
+margin_left = 82.0
+margin_right = 146.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 30.0
+value = 4.0
+align = 1
+script = ExtResource( 7 )
+
+[node name="DeckSpeed" type="Label" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 304.0
+margin_right = 236.0
+margin_bottom = 323.0
+text = "Deck Speed:"
+
+[node name="CurrentSpeed" type="Label" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 329.0
+margin_right = 236.0
+margin_bottom = 348.0
+text = "Current Speed:"
+
+[node name="BasePhysicalAccuracy" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 354.0
+margin_right = 236.0
+margin_bottom = 373.0
+
+[node name="BasePhysicalAccuracy" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BasePhysicalAccuracy"]
+margin_right = 151.0
+margin_bottom = 19.0
+text = "Base Physical Accuracy"
+
+[node name="BasePhysicalAccuracyValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BasePhysicalAccuracy"]
+margin_left = 157.0
+margin_right = 221.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 200.0
+value = 100.0
+align = 1
+
+[node name="BaseMagicAccuracy" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 379.0
+margin_right = 236.0
+margin_bottom = 398.0
+
+[node name="BaseMagicAccuracy" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BaseMagicAccuracy"]
+margin_right = 136.0
+margin_bottom = 19.0
+text = "Base Magic Accuracy"
+
+[node name="BaseMagicAccuracyValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BaseMagicAccuracy"]
+margin_left = 142.0
+margin_right = 206.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 200.0
+value = 100.0
+align = 1
+
+[node name="BasePhysicalEvasion" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 404.0
+margin_right = 236.0
+margin_bottom = 423.0
+
+[node name="BasePhysicalEvasion" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BasePhysicalEvasion"]
+margin_right = 141.0
+margin_bottom = 19.0
+text = "Base Physical Evasion"
+
+[node name="BasePhysicalEvasionValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BasePhysicalEvasion"]
+margin_left = 147.0
+margin_right = 211.0
+margin_bottom = 19.0
+min_value = 1.0
+value = 5.0
+align = 1
+script = ExtResource( 8 )
+
+[node name="BaseMagicEvasion" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 429.0
+margin_right = 236.0
+margin_bottom = 448.0
+
+[node name="BaseMagicEvasion" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BaseMagicEvasion"]
+margin_right = 126.0
+margin_bottom = 19.0
+text = "Base Magic Evasion"
+
+[node name="BaseMagicEvasionValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BaseMagicEvasion"]
+margin_left = 132.0
+margin_right = 196.0
+margin_bottom = 19.0
+min_value = 1.0
+value = 5.0
+align = 1
+script = ExtResource( 9 )
+
+[node name="MaxDrawPoints" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 454.0
+margin_right = 183.0
+margin_bottom = 473.0
+size_flags_horizontal = 0
+
+[node name="DrawPoints" type="Label" parent="Stats/HBoxContainer/VBoxContainer/MaxDrawPoints"]
+margin_right = 113.0
+margin_bottom = 19.0
+text = "Base Draw Points"
+
+[node name="DrawPointsValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/MaxDrawPoints"]
+margin_left = 119.0
+margin_right = 183.0
+margin_bottom = 19.0
+min_value = 1.0
+max_value = 20.0
+value = 4.0
+align = 1
+
+[node name="BaseCritDamage" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 479.0
+margin_right = 186.0
+margin_bottom = 498.0
+size_flags_horizontal = 0
+
+[node name="BaseCritDamage" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BaseCritDamage"]
+margin_right = 116.0
+margin_bottom = 19.0
+text = "Base Crit Damage"
+
+[node name="BaseCritDamageValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BaseCritDamage"]
+margin_left = 122.0
+margin_right = 186.0
+margin_bottom = 19.0
+max_value = 200.0
+value = 50.0
+align = 1
+
+[node name="BaseCritChance" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 504.0
+margin_right = 183.0
+margin_bottom = 523.0
+size_flags_horizontal = 0
+
+[node name="BaseCritChance" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BaseCritChance"]
+margin_right = 113.0
+margin_bottom = 19.0
+text = "Base Crit Chance"
+
+[node name="BaseCritChanceValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BaseCritChance"]
+margin_left = 119.0
+margin_right = 183.0
+margin_bottom = 19.0
+hint_tooltip = "0 is default. More than 0 is increased crit chance."
+min_value = -200.0
+max_value = 200.0
+align = 1
+
+[node name="AIControlled" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 529.0
+margin_right = 114.0
+margin_bottom = 548.0
+size_flags_horizontal = 0
+
+[node name="AIControlled" type="CheckBox" parent="Stats/HBoxContainer/VBoxContainer/AIControlled"]
+margin_right = 114.0
+margin_bottom = 19.0
+hint_tooltip = "If checked, this unit is played by AI. If unchecked, this unit is controlled by the player."
+pressed = true
+text = "AI Controlled"
+
+[node name="AIType" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 554.0
+margin_right = 89.0
+margin_bottom = 573.0
+size_flags_horizontal = 0
+
+[node name="AIType" type="OptionButton" parent="Stats/HBoxContainer/VBoxContainer/AIType"]
+margin_right = 89.0
+margin_bottom = 19.0
+text = "Normal AI"
+script = ExtResource( 10 )
+
+[node name="UpdateUnit" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 579.0
+margin_right = 211.0
+margin_bottom = 598.0
+size_flags_horizontal = 0
+
+[node name="UpdateUnit" type="Button" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
+margin_right = 68.0
+margin_bottom = 19.0
+text = "Save Unit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
+margin_left = 74.0
+margin_right = 78.0
+margin_bottom = 19.0
+
+[node name="Tween" type="Tween" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
+
+[node name="DeleteUnit" type="Button" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
+margin_left = 84.0
+margin_right = 163.0
+margin_bottom = 19.0
+text = "Delete Unit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit/DeleteUnit"]
+margin_right = 83.0
+margin_bottom = 58.0
+popup_exclusive = true
+dialog_text = "Are you sure you want to delete?"
+
+[node name="Updated" type="Label" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
+margin_left = 169.0
+margin_right = 211.0
+margin_bottom = 19.0
+text = "Saved!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="Stats/HBoxContainer"]
+margin_left = 242.0
+margin_right = 246.0
+margin_bottom = 699.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Stats/HBoxContainer"]
+margin_left = 252.0
+margin_right = 487.0
+margin_bottom = 699.0
+rect_min_size = Vector2( 235, 690 )
+
+[node name="Cards" type="VBoxContainer" parent="Stats/HBoxContainer/VBoxContainer2"]
+margin_right = 235.0
+margin_bottom = 336.0
+rect_min_size = Vector2( 0, 336 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="AddCard" type="Button" parent="Stats/HBoxContainer/VBoxContainer2/Cards"]
+margin_right = 235.0
+margin_bottom = 19.0
+text = "Add Card"
+
+[node name="Label" type="Label" parent="Stats/HBoxContainer/VBoxContainer2/Cards"]
+visible = false
+margin_top = 27.0
+margin_right = 230.0
+margin_bottom = 46.0
+text = "Cards"
+align = 1
+
+[node name="Cards" type="ScrollContainer" parent="Stats/HBoxContainer/VBoxContainer2/Cards"]
+margin_top = 25.0
+margin_right = 235.0
+margin_bottom = 335.0
+rect_min_size = Vector2( 230, 310 )
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stats/HBoxContainer/VBoxContainer2/Cards/Cards"]
+margin_right = 230.0
+margin_bottom = 310.0
+rect_min_size = Vector2( 230, 310 )
+
+[node name="HSeparator" type="HSeparator" parent="Stats/HBoxContainer/VBoxContainer2"]
+margin_top = 342.0
+margin_right = 235.0
+margin_bottom = 346.0
+
+[node name="Proficiencies" type="VBoxContainer" parent="Stats/HBoxContainer/VBoxContainer2"]
+margin_top = 352.0
+margin_right = 235.0
+margin_bottom = 688.0
+rect_min_size = Vector2( 0, 336 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="AddProficiency" type="Button" parent="Stats/HBoxContainer/VBoxContainer2/Proficiencies"]
+margin_right = 235.0
+margin_bottom = 19.0
+text = "Add Proficiency"
+
+[node name="Label" type="Label" parent="Stats/HBoxContainer/VBoxContainer2/Proficiencies"]
+visible = false
+margin_top = 27.0
+margin_right = 240.0
+margin_bottom = 46.0
+text = "Proficiencies"
+align = 1
+
+[node name="Cards" type="ScrollContainer" parent="Stats/HBoxContainer/VBoxContainer2/Proficiencies"]
+margin_top = 25.0
+margin_right = 235.0
+margin_bottom = 335.0
+rect_min_size = Vector2( 230, 310 )
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stats/HBoxContainer/VBoxContainer2/Proficiencies/Cards"]
+margin_right = 230.0
+margin_bottom = 310.0
+rect_min_size = Vector2( 230, 310 )
+
+[node name="WindowDialog" type="WindowDialog" parent="."]
+margin_left = 584.0
+margin_right = 840.0
+margin_bottom = 448.0
+rect_min_size = Vector2( 256, 448 )
+window_title = "Cards"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="ScrollContainer" parent="WindowDialog"]
+margin_right = 256.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 244, 416 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WindowDialog/Cards"]
+margin_right = 244.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 244, 416 )
+
+[node name="WindowDialog2" type="WindowDialog" parent="."]
+margin_left = 584.0
+margin_right = 840.0
+margin_bottom = 448.0
+rect_min_size = Vector2( 256, 448 )
+window_title = "Profiencies"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Proficiencies" type="ScrollContainer" parent="WindowDialog2"]
+margin_right = 256.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 244, 416 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WindowDialog2/Proficiencies"]
+margin_right = 244.0
+margin_bottom = 416.0
+rect_min_size = Vector2( 244, 416 )
+
+[connection signal="pressed" from="MenuControl/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="pressed" from="MenuControl/CardEditor" to="." method="_on_CardEditor_pressed"]
+[connection signal="pressed" from="MenuControl/TestMap" to="." method="_on_TestMap_pressed"]
+[connection signal="pressed" from="Units/VBoxContainer/HBoxContainer/CreateNew" to="." method="_on_SaveUnit_pressed"]
+[connection signal="toggled" from="Units/VBoxContainer/HBoxContainer/Owned" to="." method="_on_Owned_toggled"]
+[connection signal="text_changed" from="Stats/HBoxContainer/VBoxContainer/Name/NameEdit" to="." method="_on_NameEdit_text_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/Team/TeamValue" to="." method="_on_TeamValue_value_changed"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/MaxHealthPoints/HealthValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/MaxAP/APValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/MaxJumpPoints/JumpPointsValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/UnitBaseSpeed/UnitBaseSpeedValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/BasePhysicalEvasion/BasePhysicalEvasionValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Class/OptionButton" to="Stats/HBoxContainer/VBoxContainer/BaseMagicEvasion/BaseMagicEvasionValue" method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/Job/JobOptionButton" to="." method="_on_JobOptionButton_item_selected"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/Level/LevelValue" to="." method="_on_LevelValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/Experience/ExperienceValue" to="." method="_on_ExperienceValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxHealthPoints/HealthValue" to="." method="_on_HealthValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxAP/APValue" to="." method="_on_APValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/APRegen/APRegenValue" to="." method="_on_APRegenValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxMovementPoints/MovementPointsValue" to="." method="_on_MovementPointsValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxJumpPoints/JumpPointsValue" to="." method="_on_JumpPointsValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/UnitBaseSpeed/UnitBaseSpeedValue" to="." method="_on_UnitBaseSpeedValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BasePhysicalAccuracy/BasePhysicalAccuracyValue" to="." method="_on_BasePhysicalAccuracyValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseMagicAccuracy/BaseMagicAccuracyValue" to="." method="_on_BaseMagicAccuracyValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BasePhysicalEvasion/BasePhysicalEvasionValue" to="." method="_on_BasePhysicalEvasionValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseMagicEvasion/BaseMagicEvasionValue" to="." method="_on_BaseMagicEvasionValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxDrawPoints/DrawPointsValue" to="." method="_on_DrawPointsValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseCritDamage/BaseCritDamageValue" to="." method="_on_BaseCritDamageValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseCritChance/BaseCritChanceValue" to="." method="_on_BaseCritChanceValue_value_changed"]
+[connection signal="toggled" from="Stats/HBoxContainer/VBoxContainer/AIControlled/AIControlled" to="." method="_on_AIControlled_toggled"]
+[connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/AIType/AIType" to="." method="_on_AIType_item_selected"]
+[connection signal="pressed" from="Stats/HBoxContainer/VBoxContainer/UpdateUnit/UpdateUnit" to="." method="_on_UpdateUnit_pressed"]
+[connection signal="pressed" from="Stats/HBoxContainer/VBoxContainer/UpdateUnit/DeleteUnit" to="." method="_on_DeleteUnit_pressed"]
+[connection signal="confirmed" from="Stats/HBoxContainer/VBoxContainer/UpdateUnit/DeleteUnit/AcceptDialog" to="." method="_on_AcceptDialog_confirmed"]
+[connection signal="pressed" from="Stats/HBoxContainer/VBoxContainer2/Cards/AddCard" to="." method="_on_AddCard_pressed"]
+[connection signal="pressed" from="Stats/HBoxContainer/VBoxContainer2/Proficiencies/AddProficiency" to="." method="_on_AddProficiency_pressed"]

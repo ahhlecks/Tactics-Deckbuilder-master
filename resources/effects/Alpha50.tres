@@ -1,0 +1,45 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[sub_resource type="VisualShaderNodeColorFunc" id=1]
+output_port_for_preview = 0
+default_input_values = [ 0, Vector3( 0.5, 0.5, 0.5 ) ]
+
+[sub_resource type="VisualShader" id=2]
+code = "shader_type spatial;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ColorFunc:2
+	vec3 n_in2p0 = vec3(0.50000, 0.50000, 0.50000);
+	vec3 n_out2p0;
+	{
+		vec3 c = n_in2p0;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		float max3 = max(max1, max2);
+		n_out2p0 = vec3(max3, max3, max3);
+	}
+
+// Output:0
+	ALPHA = dot(n_out2p0, vec3(0.333333, 0.333333, 0.333333));
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 0, 75 )
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( 60, 140 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 1 )
+
+[resource]
+shader = SubResource( 2 )

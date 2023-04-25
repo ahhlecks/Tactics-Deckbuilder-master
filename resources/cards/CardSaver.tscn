@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://resources/cards/CardSaver.gd" type="Script" id=1]
+[ext_resource path="res://behavior_tree/blackboard.gd" type="Script" id=2]
+[ext_resource path="res://behavior_tree/behavior_tree.gd" type="Script" id=3]
+[ext_resource path="res://objects/cards/Fireball.tscn" type="PackedScene" id=4]
+
+[node name="CardSaver" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource( 2 )
+_data = {
+}
+
+[node name="BehaviorTree" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="Fireball" parent="BehaviorTree" instance=ExtResource( 4 )]

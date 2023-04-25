@@ -1,0 +1,132 @@
+[gd_scene load_steps=51 format=2]
+
+[ext_resource path="res://assets/3d/character_animations/Idle.tres" type="Animation" id=1]
+[ext_resource path="res://assets/3d/character_models/Vanguard/Vanguard.glb" type="PackedScene" id=2]
+[ext_resource path="res://assets/3d/character_animations/JumpKick.tres" type="Animation" id=3]
+[ext_resource path="res://assets/3d/character_animations/Beckon.tres" type="Animation" id=4]
+[ext_resource path="res://assets/3d/character_animations/Parry.tres" type="Animation" id=5]
+[ext_resource path="res://assets/3d/character_animations/PolearmAttack3.tres" type="Animation" id=6]
+[ext_resource path="res://assets/3d/character_animations/ShieldBash.tres" type="Animation" id=7]
+[ext_resource path="res://assets/3d/character_animations/SpinAttack.tres" type="Animation" id=8]
+[ext_resource path="res://assets/3d/character_animations/Stab.tres" type="Animation" id=9]
+[ext_resource path="res://assets/3d/character_animations/Point.tres" type="Animation" id=10]
+[ext_resource path="res://assets/3d/character_animations/LowGuard.tres" type="Animation" id=11]
+[ext_resource path="res://assets/3d/character_animations/Hurt2.tres" type="Animation" id=12]
+[ext_resource path="res://assets/3d/character_animations/SwordAttack2.tres" type="Animation" id=13]
+[ext_resource path="res://assets/3d/character_animations/PolearmAttack2.tres" type="Animation" id=14]
+[ext_resource path="res://assets/3d/character_animations/SwordShieldTaunt.tres" type="Animation" id=15]
+[ext_resource path="res://assets/3d/character_animations/PolearmAttack.tres" type="Animation" id=16]
+[ext_resource path="res://assets/3d/character_animations/ChargeUp.tres" type="Animation" id=17]
+[ext_resource path="res://assets/3d/character_animations/Mordhau.tres" type="Animation" id=18]
+[ext_resource path="res://assets/3d/character_animations/SwordAttack.tres" type="Animation" id=19]
+[ext_resource path="res://assets/3d/character_animations/ThrustAttack.tres" type="Animation" id=20]
+[ext_resource path="res://assets/3d/character_animations/Dodge.tres" type="Animation" id=21]
+[ext_resource path="res://assets/3d/character_animations/Hurt.tres" type="Animation" id=22]
+[ext_resource path="res://assets/3d/character_animations/Block.tres" type="Animation" id=23]
+[ext_resource path="res://assets/3d/character_animations/Jump.tres" type="Animation" id=24]
+[ext_resource path="res://assets/3d/character_animations/ChargeUp2.tres" type="Animation" id=25]
+[ext_resource path="res://assets/3d/character_animations/Cast15Sec.tres" type="Animation" id=26]
+[ext_resource path="res://assets/3d/character_animations/Die.tres" type="Animation" id=27]
+[ext_resource path="res://assets/3d/character_animations/Walk.tres" type="Animation" id=28]
+[ext_resource path="res://assets/3d/character_animations/Yes.tres" type="Animation" id=29]
+[ext_resource path="res://assets/3d/character_animations/CastDischarge3Sec_2Sec.tres" type="Animation" id=30]
+[ext_resource path="res://assets/3d/character_animations/CastDischarge3Sec_1Sec.tres" type="Animation" id=31]
+[ext_resource path="res://assets/3d/character_animations/Cast1Sec.tres" type="Animation" id=32]
+[ext_resource path="res://assets/3d/character_animations/No.tres" type="Animation" id=33]
+[ext_resource path="res://assets/3d/character_animations/Cast5Sec.tres" type="Animation" id=34]
+[ext_resource path="res://assets/3d/character_animations/JumpQuick.tres" type="Animation" id=35]
+[ext_resource path="res://assets/3d/character_animations/Cast.tres" type="Animation" id=36]
+[ext_resource path="res://assets/3d/character_animations/Cast2Long.tres" type="Animation" id=37]
+[ext_resource path="res://assets/3d/character_animations/Cast2.tres" type="Animation" id=38]
+[ext_resource path="res://assets/3d/character_models/Vanguard/Material_001.material" type="Material" id=39]
+[ext_resource path="res://assets/3d/character_models/CharacterMesh.gd" type="Script" id=40]
+[ext_resource path="res://assets/sounds/combat/Impact_Sword_To_PlateArmour_05.wav" type="AudioStream" id=41]
+[ext_resource path="res://assets/3d/character_animations/LegSweep.tres" type="Animation" id=43]
+[ext_resource path="res://assets/3d/character_animations/HurtLoop.tres" type="Animation" id=44]
+[ext_resource path="res://assets/3d/character_animations/ChargeLoop.tres" type="Animation" id=45]
+[ext_resource path="res://assets/3d/character_animations/CastLoop.tres" type="Animation" id=46]
+[ext_resource path="res://assets/3d/character_animations/Kick.tres" type="Animation" id=47]
+[ext_resource path="res://assets/3d/character_animations/Shoot.tres" type="Animation" id=48]
+[ext_resource path="res://assets/3d/character_animations/ShootHigh.tres" type="Animation" id=49]
+[ext_resource path="res://assets/3d/character_animations/Punch.tres" type="Animation" id=50]
+[ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=51]
+
+[node name="Vanguard" instance=ExtResource( 2 )]
+script = ExtResource( 40 )
+
+[node name="metarig001" parent="." index="0"]
+transform = Transform( -1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 0, -1, 0 )
+
+[node name="eyes" parent="metarig001/Skeleton" index="1"]
+material/0 = ExtResource( 39 )
+
+[node name="hand_r_attachment" type="BoneAttachment" parent="metarig001/Skeleton" index="6"]
+transform = Transform( 0.0478725, -0.934046, -0.35393, -0.353919, -0.347209, 0.868439, -0.93405, 0.0836883, -0.347198, -0.439362, 0.745288, -0.0284708 )
+bone_name = "hand.R"
+
+[node name="attachment" type="MeshInstance" parent="metarig001/Skeleton/hand_r_attachment" index="0"]
+transform = Transform( -7.45058e-09, -1, 5.21541e-08, -0.965925, -2.6077e-08, -0.258819, 0.258819, -8.19564e-08, -0.965926, -2.98023e-08, 0.05, 5.96046e-08 )
+
+[node name="hand_l_attachment" type="BoneAttachment" parent="metarig001/Skeleton" index="7"]
+transform = Transform( 0.0478727, 0.934046, 0.35393, 0.353919, -0.34721, 0.868439, 0.93405, 0.0836879, -0.347198, 0.439362, 0.745287, -0.0284711 )
+bone_name = "hand.L"
+
+[node name="attachment" type="MeshInstance" parent="metarig001/Skeleton/hand_l_attachment" index="0"]
+transform = Transform( 7.07805e-08, 1, 5.09433e-07, -0.965926, 1.8999e-07, -0.258819, -0.258819, -4.74975e-07, 0.965926, 0, 0.05, 0 )
+
+[node name="feet_position" type="Position3D" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.99, 0 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource( 41 )
+bus = "SFX"
+
+[node name="AnimationPlayer" parent="." index="3"]
+anims/Beckon = ExtResource( 4 )
+anims/Block = ExtResource( 23 )
+anims/Cast = ExtResource( 36 )
+anims/Cast15Sec = ExtResource( 26 )
+anims/Cast1Sec = ExtResource( 32 )
+anims/Cast2 = ExtResource( 38 )
+anims/Cast2Long = ExtResource( 37 )
+anims/Cast5Sec = ExtResource( 34 )
+anims/CastDischarge3Sec_1Sec = ExtResource( 31 )
+anims/CastDischarge3Sec_2Sec = ExtResource( 30 )
+anims/CastLoop = ExtResource( 46 )
+anims/ChargeLoop = ExtResource( 45 )
+anims/ChargeUp = ExtResource( 17 )
+anims/ChargeUp2 = ExtResource( 25 )
+anims/Die = ExtResource( 27 )
+anims/Dodge = ExtResource( 21 )
+anims/Hurt = ExtResource( 22 )
+anims/Hurt2 = ExtResource( 12 )
+anims/HurtLoop = ExtResource( 44 )
+anims/Idle = ExtResource( 1 )
+anims/Jump = ExtResource( 24 )
+anims/JumpKick = ExtResource( 3 )
+anims/JumpQuick = ExtResource( 35 )
+anims/Kick = ExtResource( 47 )
+anims/LegSweep = ExtResource( 43 )
+anims/LowGuard = ExtResource( 11 )
+anims/Mordhau = ExtResource( 18 )
+anims/No = ExtResource( 33 )
+anims/Parry = ExtResource( 5 )
+anims/Point = ExtResource( 10 )
+anims/PolearmAttack = ExtResource( 16 )
+anims/PolearmAttack2 = ExtResource( 14 )
+anims/PolearmAttack3 = ExtResource( 6 )
+anims/Punch = ExtResource( 50 )
+anims/ShieldBash = ExtResource( 7 )
+anims/Shoot = ExtResource( 48 )
+anims/ShootHigh = ExtResource( 49 )
+anims/SpinAttack = ExtResource( 8 )
+anims/Stab = ExtResource( 9 )
+anims/SwordAttack = ExtResource( 19 )
+anims/SwordAttack2 = ExtResource( 13 )
+anims/SwordShieldTaunt = ExtResource( 15 )
+anims/ThrustAttack = ExtResource( 20 )
+anims/Walk = ExtResource( 28 )
+anims/Yes = ExtResource( 29 )
+
+[node name="EffekseerEmitter" type="Spatial" parent="." index="4"]
+script = ExtResource( 51 )

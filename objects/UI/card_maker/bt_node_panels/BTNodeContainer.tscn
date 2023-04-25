@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://objects/UI/card_maker/bt_node_panels/BTNodeContainer.gd" type="Script" id=1]
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=2]
+
+[node name="BTNodeContainer" type="ScrollContainer"]
+margin_right = 304.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 304, 188 )
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 288.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 288, 0 )
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+margin_right = 288.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 288, 0 )

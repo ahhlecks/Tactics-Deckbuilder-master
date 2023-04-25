@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://objects/UI/card_maker/BTNodeDialog.gd" type="Script" id=2]
+
+[node name="BTNodeDialog" type="WindowDialog"]
+margin_right = 304.0
+margin_bottom = 214.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="AddNodeButton" type="Button" parent="."]
+margin_left = 2.0
+margin_top = 190.0
+margin_right = 58.0
+margin_bottom = 211.0
+text = "Add Node"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EditNodeButton" type="Button" parent="."]
+margin_left = 2.0
+margin_top = 190.0
+margin_right = 72.0
+margin_bottom = 211.0
+text = "Edit Node"
+
+[node name="MoveUp" type="Button" parent="."]
+visible = false
+margin_left = 80.0
+margin_top = 190.0
+margin_right = 150.0
+margin_bottom = 211.0
+text = "Move Up"
+
+[node name="MoveDown" type="Button" parent="."]
+visible = false
+margin_left = 158.0
+margin_top = 190.0
+margin_right = 241.0
+margin_bottom = 211.0
+text = "Move Down"
+
+[connection signal="pressed" from="AddNodeButton" to="." method="addBTNode"]
+[connection signal="pressed" from="EditNodeButton" to="." method="editBTNode"]
+[connection signal="pressed" from="MoveUp" to="." method="_on_MoveUp_pressed"]
+[connection signal="pressed" from="MoveDown" to="." method="_on_MoveDown_pressed"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/UI/card_maker/bt_node_panels/BTNodeContainer.gd" type="Script" id=1]
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=2]
+[ext_resource path="res://objects/UI/card_maker/ValidTargetsOption.gd" type="Script" id=3]
+
+[node name="ScrollContainer" type="ScrollContainer"]
+margin_right = 304.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 304, 192 )
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 292.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 292, 46 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+margin_right = 292.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 292, 19 )
+autowrap = true
+
+[node name="ValidTargetsOption" type="OptionButton" parent="VBoxContainer"]
+margin_top = 25.0
+margin_right = 292.0
+margin_bottom = 46.0
+text = "Valid Targets"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

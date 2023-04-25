@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Popup.wav-54a4e1def3d21f5dcc5f7125deeed028.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ui/Popup.wav"
+dest_files=[ "res://.import/Popup.wav-54a4e1def3d21f5dcc5f7125deeed028.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resources/themes/custom/new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://objects/UI/ConsoleControl.gd" type="Script" id=2]
+
+[node name="ConsoleControl" type="Control"]
+visible = false
+margin_right = 448.0
+margin_bottom = 256.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 448.0
+margin_bottom = 256.0
+color = Color( 0, 0, 0, 0.2 )
+
+[node name="output" type="RichTextLabel" parent="."]
+margin_right = 448.0
+margin_bottom = 237.0
+theme = ExtResource( 1 )
+
+[node name="input" type="LineEdit" parent="."]
+margin_top = 237.0
+margin_right = 448.0
+margin_bottom = 256.0
+theme = ExtResource( 1 )

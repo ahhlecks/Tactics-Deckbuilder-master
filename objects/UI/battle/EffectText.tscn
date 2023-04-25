@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://resources/fonts/GUI_Font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://objects/UI/battle/EffectText.gd" type="Script" id=2]
+[ext_resource path="res://objects/UI/battle/EffectTextPlay.tres" type="Animation" id=3]
+[ext_resource path="res://objects/UI/battle/EffectTextPlayCrit.tres" type="Animation" id=4]
+[ext_resource path="res://objects/UI/battle/EffectTextPlayHeal.tres" type="Animation" id=5]
+
+[node name="EffectText" type="Label"]
+pause_mode = 2
+modulate = Color( 0.862745, 0.196078, 0.235294, 1 )
+margin_right = 63.0
+margin_bottom = 23.0
+rect_scale = Vector2( 1.25, 1.25 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Missed!"
+align = 1
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
+anims/EffectTextPlay = ExtResource( 3 )
+anims/EffectTextPlayCrit = ExtResource( 4 )
+anims/EffectTextPlayHeal = ExtResource( 5 )
+
+[connection signal="tree_exited" from="." to="." method="_on_EffectText_tree_exited"]

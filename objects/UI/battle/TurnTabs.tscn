@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/UI/battle/TurnTabs.gd" type="Script" id=1]
+
+[node name="TurnTabs" type="Control"]
+rect_clip_content = true
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}

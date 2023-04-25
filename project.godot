@@ -1,0 +1,904 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Player",
+"class": "AI_Player",
+"language": "GDScript",
+"path": "res://objects/scenes/AI_Player.gd"
+}, {
+"base": "OptionButton",
+"class": "ArrayCheckOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/ArrayCheckOption.gd"
+}, {
+"base": "BTLeaf",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_attack.gd"
+}, {
+"base": "Node",
+"class": "BBService",
+"language": "GDScript",
+"path": "res://behavior_tree/bb_service.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTAlwaysFail",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_always_fail.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTAlwaysSucceed",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_always_succeed.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTCheckLastCard",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_check_last_card.gd"
+}, {
+"base": "BTNode",
+"class": "BTComposite",
+"language": "GDScript",
+"path": "res://behavior_tree/bt_composite.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTConditional",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_conditional.gd"
+}, {
+"base": "BTLeaf",
+"class": "BTCostCheck",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_cost_check.gd"
+}, {
+"base": "BTNode",
+"class": "BTDecorator",
+"language": "GDScript",
+"path": "res://behavior_tree/bt_decorator.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTGuard",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_guard.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTInvert",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_invert.gd"
+}, {
+"base": "BTNode",
+"class": "BTLeaf",
+"language": "GDScript",
+"path": "res://behavior_tree/bt_leaf.gd"
+}, {
+"base": "BTNode",
+"class": "BTLeafEvasionCheck",
+"language": "GDScript",
+"path": "res://behavior_tree/bt_leaf_evasion_check.gd"
+}, {
+"base": "Node",
+"class": "BTNode",
+"language": "GDScript",
+"path": "res://behavior_tree/bt_node.gd"
+}, {
+"base": "ScrollContainer",
+"class": "BTNodeContainer",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/bt_node_panels/BTNodeContainer.gd"
+}, {
+"base": "WindowDialog",
+"class": "BTNodeDialog",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/BTNodeDialog.gd"
+}, {
+"base": "BTComposite",
+"class": "BTParallel",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_parallel.gd"
+}, {
+"base": "BTComposite",
+"class": "BTRandomSelector",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_random_selector.gd"
+}, {
+"base": "BTComposite",
+"class": "BTRandomSequence",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_random_sequence.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTRepeat",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_repeat.gd"
+}, {
+"base": "BTDecorator",
+"class": "BTRepeatUntil",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_repeat_until.gd"
+}, {
+"base": "BTComposite",
+"class": "BTSelector",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_selector.gd"
+}, {
+"base": "BTComposite",
+"class": "BTSequence",
+"language": "GDScript",
+"path": "res://behavior_tree/composites/bt_sequence.gd"
+}, {
+"base": "BTLeaf",
+"class": "BTWait",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_wait.gd"
+}, {
+"base": "Node",
+"class": "BehaviorTree",
+"language": "GDScript",
+"path": "res://behavior_tree/behavior_tree.gd"
+}, {
+"base": "Node",
+"class": "Blackboard",
+"language": "GDScript",
+"path": "res://behavior_tree/blackboard.gd"
+}, {
+"base": "Node",
+"class": "Card",
+"language": "GDScript",
+"path": "res://resources/cards/Card.gd"
+}, {
+"base": "OptionButton",
+"class": "CardAnimationOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardAnimationOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardClassOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardClassOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardElementOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardElementOption.gd"
+}, {
+"base": "Control",
+"class": "CardGUI",
+"language": "GDScript",
+"path": "res://objects/UI/battle/CardGUI.gd"
+}, {
+"base": "OptionButton",
+"class": "CardIntVariableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardIntVariableOption.gd"
+}, {
+"base": "Control",
+"class": "CardMaker",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardMaker.gd"
+}, {
+"base": "BTLeaf",
+"class": "CardModifyStat",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_card_modify_stat.gd"
+}, {
+"base": "OptionButton",
+"class": "CardNameOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardNameOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardPrerequisiteOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardPrerequisiteOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardSourceOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardSourceOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardStatusDurationOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardStatusDurationOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CardStatusOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardStatusOption.gd"
+}, {
+"base": "Control",
+"class": "CardTabGUI",
+"language": "GDScript",
+"path": "res://objects/UI/battle/CardTabGUI.gd"
+}, {
+"base": "OptionButton",
+"class": "CardTypeOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardTypeOption.gd"
+}, {
+"base": "CompoundOptionButton",
+"class": "CardVariableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CardVariableOption.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterAddCard",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_add_card.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterAddStatus",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_add_status.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterDiscardCard",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_discard_card.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterDrawCard",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_draw_card.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterModifyStat",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_modify_stat.gd"
+}, {
+"base": "BTLeaf",
+"class": "CasterModifyStatDuration",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_caster_modify_stat_duration.gd"
+}, {
+"base": "BTLeaf",
+"class": "ClearTargets",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_clear_targets.gd"
+}, {
+"base": "OptionButton",
+"class": "ComparisonOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/ComparisonOption.gd"
+}, {
+"base": "OptionButton",
+"class": "CompoundOptionButton",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/CompoundOptionButton.gd"
+}, {
+"base": "NinePatchRect",
+"class": "CustomNinePatch",
+"language": "GDScript",
+"path": "res://objects/UI/NinePatchRect.gd"
+}, {
+"base": "",
+"class": "EffekseerEffect",
+"language": "NativeScript",
+"path": "res://addons/effekseer/src/EffekseerEffect.gdns"
+}, {
+"base": "Spatial",
+"class": "EffekseerEmitter",
+"language": "NativeScript",
+"path": "res://addons/effekseer/src/EffekseerEmitter.gdns"
+}, {
+"base": "",
+"class": "EffekseerEmitter2D",
+"language": "NativeScript",
+"path": "res://addons/effekseer/src/EffekseerEmitter2D.gdns"
+}, {
+"base": "",
+"class": "EffekseerResource",
+"language": "NativeScript",
+"path": "res://addons/effekseer/src/EffekseerResource.gdns"
+}, {
+"base": "CheckButton",
+"class": "FallbackButton",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/FallbackButton.gd"
+}, {
+"base": "CanvasLayer",
+"class": "FpsLabel",
+"language": "GDScript",
+"path": "res://objects/UI/FPSLabel.gd"
+}, {
+"base": "EditorVCSInterface",
+"class": "GitAPI",
+"language": "NativeScript",
+"path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "BTLeaf",
+"class": "HandModifyStat",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_hand_modify_stat.gd"
+}, {
+"base": "Spatial",
+"class": "HexCell",
+"language": "GDScript",
+"path": "res://objects/HexCell.gd"
+}, {
+"base": "Spatial",
+"class": "HexGrid",
+"language": "GDScript",
+"path": "res://objects/HexGrid.gd"
+}, {
+"base": "StaticBody",
+"class": "HexStaticObject",
+"language": "GDScript",
+"path": "res://objects/HexStaticObject.gd"
+}, {
+"base": "KinematicBody",
+"class": "HexUnit",
+"language": "GDScript",
+"path": "res://objects/HexUnit.gd"
+}, {
+"base": "OptionButton",
+"class": "IntArgOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/IntArgOption.gd"
+}, {
+"base": "CompoundOptionButton",
+"class": "IntSourceOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/IntSourceOption.gd"
+}, {
+"base": "BTDecorator",
+"class": "IsCardLevel",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_is_card_level.gd"
+}, {
+"base": "BTDecorator",
+"class": "IsUnitLevel",
+"language": "GDScript",
+"path": "res://behavior_tree/decorators/bt_is_unit_level.gd"
+}, {
+"base": "BTLeaf",
+"class": "ModifyAttack",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_modify_attack.gd"
+}, {
+"base": "OptionButton",
+"class": "OperationOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/OperationOption.gd"
+}, {
+"base": "Node",
+"class": "Player",
+"language": "GDScript",
+"path": "res://objects/scenes/Player.gd"
+}, {
+"base": "BTLeaf",
+"class": "Pull",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_pull.gd"
+}, {
+"base": "BTLeaf",
+"class": "Push",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_push.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetAttack",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_attack.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetInlineTargets",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_inline_targets.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetIntArg",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_int_arg.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetLeftRightTargets",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_leftright_targets.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetSingleTarget",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_single_target.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetSplashTargets",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_splash_targets.gd"
+}, {
+"base": "BTLeaf",
+"class": "SetStatus",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_set_status.gd"
+}, {
+"base": "BTLeaf",
+"class": "TargetAddCard",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_target_add_card.gd"
+}, {
+"base": "BTLeaf",
+"class": "TargetAddStatus",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_target_add_status.gd"
+}, {
+"base": "OptionButton",
+"class": "TargetCalculationOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/TargetCalculationOption.gd"
+}, {
+"base": "OptionButton",
+"class": "TargetConditionOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/TargetConditionOption.gd"
+}, {
+"base": "BTLeaf",
+"class": "TargetDrawCard",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_target_draw_card.gd"
+}, {
+"base": "BTLeaf",
+"class": "TargetModifyStat",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_target_modify_stat.gd"
+}, {
+"base": "BTLeaf",
+"class": "TargetModifyStatDuration",
+"language": "GDScript",
+"path": "res://behavior_tree/leaves/bt_target_modify_stat_duration.gd"
+}, {
+"base": "OptionButton",
+"class": "TargetSourceOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/TargetSourceOption.gd"
+}, {
+"base": "Node",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://objects/logic/TurnQueue.gd"
+}, {
+"base": "OptionButton",
+"class": "UnitCostVariableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/UnitCostVariableOption.gd"
+}, {
+"base": "OptionButton",
+"class": "UnitDeckOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/UnitDeckOption.gd"
+}, {
+"base": "Control",
+"class": "UnitGUI",
+"language": "GDScript",
+"path": "res://objects/UI/battle/UnitGUI.gd"
+}, {
+"base": "OptionButton",
+"class": "UnitIntModifiableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/UnitIntModifiableOption.gd"
+}, {
+"base": "OptionButton",
+"class": "UnitIntVariableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/UnitIntVariableOption.gd"
+}, {
+"base": "Control",
+"class": "UnitMaker",
+"language": "GDScript",
+"path": "res://objects/UI/unit_maker/UnitMaker.gd"
+}, {
+"base": "Control",
+"class": "UnitTabGUI",
+"language": "GDScript",
+"path": "res://objects/UI/battle/UnitTabGUI.gd"
+}, {
+"base": "Control",
+"class": "UnitTabGUIMini",
+"language": "GDScript",
+"path": "res://objects/UI/battle/UnitTabGUIMini.gd"
+}, {
+"base": "OptionButton",
+"class": "UnitVariableOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/UnitVariableOption.gd"
+}, {
+"base": "OptionButton",
+"class": "ValidTargetsOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/ValidTargetsOption.gd"
+}, {
+"base": "CanvasLayer",
+"class": "VersionLabel",
+"language": "GDScript",
+"path": "res://objects/UI/VersionLabel.gd"
+}, {
+"base": "OptionButton",
+"class": "WeaponOption",
+"language": "GDScript",
+"path": "res://objects/UI/card_maker/WeaponOption.gd"
+}, {
+"base": "Spatial",
+"class": "WorldScene",
+"language": "GDScript",
+"path": "res://objects/scenes/WorldScene.gd"
+} ]
+_global_script_class_icons={
+"AI_Player": "",
+"ArrayCheckOption": "",
+"Attack": "res://behavior_tree/icons/btleaf.svg",
+"BBService": "res://behavior_tree/icons/bbservice.svg",
+"BTAlwaysFail": "res://behavior_tree/icons/btnode.svg",
+"BTAlwaysSucceed": "res://behavior_tree/icons/btnode.svg",
+"BTCheckLastCard": "res://behavior_tree/icons/btnode.svg",
+"BTComposite": "res://behavior_tree/icons/btcomposite.svg",
+"BTConditional": "res://behavior_tree/icons/btnode.svg",
+"BTCostCheck": "",
+"BTDecorator": "res://behavior_tree/icons/btdecorator.svg",
+"BTGuard": "res://behavior_tree/icons/btguard.svg",
+"BTInvert": "res://behavior_tree/icons/btrevert.svg",
+"BTLeaf": "res://behavior_tree/icons/btleaf.svg",
+"BTLeafEvasionCheck": "res://behavior_tree/icons/btleaf.svg",
+"BTNode": "res://behavior_tree/icons/btnode.svg",
+"BTNodeContainer": "",
+"BTNodeDialog": "",
+"BTParallel": "res://behavior_tree/icons/btparallel.svg",
+"BTRandomSelector": "res://behavior_tree/icons/btrndselector.svg",
+"BTRandomSequence": "res://behavior_tree/icons/btrndsequence.svg",
+"BTRepeat": "res://behavior_tree/icons/btrepeat.svg",
+"BTRepeatUntil": "res://behavior_tree/icons/btrepeatuntil.svg",
+"BTSelector": "res://behavior_tree/icons/btselector.svg",
+"BTSequence": "res://behavior_tree/icons/btsequence.svg",
+"BTWait": "res://behavior_tree/icons/btwait.svg",
+"BehaviorTree": "res://behavior_tree/icons/bt.svg",
+"Blackboard": "res://behavior_tree/icons/blackboard.svg",
+"Card": "",
+"CardAnimationOption": "",
+"CardClassOption": "",
+"CardElementOption": "",
+"CardGUI": "",
+"CardIntVariableOption": "",
+"CardMaker": "",
+"CardModifyStat": "res://behavior_tree/icons/btleaf.svg",
+"CardNameOption": "",
+"CardPrerequisiteOption": "",
+"CardSourceOption": "",
+"CardStatusDurationOption": "",
+"CardStatusOption": "",
+"CardTabGUI": "",
+"CardTypeOption": "",
+"CardVariableOption": "",
+"CasterAddCard": "res://behavior_tree/icons/btleaf.svg",
+"CasterAddStatus": "res://behavior_tree/icons/btleaf.svg",
+"CasterDiscardCard": "res://behavior_tree/icons/btleaf.svg",
+"CasterDrawCard": "res://behavior_tree/icons/btleaf.svg",
+"CasterModifyStat": "res://behavior_tree/icons/btleaf.svg",
+"CasterModifyStatDuration": "res://behavior_tree/icons/btleaf.svg",
+"ClearTargets": "res://behavior_tree/icons/btleaf.svg",
+"ComparisonOption": "",
+"CompoundOptionButton": "",
+"CustomNinePatch": "",
+"EffekseerEffect": "res://addons/effekseer/icon16.png",
+"EffekseerEmitter": "res://addons/effekseer/icon16.png",
+"EffekseerEmitter2D": "res://addons/effekseer/icon16.png",
+"EffekseerResource": "res://addons/effekseer/icon16.png",
+"FallbackButton": "",
+"FpsLabel": "",
+"GitAPI": "",
+"HandModifyStat": "res://behavior_tree/icons/btleaf.svg",
+"HexCell": "",
+"HexGrid": "",
+"HexStaticObject": "",
+"HexUnit": "",
+"IntArgOption": "",
+"IntSourceOption": "",
+"IsCardLevel": "res://behavior_tree/icons/btdecorator.svg",
+"IsUnitLevel": "res://behavior_tree/icons/btdecorator.svg",
+"ModifyAttack": "res://behavior_tree/icons/btleaf.svg",
+"OperationOption": "",
+"Player": "",
+"Pull": "res://behavior_tree/icons/btleaf.svg",
+"Push": "res://behavior_tree/icons/btleaf.svg",
+"SetAttack": "res://behavior_tree/icons/btleaf.svg",
+"SetInlineTargets": "res://behavior_tree/icons/btleaf.svg",
+"SetIntArg": "res://behavior_tree/icons/btleaf.svg",
+"SetLeftRightTargets": "res://behavior_tree/icons/btleaf.svg",
+"SetSingleTarget": "res://behavior_tree/icons/btleaf.svg",
+"SetSplashTargets": "res://behavior_tree/icons/btleaf.svg",
+"SetStatus": "res://behavior_tree/icons/btleaf.svg",
+"TargetAddCard": "res://behavior_tree/icons/btleaf.svg",
+"TargetAddStatus": "res://behavior_tree/icons/btleaf.svg",
+"TargetCalculationOption": "",
+"TargetConditionOption": "",
+"TargetDrawCard": "res://behavior_tree/icons/btleaf.svg",
+"TargetModifyStat": "res://behavior_tree/icons/btleaf.svg",
+"TargetModifyStatDuration": "res://behavior_tree/icons/btleaf.svg",
+"TargetSourceOption": "",
+"TurnQueue": "",
+"UnitCostVariableOption": "",
+"UnitDeckOption": "",
+"UnitGUI": "",
+"UnitIntModifiableOption": "",
+"UnitIntVariableOption": "",
+"UnitMaker": "",
+"UnitTabGUI": "",
+"UnitTabGUIMini": "",
+"UnitVariableOption": "",
+"ValidTargetsOption": "",
+"VersionLabel": "",
+"WeaponOption": "",
+"WorldScene": ""
+}
+
+[application]
+
+config/name="Tactics Deckbuilder"
+run/main_scene="res://objects/scenes/Main.tscn"
+config/use_custom_user_dir=true
+boot_splash/image="res://assets/images/backgrounds/black_square.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://assets/images/ui/unit/Deck_Icon.png"
+config/quit_on_go_back=false
+
+[audio]
+
+default_bus_layout="res://resources/default_bus_layout.tres"
+
+[autoload]
+
+HexUtils="*res://objects/HexUtils.gd"
+BattleDictionary="*res://objects/logic/BattleDictionary.gd"
+PlayerVars="*res://PlayerVars.gd"
+CardLoader="*res://resources/cards/CardLoader.gd"
+UI_Sounds="*res://assets/sounds/UI_Sounds.gd"
+UnitLoader="*res://resources/units/UnitLoader.gd"
+MapLoader="*res://resources/maps/MapLoader.gd"
+GameUtils="*res://resources/GameUtils.gd"
+EffekseerSystem="*res://addons/effekseer/src/EffekseerSystem.gdns"
+
+[concept_graph]
+
+generation/enable_multithreading=true
+generation/delay_before_generation=75
+user_interface/inline_vector_fields=false
+user_interface/group_nodes_by_type=false
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/dpi/allow_hidpi=true
+
+[editor]
+
+version_control_autoload_on_startup=true
+version_control_plugin_name="GitAPI"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/effekseer/plugin.cfg" )
+
+[gdnative]
+
+singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+
+[global]
+
+verbose=false
+
+[gui]
+
+timers/tooltip_delay_sec=0.1
+
+[input]
+
+ui_cancel={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777349,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777235,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":61,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777347,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777236,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":45,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_fw={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_bw={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_l={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+move_r={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+mouse_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+mouse_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+mouse_middle={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+shift_key={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+rotate_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777357,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+rotate_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777359,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_pan={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+toggle_focus={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_act={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_move={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_react={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_wait={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+1={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":49,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+2={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+3={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":51,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+4={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+5={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":53,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+6={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":54,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+7={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":55,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+8={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":56,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+9={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":57,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+0={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":48,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+tilde={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":96,"unicode":0,"echo":false,"script":null)
+ ]
+}
+print={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777262,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_tilt_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777358,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_tilt_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777352,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cam_reset={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777355,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[rendering]
+
+quality/shadow_atlas/size=8192
+quality/shadow_atlas/cubemap_size=2048
+environment/default_clear_color=Color( 0.0627451, 0.0627451, 0.0627451, 1 )
+quality/filters/msaa=3
+environment/default_environment="res://defaultenv.tres"

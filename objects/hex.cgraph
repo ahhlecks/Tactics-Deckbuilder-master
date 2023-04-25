@@ -1,0 +1,229 @@
+{
+	"connections": [
+		{
+			"from": "GraphNode6",
+			"from_port": 0,
+			"to": "GraphNode3",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode3",
+			"from_port": 0,
+			"to": "GraphNode5",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode2",
+			"from_port": 0,
+			"to": "GraphNode9",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode5",
+			"from_port": 0,
+			"to": "GraphNode",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode8",
+			"from_port": 0,
+			"to": "GraphNode10",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode10",
+			"from_port": 0,
+			"to": "GraphNode2",
+			"to_port": 1
+		},
+		{
+			"from": "GraphNode11",
+			"from_port": 0,
+			"to": "GraphNode12",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode",
+			"from_port": 0,
+			"to": "GraphNode4",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode4",
+			"from_port": 0,
+			"to": "GraphNode13",
+			"to_port": 0
+		},
+		{
+			"from": "GraphNode13",
+			"from_port": 0,
+			"to": "GraphNode7",
+			"to_port": 0
+		}
+	],
+	"nodes": [
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1600,
+				"offset_y": -440,
+				"slots": {
+					"0": "Curve"
+				}
+			},
+			"name": "GraphNode6",
+			"type": "nodetree_input_curve"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1400,
+				"offset_y": -440,
+				"slots": {}
+			},
+			"name": "GraphNode3",
+			"type": "curve_tesselate_exact"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1140,
+				"offset_y": -400,
+				"slots": {
+					"1": 0.001,
+					"3": false,
+					"4": true,
+					"5": "(0, 1, 0)",
+					"6": false
+				}
+			},
+			"name": "GraphNode5",
+			"type": "extrude_curve_straight"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -320,
+				"offset_y": -520,
+				"slots": {}
+			},
+			"name": "GraphNode7",
+			"type": "final_output"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -860,
+				"offset_y": -820,
+				"slots": {
+					"1": "(0, 1, 0)",
+					"2": "(0, 0, 0)",
+					"3": "(0, 0, 0)",
+					"4": true
+				}
+			},
+			"name": "GraphNode9",
+			"type": "transform_constant_3d"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1140,
+				"offset_y": -740,
+				"slots": {
+					"3": 0.5,
+					"4": "(1, 1)",
+					"5": true
+				}
+			},
+			"name": "GraphNode2",
+			"type": "extrude_bevel_along_path"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -880,
+				"offset_y": -360,
+				"slots": {
+					"1": "(0, 0, -1)",
+					"2": "(0, 0, 30)",
+					"3": "(0, 0, 0)",
+					"4": true
+				}
+			},
+			"name": "GraphNode",
+			"type": "transform_constant_3d"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1400,
+				"offset_y": -700,
+				"slots": {
+					"1": "(0, 0, 0)",
+					"2": true
+				}
+			},
+			"name": "GraphNode10",
+			"type": "rotate_transforms_offset"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -1600,
+				"offset_y": -700,
+				"slots": {
+					"0": "Path"
+				}
+			},
+			"name": "GraphNode8",
+			"type": "nodetree_input_curve"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -334.614868,
+				"offset_y": -741.5,
+				"slots": {}
+			},
+			"name": "GraphNode12",
+			"type": "final_output"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -600,
+				"offset_y": -720,
+				"slots": {
+					"0": "Sides"
+				}
+			},
+			"name": "GraphNode11",
+			"type": "nodetree_input_mesh"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -510,
+				"offset_y": -365.5,
+				"slots": {
+					"1": "Top"
+				}
+			},
+			"name": "GraphNode13",
+			"type": "rename_node"
+		},
+		{
+			"data": {},
+			"editor": {
+				"offset_x": -580,
+				"offset_y": -540,
+				"slots": {
+					"1": false
+				}
+			},
+			"name": "GraphNode4",
+			"type": "merge_meshes"
+		}
+	]
+}

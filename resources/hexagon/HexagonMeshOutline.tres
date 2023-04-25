@@ -1,0 +1,14 @@
+[gd_resource type="ArrayMesh" format=2]
+
+[resource]
+surfaces/0 = {
+"aabb": AABB( -0.866025, 1, -1, 1.73205, 1.00136e-05, 2.00001 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 63, 215, 179, 93, 63, 0, 0, 128, 63, 0, 0, 0, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 191, 215, 179, 93, 191, 0, 0, 128, 63, 0, 0, 0, 63 ),
+"array_index_data": PoolByteArray(  ),
+"blend_shape_data": [  ],
+"format": 97281,
+"index_count": 0,
+"primitive": 3,
+"skeleton_aabb": [  ],
+"vertex_count": 6
+}

@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Deck_Shuffle.wav-4c7650051de6b5150be83cff0b1c02ad.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ui/cards/Deck_Shuffle.wav"
+dest_files=[ "res://.import/Deck_Shuffle.wav-4c7650051de6b5150be83cff0b1c02ad.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

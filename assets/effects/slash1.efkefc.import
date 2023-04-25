@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/slash1.efkefc-5ef5b6cbc43e0835b2971c69b2e66a0f.res"
+
+[deps]
+
+source_file="res://assets/effects/slash1.efkefc"
+dest_files=[ "res://.import/slash1.efkefc-5ef5b6cbc43e0835b2971c69b2e66a0f.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true
