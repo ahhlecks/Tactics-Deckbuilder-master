@@ -10,6 +10,7 @@ onready var cards = $Cards
 onready var turn_tabs = $TurnTabs
 onready var unit_gui = $UnitGUI
 onready var actions = $Actions
+onready var unit_hud = $UnitHUD
 onready var actions_anim = $Actions/ActionsAnimation
 onready var move_button = $Actions/Move/MoveButton
 onready var act_button = $Actions/Act/ActButton

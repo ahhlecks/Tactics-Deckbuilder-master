@@ -77,6 +77,12 @@ func setUnitList(unit_list:Array, player_party:int) -> void:
 		else:
 			unit_list[unit].unit_owner = enemy_player
 			enemy_player.units.append(unit_list[unit])
+		
+	turn_queue.units = unit_list
+	yield(get_tree(), "idle_frame")
+	startMatch()
+
+
 #		var new_unit:HexUnit = UnitPrefab.instance()
 #		new_unit.grid = grid
 #		new_unit.battle_controller = self
@@ -88,10 +94,6 @@ func setUnitList(unit_list:Array, player_party:int) -> void:
 #		else:
 #			new_unit.unit_owner = enemy_player
 #			enemy_player.units.append(new_unit)
-	turn_queue.units = unit_list
-	yield(get_tree(), "idle_frame")
-	startMatch()
-
 
 func clearAll() -> void:
 	for i in turn_queue.get_children():

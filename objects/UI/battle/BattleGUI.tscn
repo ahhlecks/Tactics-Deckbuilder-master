@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://objects/UI/battle/battle_ui_popout.tres" type="Animation" id=1]
 [ext_resource path="res://assets/images/ui/DiscardPile.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://resources/themes/custom/new_theme2.tres" type="Theme" id=9]
 [ext_resource path="res://objects/UI/battle/EffectTexts.gd" type="Script" id=10]
 [ext_resource path="res://resources/cards/Card.gd" type="Script" id=11]
+[ext_resource path="res://objects/UI/battle/UnitHUD.tscn" type="PackedScene" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 outline_size = 2
@@ -310,6 +311,9 @@ __meta__ = {
 [node name="SFX" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 15 )
 bus = "SFX"
+
+[node name="UnitHUD" parent="." instance=ExtResource( 12 )]
+visible = false
 
 [connection signal="drawn_card" from="." to="." method="_on_BattleGUI_drawn_card"]
 [connection signal="toggled" from="Actions/Act/ActButton" to="." method="_on_ActButton_toggled"]

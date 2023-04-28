@@ -39,32 +39,6 @@ func aiDoBestMove(unit:HexUnit) -> void:
 					unit.current_action_points -= actual_cost
 					unitEliminateCards(unit, 1, "hand_deck", "", c.unique_id)
 					break
-	#If low health, run away first
-	if float(unit.current_health) / float(unit.max_health) <= .25:
-		if unit.current_movement_points > 0:
-			unit.searchCellDistance(get_parent().grid.cells)
-			var valid_move_cells:Array = []
-			unit.checkValidMoveCells(unit.currentCell, unit.current_movement_points, unit.current_jump_points)
-			valid_move_cells = unit.validMoveCells
-			if valid_move_cells.empty():
-				valid_move_cells.append(unit.currentCell)
-			var enemy_occupied_cells:Array = []
-			var ally_occupied_cells:Array = []
-			for cell in get_parent().grid.cells:
-				if cell.unit != null and cell.unit.team != unit.team:
-					enemy_occupied_cells.append(cell)
-				if cell.unit != null and cell.unit.team == unit.team and cell.unit != unit:
-					ally_occupied_cells.append(cell)
-			var best_move_cell:Array = []
-			for cells in valid_move_cells:
-				var cell_value:int = 0
-				for enemy_cell in enemy_occupied_cells:
-					cell_value += (cells.distanceTo(enemy_cell))
-				for ally_cell in ally_occupied_cells:
-					cell_value -= (cells.distanceTo(ally_cell))
-				best_move_cell.append([cells,cell_value])
-			unit.moveTo(descendingActionValue(best_move_cell)[0][0])
-			yield(unit,"moved")
 	#Do the best attacks available
 	var leastAPCardCost = ascendingCardAPValue(unit.hand_deck)[0].action_costs[ascendingCardAPValue(unit.hand_deck)[0].card_level]
 	while unit.current_action_points > leastAPCardCost and unit.hand_deck.size() > 0:
@@ -98,8 +72,34 @@ func aiDoBestMove(unit:HexUnit) -> void:
 		if unit.hand_deck.size() > 0:
 			var leastAPCard = ascendingCardAPValue(unit.hand_deck)[0]
 			leastAPCardCost = leastAPCard.action_costs[leastAPCard.card_level]
+	#If low health, run away
+	if float(unit.current_health) / float(unit.max_health) <= .20:
+		if unit.current_movement_points > 0:
+			unit.searchCellDistance(get_parent().grid.cells)
+			var valid_move_cells:Array = []
+			unit.checkValidMoveCells(unit.currentCell, unit.current_movement_points, unit.current_jump_points)
+			valid_move_cells = unit.validMoveCells
+			if valid_move_cells.empty():
+				valid_move_cells.append(unit.currentCell)
+			var enemy_occupied_cells:Array = []
+			var ally_occupied_cells:Array = []
+			for cell in get_parent().grid.cells:
+				if cell.unit != null and cell.unit.team != unit.team:
+					enemy_occupied_cells.append(cell)
+				if cell.unit != null and cell.unit.team == unit.team and cell.unit != unit:
+					ally_occupied_cells.append(cell)
+			var best_move_cell:Array = []
+			for cells in valid_move_cells:
+				var cell_value:int = 0
+				for enemy_cell in enemy_occupied_cells:
+					cell_value += (cells.distanceTo(enemy_cell))
+				for ally_cell in ally_occupied_cells:
+					cell_value -= (cells.distanceTo(ally_cell))
+				best_move_cell.append([cells,cell_value])
+			unit.moveTo(descendingActionValue(best_move_cell)[0][0])
+			yield(unit,"moved")
 #	Movement after attacking
-	if unit.current_movement_points > 0:
+	elif unit.current_movement_points > 0:
 		unit.searchCellDistance(get_parent().grid.cells)
 		var valid_move_cells:Array = []
 		unit.checkValidMoveCells(unit.currentCell, unit.current_movement_points, unit.current_jump_points)

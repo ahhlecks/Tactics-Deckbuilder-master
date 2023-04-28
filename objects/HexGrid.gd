@@ -417,9 +417,9 @@ func save_map(path:String):
 		file.close()
 	file.call_deferred("queue_free")
 	dir.call_deferred("queue_free")
+		#var not_saved:bool = false
 
 func load_map(map:String):
-	var not_saved:bool = false
 	clear_map()
 	battle_controller.clearAll()
 	var map_data = MapLoader.loadSingleMapFile(map)
