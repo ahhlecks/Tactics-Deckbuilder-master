@@ -64,6 +64,8 @@ var base_crit_damage:int = 50
 var current_crit_damage:int = 50
 var base_crit_chance:int = 0
 var current_crit_chance:int = 0
+var base_crit_evasion:int = 0
+var current_crit_evasion:int = 0
 var experience:int = 0
 var level:int = 1
 #var block:int = 0
@@ -152,6 +154,7 @@ func update_fields(unit:Dictionary, ally:bool = true):
 	vbox.get_node("MaxDrawPoints/DrawPointsValue").value = unit.base_draw_points
 	vbox.get_node("BaseCritDamage/BaseCritDamageValue").value = unit.base_crit_damage
 	vbox.get_node("BaseCritChance/BaseCritChanceValue").value = unit.base_crit_chance
+	vbox.get_node("BaseCritEvasion/BaseCritEvasionValue").value = unit.base_crit_evasion
 	vbox.get_node("Experience/ExperienceValue").value = unit.experience
 	vbox.get_node("Level/LevelValue").value = unit.level
 	vbox.get_node("AIControlled/AIControlled").pressed = unit.is_ai_controlled
@@ -239,6 +242,8 @@ func updateUnit() -> Dictionary:
 		"current_crit_damage" : vbox.get_node("BaseCritDamage/BaseCritDamageValue").value,
 		"base_crit_chance" : vbox.get_node("BaseCritChance/BaseCritChanceValue").value,
 		"current_crit_chance" : vbox.get_node("BaseCritChance/BaseCritChanceValue").value,
+		"base_crit_evasion" : vbox.get_node("BaseCritEvasion/BaseCritEvasionValue").value,
+		"current_crit_evaion" : vbox.get_node("BaseCritEvasion/BaseCritEvasionValue").value,
 		"experience" : vbox.get_node("Experience/ExperienceValue").value,
 		"level" : vbox.get_node("Level/LevelValue").value,
 		"block" : 0,
@@ -387,11 +392,13 @@ func _on_BaseCritDamageValue_value_changed(value):
 	base_crit_damage = value
 	current_crit_damage = value
 
-
 func _on_BaseCritChanceValue_value_changed(value):
 	base_crit_chance = value
 	current_crit_chance = value
 
+func _on_BaseCritEvasionValue_value_changed(value):
+	base_crit_evasion = value
+	current_crit_evasion = value
 
 func _on_LevelValue_value_changed(value):
 	level = value
@@ -485,6 +492,8 @@ func defaultUnit(id = null) -> Dictionary:
 		"current_crit_damage" : 50,
 		"base_crit_chance" : 0,
 		"current_crit_chance" : 0,
+		"base_crit_evasion" : 0,
+		"current_crit_evasion" : 0,
 		"experience" : 0,
 		"level" : 1,
 		"block" : 0,
@@ -581,6 +590,8 @@ func unit_to_data(unit:HexUnit) -> Dictionary:
 		"current_crit_damage" : unit.current_crit_damage,
 		"base_crit_chance" : unit.base_crit_chance,
 		"current_crit_chance" : unit.current_crit_chance,
+		"base_crit_evasion" : unit.base_crit_evasion,
+		"current_crit_evasion" : unit.current_crit_evasion,
 		"experience" : unit.experience,
 		"level" : unit.level,
 		"block" : unit.block,
@@ -949,4 +960,3 @@ func clear():
 	clearCardList()
 	clearUnitCardList()
 	clearUnitProficienciesList()
-

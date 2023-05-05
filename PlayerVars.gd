@@ -10,6 +10,7 @@ var ALLY_UNIT_SAVE_DIR:String = "user://units/ally/"
 var ALLY_UNIT_SAVE_DIR_:String = "user://units/ally"
 #var PLAYER_UNIT_LIST_FILE:String = "player_units.dat"#
 #var UNIT_LIST_FILE:String = "unit_list.dat"#
+var DELETED_DIR:String = "res://data/deleted/"
 
 var CARD_LOAD_DIR:String = "res://data/cards/"
 var CARD_LOAD_DIR_:String = "res://data/cards"

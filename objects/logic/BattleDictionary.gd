@@ -283,6 +283,8 @@ var unit_int_modifiable:Array = [
 	"current_crit_damage",
 	"base_crit_chance",
 	"current_crit_chance",
+	"base_crit_evasion",
+	"current_crit_evasion",
 	"elevation",
 	"experience",
 	"level",

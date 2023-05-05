@@ -299,6 +299,11 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://addons/effekseer/src/EffekseerResource.gdns"
 }, {
+"base": "Resource",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://data/equipment/Equipment.gd"
+}, {
 "base": "CheckButton",
 "class": "FallbackButton",
 "language": "GDScript",
@@ -588,6 +593,7 @@ _global_script_class_icons={
 "EffekseerEmitter": "res://addons/effekseer/icon16.png",
 "EffekseerEmitter2D": "res://addons/effekseer/icon16.png",
 "EffekseerResource": "res://addons/effekseer/icon16.png",
+"Equipment": "",
 "FallbackButton": "",
 "FpsLabel": "",
 "GitAPI": "",
@@ -671,8 +677,8 @@ user_interface/group_nodes_by_type=false
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/width=1920
+window/size/height=1080
 window/dpi/allow_hidpi=true
 
 [editor]

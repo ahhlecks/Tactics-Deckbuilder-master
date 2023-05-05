@@ -1,0 +1,222 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/ui/equipment_ui/equipment_chart_base.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/ui/icons/icon_fist.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/ui/equipment_ui/tier2.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/ui/icons/icon_gear.png" type="Texture" id=6]
+[ext_resource path="res://assets/images/ui/equipment_ui/base.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/ui/equipment_ui/tier3.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/ui/equipment_ui/tier4.png" type="Texture" id=9]
+[ext_resource path="res://assets/images/ui/icons/icon_shield.png" type="Texture" id=10]
+[ext_resource path="res://assets/images/ui/equipment_ui/tier1.png" type="Texture" id=11]
+[ext_resource path="res://assets/images/ui/equipment_ui/horizontal_line_big.png" type="Texture" id=12]
+[ext_resource path="res://assets/images/ui/equipment_ui/horizontal_line.png" type="Texture" id=13]
+[ext_resource path="res://resources/fonts/Fenix_22.tres" type="DynamicFont" id=14]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float x_intensity = 1.0;
+uniform float y_intensity = 1.0;
+uniform float offset = 0.0;
+uniform float speed : hint_range(0, 20) = 20;
+uniform float wave_frequency : hint_range(0, 100) = 10;
+uniform float wave_length : hint_range(50, 800) = 55.0;
+
+void fragment() {
+	vec2 real_uv = vec2(UV.x, UV.y);
+	
+	vec2 vecToBottom = vec2(1, 1) - UV.y; 
+	float distToBottom = length(vecToBottom);
+	
+	float final_speed = TIME * (speed / 100.0) + offset;
+	
+	float time_var = (cos(final_speed) * cos(final_speed * 4.0) * cos(final_speed * 2.0))/(200.0);
+	float time_var2 = (cos(final_speed) * cos(final_speed * 6.0) * cos(final_speed * 2.0))/(200.0);
+	
+	float wave_from_x = (cos(real_uv.x * 100.0)/1000.0);
+	float wave_large_from_x = cos(TIME + (real_uv.x * wave_frequency))/wave_length;
+	
+	float wave_from_y = (cos(real_uv.y * 99000.0)/90000.0);
+	
+	float new_x = real_uv.x + time_var * (distToBottom * x_intensity) + wave_from_x + (wave_large_from_x);
+	float new_y = real_uv.y + time_var2 * (distToBottom * y_intensity);
+	
+	vec2 new_uv1 = vec2(new_x, new_y);
+	vec4 new_texture = texture(TEXTURE, new_uv1);
+
+	COLOR.rgba = new_texture.rgba;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+render_priority = 1
+shader = SubResource( 1 )
+shader_param/x_intensity = 1.0
+shader_param/y_intensity = 1.0
+shader_param/offset = 0.0
+shader_param/speed = 2.0
+shader_param/wave_frequency = 10.0
+shader_param/wave_length = 130.0
+
+[node name="EquipmentMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MenuSimpleBg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MenuFogBg" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( -29, 0 )
+scale = Vector2( 1.03021, 1 )
+texture = ExtResource( 2 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="EquipmentChartBase" type="Sprite" parent="."]
+position = Vector2( 960, 540 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HorizontalLine" type="Sprite" parent="."]
+position = Vector2( 960, 86 )
+texture = ExtResource( 13 )
+
+[node name="HorizontalLineBig" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, 90 )
+texture = ExtResource( 12 )
+centered = false
+
+[node name="Title" type="Label" parent="."]
+anchor_top = 0.006
+anchor_right = 1.0
+anchor_bottom = 0.069
+margin_top = -0.48
+margin_bottom = -0.520004
+custom_colors/font_color = Color( 0.607843, 0.784314, 0.831373, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "Equipment"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Utility" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 120.0
+
+[node name="Base" type="Sprite" parent="Utility"]
+position = Vector2( 0, -25 )
+texture = ExtResource( 7 )
+
+[node name="IconHealth2" type="Sprite" parent="Utility"]
+position = Vector2( -0.819946, -27.759 )
+rotation = -2.0944
+texture = ExtResource( 6 )
+
+[node name="Tier1" type="Sprite" parent="Utility"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -75 )
+texture = ExtResource( 11 )
+
+[node name="Tier2" type="Sprite" parent="Utility"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -131.5 )
+texture = ExtResource( 5 )
+
+[node name="Tier3" type="Sprite" parent="Utility"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -187.5 )
+texture = ExtResource( 8 )
+
+[node name="Tier4" type="Sprite" parent="Utility"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -244 )
+texture = ExtResource( 9 )
+
+[node name="Defense" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = -120.0
+
+[node name="Base" type="Sprite" parent="Defense"]
+position = Vector2( 0, -25 )
+texture = ExtResource( 7 )
+
+[node name="IconShield" type="Sprite" parent="Defense"]
+position = Vector2( -0.820435, -27.5787 )
+rotation = 2.0944
+texture = ExtResource( 10 )
+
+[node name="Tier1" type="Sprite" parent="Defense"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -75 )
+texture = ExtResource( 11 )
+
+[node name="Tier2" type="Sprite" parent="Defense"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -131.5 )
+texture = ExtResource( 5 )
+
+[node name="Tier3" type="Sprite" parent="Defense"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -187.5 )
+texture = ExtResource( 8 )
+
+[node name="Tier4" type="Sprite" parent="Defense"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -244 )
+texture = ExtResource( 9 )
+
+[node name="Attack" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Base" type="Sprite" parent="Attack"]
+position = Vector2( 0, -25 )
+texture = ExtResource( 7 )
+
+[node name="IconFist" type="Sprite" parent="Attack"]
+position = Vector2( 0, -26 )
+texture = ExtResource( 4 )
+
+[node name="Tier1" type="Sprite" parent="Attack"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -75 )
+texture = ExtResource( 11 )
+
+[node name="Tier2" type="Sprite" parent="Attack"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -131.5 )
+texture = ExtResource( 5 )
+
+[node name="Tier3" type="Sprite" parent="Attack"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -187.5 )
+texture = ExtResource( 8 )
+
+[node name="Tier4" type="Sprite" parent="Attack"]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 0, -244 )
+texture = ExtResource( 9 )

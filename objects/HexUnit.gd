@@ -146,6 +146,8 @@ var base_crit_damage:float
 var current_crit_damage:float
 var base_crit_chance:float
 var current_crit_chance:float
+var base_crit_evasion:float
+var current_crit_evasion:float
 var experience:int
 var level:int
 var block:int
@@ -622,6 +624,8 @@ func save() -> Dictionary:
 		"current_crit_damage" : current_crit_damage,
 		"base_crit_chance" : base_crit_chance,
 		"current_crit_chance" : current_crit_chance,
+		"base_crit_evasion" : base_crit_evasion,
+		"current_crit_evasion" : current_crit_evasion,
 		"experience" : experience,
 		"level" : level,
 		"traits" : traits,
@@ -701,6 +705,8 @@ func loadData(data):
 	current_crit_damage = data.get("current_crit_damage")
 	base_crit_chance = data.get("base_crit_chance")
 	current_crit_chance = data.get("current_crit_chance")
+	base_crit_evasion = data.get("base_crit_evasion")
+	current_crit_evasion = data.get("current_crit_evasion")
 	experience = data.get("experience")
 	level = data.get("level")
 	block = data.get("block")
@@ -783,6 +789,8 @@ func basicLoadData(map_player_data):
 		current_crit_damage = unit_data.get("current_crit_damage")
 		base_crit_chance = unit_data.get("base_crit_chance")
 		current_crit_chance = unit_data.get("current_crit_chance")
+		base_crit_evasion = unit_data.get("base_crit_evasion")
+		current_crit_evasion = unit_data.get("current_crit_evasion")
 		experience = unit_data.get("experience")
 		level = unit_data.get("level")
 		block = unit_data.get("block")
@@ -865,6 +873,7 @@ func setupTurn() -> void:
 	current_magic_evasion = base_magic_evasion
 	current_crit_damage = base_crit_damage
 	current_crit_chance = base_crit_chance
+	current_crit_evasion = base_crit_evasion
 #	["StatChange", duration, str(stat) + " " + operationToString(operation) + " " + str(stat_value), "Debuff", stat, stat_value, operation]
 	for i in statuses:
 		if i[0] is String:

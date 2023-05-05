@@ -57,10 +57,10 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 		blackboard.set_data("targets",target_area)
 		blackboard.set_data("target_params",["splash",splash_min_range,splash_max_range,splash_up_vertical_range,splash_down_vertical_range])
 		blackboard.set_data("is_splash",true)
-		if blackboard.has_data("utility_value"):
-			blackboard.set_data("utility_value",blackboard.get_data("utility_value") + targets.size()*10)
+		if blackboard.has_data("utility_value_multiplier"):
+			blackboard.set_data("utility_value_multiplier",blackboard.get_data("utility_value_multiplier") + targets.size())
 		else:
-			blackboard.set_data("utility_value",targets.size()*10)
+			blackboard.set_data("utility_value_multiplier",targets.size())
 	return succeed()
 
 func get_class() -> String:

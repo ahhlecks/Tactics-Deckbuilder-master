@@ -10,6 +10,8 @@
 - Different AI types *
 - Player unit AI *
 - Console Commandline *
+- <s>Unit base_crit_evasion</s> 05/05/2022
+- <s>Unit current_crit_evasion</s> 05/05/2022
 - <s>BT_Inline_Targets **</s> 11/10/2022
 - <s>BT_Left_Right_Targets **</s> 11/10/2022
 - <s>Hexagonal targeting **</s> 11/10/2022
@@ -26,4 +28,4 @@
 - <s>BT_Target_Add_Card</s>
 - <s>Unit Var: current_crit_chance</s>
 - <s>Unit Var: base_crit_chance</s>
-- <s>Unit AI</s> 7/21/2022
+- <s>Unit AI</s> 07/21/2022

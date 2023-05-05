@@ -256,7 +256,7 @@ func calculateHit(agent, blackboard, target) -> Array:
 	if agent.need_los[agent.card_level]: #Just a normal line of sight check
 		if blackboard.has_data("target_params"):
 			var target_params:Array = blackboard.get_data("target_params")
-			if target_params[0] == "splash":
+			if target_params[0] == "splash" or target_params[0] == "leftright":
 				if target.unit != null:
 					hit_rate = hitRate(agent,target.unit,hit_rate)
 					crit_chance = critRate(agent,target.unit,crit_chance)
@@ -299,14 +299,10 @@ func hitRate(agent,target,base = 0) -> float:
 	return clamp(accuracy - evasion,0,100)
 
 func critRate(agent,target,base = 0) -> float:
-	var evasion:float
+	var evasion:float = target.current_crit_evasion
 	var crit_accuracy:float = agent.card_caster.current_crit_chance
 	if base != 0:
 		crit_accuracy = base
-	if agent.card_type == 0 or agent.card_type == 1 or agent.card_type == 4:
-		evasion = target.current_physical_evasion
-	if agent.card_type == 2 or agent.card_type == 3:
-		evasion = target.current_magic_evasion
 	return clamp(crit_accuracy - evasion,0,100)
 
 

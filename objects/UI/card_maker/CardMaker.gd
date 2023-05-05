@@ -677,6 +677,9 @@ func _on_DeleteUnit_pressed():
 
 func _on_AcceptDialog_confirmed():
 	var dir = Directory.new()
+	dir.copy(PlayerVars.CARD_LOAD_DIR + card_info.card_name + ".crd", PlayerVars.DELETED_DIR + card_info.card_name + ".crd")
+	if dir.remove(PlayerVars.CARD_LOAD_DIR + card_info.card_name + ".crd") == OK:
+		pass
 	if dir.remove(PlayerVars.CARD_SAVE_DIR + card_info.card_name + ".crd") == OK:
 		UI_Sounds.createSound(UI_Sounds.unit_delete)
 		populateCards()

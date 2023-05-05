@@ -140,7 +140,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Stats/HBoxContainer"]
 margin_right = 236.0
-margin_bottom = 699.0
+margin_bottom = 1059.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -549,10 +549,30 @@ min_value = -200.0
 max_value = 200.0
 align = 1
 
-[node name="AIControlled" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+[node name="BaseCritEvasion" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
 margin_top = 529.0
-margin_right = 114.0
+margin_right = 183.0
 margin_bottom = 548.0
+size_flags_horizontal = 0
+
+[node name="BaseCritEvasion" type="Label" parent="Stats/HBoxContainer/VBoxContainer/BaseCritEvasion"]
+margin_right = 113.0
+margin_bottom = 19.0
+text = "Base Crit Evasion"
+
+[node name="BaseCritEvasionValue" type="SpinBox" parent="Stats/HBoxContainer/VBoxContainer/BaseCritEvasion"]
+margin_left = 119.0
+margin_right = 183.0
+margin_bottom = 19.0
+hint_tooltip = "0 is default. More than 0 is increased crit chance."
+min_value = -200.0
+max_value = 200.0
+align = 1
+
+[node name="AIControlled" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
+margin_top = 554.0
+margin_right = 114.0
+margin_bottom = 573.0
 size_flags_horizontal = 0
 
 [node name="AIControlled" type="CheckBox" parent="Stats/HBoxContainer/VBoxContainer/AIControlled"]
@@ -563,9 +583,9 @@ pressed = true
 text = "AI Controlled"
 
 [node name="AIType" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
-margin_top = 554.0
+margin_top = 579.0
 margin_right = 89.0
-margin_bottom = 573.0
+margin_bottom = 598.0
 size_flags_horizontal = 0
 
 [node name="AIType" type="OptionButton" parent="Stats/HBoxContainer/VBoxContainer/AIType"]
@@ -575,9 +595,9 @@ text = "Normal AI"
 script = ExtResource( 10 )
 
 [node name="UpdateUnit" type="HBoxContainer" parent="Stats/HBoxContainer/VBoxContainer"]
-margin_top = 579.0
+margin_top = 604.0
 margin_right = 211.0
-margin_bottom = 598.0
+margin_bottom = 623.0
 size_flags_horizontal = 0
 
 [node name="UpdateUnit" type="Button" parent="Stats/HBoxContainer/VBoxContainer/UpdateUnit"]
@@ -622,12 +642,12 @@ __meta__ = {
 [node name="VSeparator" type="VSeparator" parent="Stats/HBoxContainer"]
 margin_left = 242.0
 margin_right = 246.0
-margin_bottom = 699.0
+margin_bottom = 1059.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Stats/HBoxContainer"]
 margin_left = 252.0
 margin_right = 487.0
-margin_bottom = 699.0
+margin_bottom = 1059.0
 rect_min_size = Vector2( 235, 690 )
 
 [node name="Cards" type="VBoxContainer" parent="Stats/HBoxContainer/VBoxContainer2"]
@@ -780,6 +800,7 @@ rect_min_size = Vector2( 244, 416 )
 [connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/MaxDrawPoints/DrawPointsValue" to="." method="_on_DrawPointsValue_value_changed"]
 [connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseCritDamage/BaseCritDamageValue" to="." method="_on_BaseCritDamageValue_value_changed"]
 [connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseCritChance/BaseCritChanceValue" to="." method="_on_BaseCritChanceValue_value_changed"]
+[connection signal="value_changed" from="Stats/HBoxContainer/VBoxContainer/BaseCritEvasion/BaseCritEvasionValue" to="." method="_on_BaseCritEvasionValue_value_changed"]
 [connection signal="toggled" from="Stats/HBoxContainer/VBoxContainer/AIControlled/AIControlled" to="." method="_on_AIControlled_toggled"]
 [connection signal="item_selected" from="Stats/HBoxContainer/VBoxContainer/AIType/AIType" to="." method="_on_AIType_item_selected"]
 [connection signal="pressed" from="Stats/HBoxContainer/VBoxContainer/UpdateUnit/UpdateUnit" to="." method="_on_UpdateUnit_pressed"]

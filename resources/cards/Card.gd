@@ -445,6 +445,8 @@ func execute(is_real:bool, initial_cast:bool = false) -> void:
 	if !is_real:
 		if blackboard.has_data("utility_value"):
 			utility_value = blackboard.get_data("utility_value")
+			if blackboard.has_data("utility_value_multiplier"):
+				utility_value *= blackboard.get_data("utility_value_multiplier")
 #		for key in blackboard.data.keys():
 #			if key.begins_with("caster_stat_"):
 #				var stat:String = key.right(12)
