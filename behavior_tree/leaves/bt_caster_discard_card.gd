@@ -1,6 +1,8 @@
 class_name CasterDiscardCard, "../icons/btleaf.svg" 
 extends BTLeaf
 
+#DEPRECATED#
+
 func get_class() -> String: return "CasterDiscardCard"
 # 
 export(int, "equal", "greater_than", "lesser_than", "not_equal") var comparison
@@ -11,9 +13,7 @@ export(int, "active_deck", "hand_deck", "discard_deck", "consumed_deck") var dec
 
 var deck_name:String = "active_deck"
 
-export(String, "none", "card_name", "card_class", "action_costs", "card_level", "upgrade_costs", "card_type", "can_attack", "can_defend",
-"need_los", "is_homing", "is_unblockable", "is_undeflectable", "is_consumable", "has_counter", "has_reflex", "self_statuses", "target_statuses",
-"delay", "rarity", "card_min_range", "card_max_range", "card_up_vertical_range", "card_down_vertical_range", "card_attack", "elements") var card_variable:String
+export(String) var card_variable:String #28
 
 export var card_variable_value:String
 

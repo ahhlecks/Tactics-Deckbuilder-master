@@ -27,7 +27,7 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 			if status_name != "None":
 				agent.card_caster.unit_owner.get_parent().battle_gui.addEffectText(status_name,agent.card_caster)
 	if blackboard.has_data("utility_value"):
-		blackboard.set_data("utility_value",blackboard.get_data("utility_value") + 5)
+		blackboard.set_data("utility_value",blackboard.get_data("utility_value") + (5*duration))
 	else:
-		blackboard.set_data("utility_value",5)
+		blackboard.set_data("utility_value",(5*duration))
 	return succeed()

@@ -45,7 +45,6 @@ var current_draw_points:int
 var experience:int
 var level:int
 var block:int
-var deflect:int
 var strength:int
 var willpower:int
 var traits:Array
@@ -91,7 +90,6 @@ func loadUnit(unit:HexUnit):
 	experience = unit.experience
 	level = unit.level
 	block = unit.block
-	deflect = unit.deflect
 	strength = unit.strength
 	willpower = unit.willpower
 	traits = unit.traits
@@ -115,8 +113,6 @@ func updateGUI(unit:HexUnit) -> void:
 	$AP/AP_Label.hint_tooltip = str(current_action_points) + " Action Points (AP)" 
 	$Block.hint_tooltip = str(block) + " Block"
 	$Block/Label.text = str(block)
-	$Deflect.hint_tooltip = str(deflect) + " Deflect"
-	$Deflect/Label.text = str(deflect)
 	$HP_Bar.max_value = max_health
 	$HP_Bar.value = current_health
 	if current_health > 0:

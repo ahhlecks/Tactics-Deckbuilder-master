@@ -38,7 +38,6 @@ export(String, "none",
 	"experience",
 	"level",
 	"block",
-	"deflect",
 	"strength",
 	"willpower") var stat:String
 

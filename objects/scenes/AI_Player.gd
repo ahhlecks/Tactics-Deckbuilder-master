@@ -234,7 +234,7 @@ func actionResults(card_info:Dictionary, unit:HexUnit, from:HexCell, to:HexCell,
 	# [From, To, Attack, Attack Modifiers, List of Modifiers, Hit Rate, Crit Chance, Utility Score]
 	var card:Card = Card.new()
 	card.load_card(card_info)
-	var card_damage_value:float
+	var card_damage_value:float = 0
 	var card_utility:float = 0
 	card.card_caster = unit
 	card.source_cell = from
@@ -266,7 +266,7 @@ func actionResults(card_info:Dictionary, unit:HexUnit, from:HexCell, to:HexCell,
 		if card.need_los[card.card_level]:
 			card_utility -= 2
 		if card.is_piercing[card.card_level]:
-			if (to.unit.block > 0 and card.card_type == 1) or (to.unit.deflect > 0 and card.card_type == 2):
+			if to.unit.block > 0 and card.card_type == 1:
 				card_utility += 10
 		if card.is_consumable[card.card_level] or card.self_eliminating[card.card_level]:
 			card_utility -= 2

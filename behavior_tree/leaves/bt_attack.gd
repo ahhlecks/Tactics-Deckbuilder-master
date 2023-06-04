@@ -98,7 +98,7 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 			var hit_rate = hit_calculation[0]
 			var crit_rate = hit_calculation[1]
 			# Calculate Debuffs and Buffs
-			setStatusMultipliers(agent, blackboard, unit)
+#			setStatusMultipliers(agent, blackboard, unit)
 
 #Set attack (or healing) value
 			if blackboard.has_data("attack_value"):
@@ -108,12 +108,12 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 
 ##Calculate block and deflect and strength and willpower
 			if attack_value > 0:
-				if agent.card_type == 1: # If card is a physical attack
+				if !agent.item_type.has("Magic"): # If card is a physical attack
 					if !agent.behavior_tree.is_real:
 						attack_value = max(attack_value - unit.block + agent.card_caster.strength, 0)
-				if agent.card_type == 2: # If card is a magic attack
+				if agent.item_type.has("Magic"): # If card is a magic attack
 					if !agent.behavior_tree.is_real:
-						attack_value = max(attack_value - unit.deflect + agent.card_caster.willpower, 0)
+						attack_value = max(attack_value - unit.block + agent.card_caster.willpower, 0)
 
 #Calculate hit rate and critical hit
 #			calculateHit(agent,blackboard,target)
@@ -125,6 +125,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 					if randf() < hit_rate / 100.0:
 						dealDamage(agent,blackboard,unit)
 						blackboard.set_data("targetable", true)
+						addSelfStatus(agent)
+						addTargetStatus(agent,unit)
 					else:
 						unit.emit_signal("evaded", agent)
 						unit.unit_owner.get_parent().battle_gui.addEffectText("Missed!",target)
@@ -202,22 +204,22 @@ func evasionCheck(card, from_cell:HexCell, to_cell:HexCell, check_ground:bool = 
 					hit_results[i] = [0.0,0,true,result_unit,hit_results[i].name]
 				"SideForward":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(0 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(-5 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(0 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(-5 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"SideForwardRight":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(15 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(0 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(15 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(0 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"SideForwardLeft":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(15 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(0 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(15 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(0 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"SideBackwardRight":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(20 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(25 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(20 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(25 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"SideBackwardLeft":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(20 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(25 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(20 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(25 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"SideBackward":
 					result_unit = hit_results[i].get_parent().get_parent()
-					hit_results[i] = [clamp(25 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(100 + critRate(card,result_unit,crit_rate_base),0,100),false,result_unit,hit_results[i].name]
+					hit_results[i] = [clamp(25 + hitRate(card,result_unit,hit_rate_base),0,100),clamp(100 + critRate(card,result_unit,crit_rate_base),0,100),true,result_unit,hit_results[i].name]
 				"HexUnit":
 					result_unit = hit_results[i]
 					hit_results[i] = [0,0,true,result_unit,hit_results[i].name]
@@ -254,22 +256,28 @@ func calculateHit(agent, blackboard, target) -> Array:
 		crit_chance = blackboard.get_data("caster_stat_current_crit_chance")
 		
 	if agent.need_los[agent.card_level]: #Just a normal line of sight check
-		if blackboard.has_data("target_params"):
-			var target_params:Array = blackboard.get_data("target_params")
-			if target_params[0] == "splash" or target_params[0] == "leftright":
-				if target.unit != null:
-					hit_rate = hitRate(agent,target.unit,hit_rate)
-					crit_chance = critRate(agent,target.unit,crit_chance)
-					unit = target.unit
-				return [hit_rate, crit_chance, unit]
 		hit_rate = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[0]
-		if evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1] is bool:
-			unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
-			return [hit_rate, crit_chance, unit]
-		else:
-			crit_chance = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1]
-			unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
-			return [hit_rate, crit_chance, unit]
+		crit_chance = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1]
+		unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
+		return [hit_rate, crit_chance, unit]
+#		if blackboard.has_data("target_params"):
+#			var target_params:Array = blackboard.get_data("target_params")
+#			if target_params[0] == "splash" or target_params[0] == "leftright":
+#				if target.unit != null:
+					#hit_rate = hitRate(agent,target.unit,hit_rate)
+					#crit_chance = critRate(agent,target.unit,crit_chance)
+#					hit_rate = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[0]
+#					crit_chance = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1]
+#					unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
+#					return [hit_rate, crit_chance, unit]
+#		hit_rate = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[0]
+#		if evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1] is bool:
+#			unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
+#			return [hit_rate, crit_chance, unit]
+#		else:
+#			crit_chance = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[1]
+#			unit = evasionCheck(agent,agent.source_cell,target,false,hit_rate,crit_chance)[3]
+#			return [hit_rate, crit_chance, unit]
 	if !agent.need_los[agent.card_level]: #If this card doesn't require los, always hit accuracy minus target evasion if no line of sight needed
 		if target.unit != null:
 			hit_rate = hitRate(agent,target.unit,hit_rate)
@@ -282,27 +290,27 @@ func calculateHit(agent, blackboard, target) -> Array:
 func hitRate(agent,target,base = 0) -> float:
 	var evasion:float
 	var accuracy:float
-	if agent.card_type == 0 or agent.card_type == 1 or agent.card_type == 4:
+	if !agent.item_type.has("Magic"):
 		evasion = target.current_physical_evasion
-		accuracy = agent.card_caster.current_physical_accuracy + target.evasion_degradation
-	if agent.card_type == 2 or agent.card_type == 3:
+		accuracy = agent.card_caster.current_physical_accuracy + target.evasion_degradation + agent.card_added_accuracy[agent.card_level]
+	if agent.item_type.has("Magic"):
 		evasion = target.current_magic_evasion
-		accuracy = agent.card_caster.current_magic_accuracy + target.evasion_degradation
-	if attack_value <= 0 and (agent.card_type == 0):
+		accuracy = agent.card_caster.current_magic_accuracy + target.evasion_degradation  + agent.card_added_accuracy[agent.card_level]
+	if attack_value <= 0 and !agent.item_type.has("Magic"):
 		evasion = 0
-		accuracy = agent.card_caster.current_physical_accuracy + target.evasion_degradation
-	if attack_value <= 0 and (agent.card_type == 3 or agent.card_type == 4):
+		accuracy = agent.card_caster.current_physical_accuracy + target.evasion_degradation  + agent.card_added_accuracy[agent.card_level]
+	if attack_value <= 0 and agent.item_type.has("Magic"):
 		evasion = 0
-		accuracy = agent.card_caster.current_magic_accuracy + target.evasion_degradation
+		accuracy = agent.card_caster.current_magic_accuracy + target.evasion_degradation  + agent.card_added_accuracy[agent.card_level]
 	if base != 0:
-		accuracy = base + target.evasion_degradation
+		accuracy = base + target.evasion_degradation  + agent.card_added_accuracy[agent.card_level]
 	return clamp(accuracy - evasion,0,100)
 
 func critRate(agent,target,base = 0) -> float:
 	var evasion:float = target.current_crit_evasion
-	var crit_accuracy:float = agent.card_caster.current_crit_chance
+	var crit_accuracy:float = agent.card_caster.current_crit_chance  + agent.card_added_crit_accuracy[agent.card_level]
 	if base != 0:
-		crit_accuracy = base
+		crit_accuracy = base + agent.card_added_crit_accuracy[agent.card_level]
 	return clamp(crit_accuracy - evasion,0,100)
 
 
@@ -322,28 +330,34 @@ func dealDamage(agent, blackboard, target:HexUnit) -> void:
 			agent.card_caster.emit_signal("attacked", agent)
 			target.reaction_animation = target.reaction_animations.HIT
 			#Calculate block and deflect and strength and willpower
-			if agent.card_type == 1: # If card is a physical attack
-				if agent.behavior_tree.is_real: # If this is a real attack
-					attack_value += agent.card_caster.strength
-					var old_block = target.block
-					target.block = max(target.block - attack_value, 0)
-					if !agent.is_piercing[agent.card_level]:
-						attack_value = max(attack_value - old_block, 0)
-						if old_block > 0:
-							target.reaction_animation = target.reaction_animations.BLOCK
-							target.unit_owner.get_parent().battle_gui.addEffectText("Blocked " + str(old_block - target.block),target)
-							target.emit_signal("blocked", agent, old_block - target.block)
-			if agent.card_type == 2: # If card is a magic attack
-				if agent.behavior_tree.is_real: # If this is a real attack
-					attack_value += agent.card_caster.willpower
-					var old_deflect = target.deflect
-					target.deflect = max(target.deflect - attack_value, 0)
-					if !agent.is_piercing[agent.card_level]:
-						attack_value = max(attack_value - old_deflect, 0)
-						if old_deflect > 0:
-							target.reaction_animation = target.reaction_animations.MISS
-							target.unit_owner.get_parent().battle_gui.addEffectText("Deflected " + str(old_deflect - target.deflect),target)
-							target.emit_signal("deflected", agent, old_deflect - target.deflect)
+#			if agent.card_type == 1: # If card is a physical attack
+			if agent.item_type.has("Magic"):
+				attack_value += agent.card_caster.willpower
+			else:
+				attack_value += agent.card_caster.strength
+			var old_block = target.block
+			if agent.is_shattering[agent.card_level]:
+				target.block = max(target.block - attack_value, 0)
+			elif agent.is_piercing[agent.card_level]:
+				pass
+			else:
+				target.block = max(target.block - attack_value, 0)
+				attack_value = max(attack_value - old_block, 0)
+				if old_block > 0:
+					target.reaction_animation = target.reaction_animations.BLOCK
+					target.unit_owner.get_parent().battle_gui.addEffectText("Blocked " + str(old_block - target.block),target)
+					target.emit_signal("blocked", agent, old_block - target.block)
+#			if agent.card_type == 2: # If card is a magic attack
+#				if agent.behavior_tree.is_real: # If this is a real attack
+#					attack_value += agent.card_caster.willpower
+#					var old_deflect = target.deflect
+#					target.deflect = max(target.deflect - attack_value, 0)
+#					if !agent.is_piercing[agent.card_level]:
+#						attack_value = max(attack_value - old_deflect, 0)
+#						if old_deflect > 0:
+#							target.reaction_animation = target.reaction_animations.MISS
+#							target.unit_owner.get_parent().battle_gui.addEffectText("Deflected " + str(old_deflect - target.deflect),target)
+#							target.emit_signal("deflected", agent, old_deflect - target.deflect)
 		else:
 			target.reaction_animation = target.reaction_animations.HEAL
 			target.emit_signal("receive_heal", agent, attack_value)
@@ -358,203 +372,224 @@ func dealDamage(agent, blackboard, target:HexUnit) -> void:
 	prefix_text = ""
 
 
+func addSelfStatus(agent:Node) -> void:
+	var self_statuses = agent.self_statuses[agent.card_level]
+	for status in self_statuses:
+		if agent.card_caster.hasStatusType(status[0]) != -1: # already has status
+			agent.card_caster.statuses[agent.card_caster.hasStatusType(status[0])][1] = status[1]
+		else:
+			agent.card_caster.statuses.append(status.duplicate())
+			var status_name:String = BattleDictionary.valid_statuses[status][0]
+			if status_name != "None":
+				agent.card_caster.unit_owner.get_parent().battle_gui.addEffectText(status_name,agent.card_caster)
 
-func setStatusMultipliers(agent:Node, blackboard:Blackboard, target_unit:HexUnit) -> void:
-	if target_unit.statuses.size() > 0:
-		for status in target_unit.statuses:
-			match status[0]:
-	#--------------------------- RESISTANCE-----------------------------------#
-				BattleDictionary.STATUS.PHYSICALDEFENSEUP:
-					if agent.card_type == 1:
-						attack_multiplier -= .25
-						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEUP)
-				BattleDictionary.STATUS.PHYSICALDEFENSEUP2:
-					if agent.card_type == 1:
-						attack_multiplier -= .5
-						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEUP2)
-				BattleDictionary.STATUS.MAGICDEFENSEUP:
-					if agent.card_type == 2:
-						attack_multiplier -= .25
-						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEUP)
-				BattleDictionary.STATUS.MAGICDEFENSEUP2:
-					if agent.card_type == 2:
-						attack_multiplier -= .5
-						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEUP2)
-				BattleDictionary.STATUS.FIREDEFENSEUP:
-					for element in agent.elements[agent.card_level]:
-						if element == 1:
-							attack_multiplier -= .25
-							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEUP)
-				BattleDictionary.STATUS.FIREDEFENSEUP2:
-					for element in agent.elements[agent.card_level]:
-						if element == 1:
-							attack_multiplier -= .5
-							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEUP2)
-				BattleDictionary.STATUS.ICEDEFENSEUP:
-					for element in agent.elements[agent.card_level]:
-						if element == 2:
-							attack_multiplier -= .25
-							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEUP)
-				BattleDictionary.STATUS.ICEDEFENSEUP2:
-					for element in agent.elements[agent.card_level]:
-						if element == 2:
-							attack_multiplier -= .5
-							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEUP2)
-				BattleDictionary.STATUS.ELECTRICDEFENSEUP:
-					for element in agent.elements[agent.card_level]:
-						if element == 3:
-							attack_multiplier -= .25
-							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEUP)
-				BattleDictionary.STATUS.ELECTRICDEFENSEUP2:
-					for element in agent.elements[agent.card_level]:
-						if element == 3:
-							attack_multiplier -= .5
-							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEUP2)
-	#--------------------------- SENSITIVITY --------------------------------------#
-				BattleDictionary.STATUS.PHYSICALDEFENSEDOWN:
-					if agent.card_type == 1:
-						attack_multiplier += .25
-						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEDOWN)
-				BattleDictionary.STATUS.PHYSICALDEFENSEDOWN2:
-					if agent.card_type == 1:
-						attack_multiplier += .5
-						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEDOWN2)
-				BattleDictionary.STATUS.MAGICDEFENSEDOWN:
-					if agent.card_type == 2:
-						attack_multiplier += .25
-						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEDOWN)
-				BattleDictionary.STATUS.MAGICDEFENSEDOWN2:
-					if agent.card_type == 2:
-						attack_multiplier += .5
-						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEDOWN2)
-				BattleDictionary.STATUS.FIREDEFENSEDOWN:
-					for element in agent.elements[agent.card_level]:
-						if element == 1:
-							attack_multiplier += .25
-							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEDOWN)
-				BattleDictionary.STATUS.FIREDEFENSEDOWN2:
-					for element in agent.elements[agent.card_level]:
-						if element == 1:
-							attack_multiplier += .5
-							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEDOWN2)
-				BattleDictionary.STATUS.ICEDEFENSEDOWN:
-					for element in agent.elements[agent.card_level]:
-						if element == 2:
-							attack_multiplier += .25
-							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEDOWN)
-				BattleDictionary.STATUS.ICEDEFENSEDOWN2:
-					for element in agent.elements[agent.card_level]:
-						if element == 2:
-							attack_multiplier += .5
-							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEDOWN2)
-				BattleDictionary.STATUS.ELECTRICDEFENSEDOWN:
-					for element in agent.elements[agent.card_level]:
-						if element == 3:
-							attack_multiplier += .25
-							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEDOWN)
-				BattleDictionary.STATUS.ELECTRICDEFENSEDOWN2:
-					for element in agent.elements[agent.card_level]:
-						if element == 3:
-							attack_multiplier += .5
-							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEDOWN2)
-	
-	for status in agent.card_caster.statuses:
-		match status[0]:
-	#------------------------------ STRENGTH --------------------------------------#
-			BattleDictionary.STATUS.PHYSICALATTACKUP:
-				if agent.card_type == 1:
-					attack_multiplier += .25
-					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKUP)
-			BattleDictionary.STATUS.PHYSICALATTACKUP2:
-				if agent.card_type == 1:
-					attack_multiplier += .50
-					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKUP2)
-			BattleDictionary.STATUS.MAGICATTACKUP:
-				if agent.card_type == 2:
-					attack_multiplier += .25
-					multipliers.append(BattleDictionary.STATUS.MAGICATTACKUP)
-			BattleDictionary.STATUS.MAGICATTACKUP2:
-				if agent.card_type == 2:
-					attack_multiplier += .5
-					multipliers.append(BattleDictionary.STATUS.MAGICATTACKUP2)
-			BattleDictionary.STATUS.FIREATTACKUP:
-				for element in agent.elements[agent.card_level]:
-					if element == 1:
-						attack_multiplier += .25
-						multipliers.append(BattleDictionary.STATUS.FIREATTACKUP)
-			BattleDictionary.STATUS.FIREATTACKUP2:
-				for element in agent.elements[agent.card_level]:
-					if element == 1:
-						attack_multiplier += .5
-						multipliers.append(BattleDictionary.STATUS.FIREATTACKUP2)
-			BattleDictionary.STATUS.ICEATTACKUP:
-				for element in agent.elements[agent.card_level]:
-					if element == 2:
-						attack_multiplier += .25
-						multipliers.append(BattleDictionary.STATUS.ICEATTACKUP)
-			BattleDictionary.STATUS.ICEATTACKUP2:
-				for element in agent.elements[agent.card_level]:
-					if element == 2:
-						attack_multiplier += .5
-						multipliers.append(BattleDictionary.STATUS.ICEATTACKUP2)
-			BattleDictionary.STATUS.ELECTRICATTACKUP:
-				for element in agent.elements[agent.card_level]:
-					if element == 3:
-						attack_multiplier += .25
-						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKUP)
-			BattleDictionary.STATUS.ELECTRICATTACKUP2:
-				for element in agent.elements[agent.card_level]:
-					if element == 3:
-						attack_multiplier += .5
-						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKUP2)
-	#------------------------------ WEAKNESSES-------------------------------------#
-			BattleDictionary.STATUS.PHYSICALATTACKDOWN:
-				if agent.card_type == 1:
-					attack_multiplier -= .25
-					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKDOWN)
-			BattleDictionary.STATUS.PHYSICALATTACKDOWN2:
-				if agent.card_type == 1:
-					attack_multiplier -= .50
-					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKDOWN2)
-			BattleDictionary.STATUS.MAGICATTACKDOWN:
-				if agent.card_type == 2:
-					attack_multiplier -= .25
-					multipliers.append(BattleDictionary.STATUS.MAGICATTACKDOWN)
-			BattleDictionary.STATUS.MAGICATTACKDOWN2:
-				if agent.card_type == 2:
-					attack_multiplier -= .5
-					multipliers.append(BattleDictionary.STATUS.MAGICATTACKDOWN2)
-			BattleDictionary.STATUS.FIREATTACKDOWN:
-				for element in agent.elements[agent.card_level]:
-					if element == 1:
-						attack_multiplier -= .25
-						multipliers.append(BattleDictionary.STATUS.FIREATTACKDOWN)
-			BattleDictionary.STATUS.FIREATTACKDOWN2:
-				for element in agent.elements[agent.card_level]:
-					if element == 1:
-						attack_multiplier -= .5
-						multipliers.append(BattleDictionary.STATUS.FIREATTACKDOWN2)
-			BattleDictionary.STATUS.ICEATTACKDOWN:
-				for element in agent.elements[agent.card_level]:
-					if element == 2:
-						attack_multiplier -= .25
-						multipliers.append(BattleDictionary.STATUS.ICEATTACKDOWN)
-			BattleDictionary.STATUS.ICEATTACKDOWN2:
-				for element in agent.elements[agent.card_level]:
-					if element == 2:
-						attack_multiplier -= .5
-						multipliers.append(BattleDictionary.STATUS.ICEATTACKDOWN2)
-			BattleDictionary.STATUS.ELECTRICATTACKDOWN:
-				for element in agent.elements[agent.card_level]:
-					if element == 3:
-						attack_multiplier -= .25
-						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKDOWN)
-			BattleDictionary.STATUS.ELECTRICATTACKDOWN2:
-				for element in agent.elements[agent.card_level]:
-					if element == 3:
-						attack_multiplier -= .5
-						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKDOWN2)
-	blackboard.set_data("attack_multiplier", attack_multiplier)
+func addTargetStatus(agent:Node,unit:HexUnit) -> void:
+	var target_statuses = agent.target_statuses[agent.card_level]
+	for status in target_statuses:
+		if unit.hasStatusType(status[0]) != -1: # already has status
+			unit.statuses[unit.hasStatusType(status[0])][1] = status[1]
+		else:
+			unit.statuses.append(status.duplicate())
+			var status_name:String = BattleDictionary.valid_statuses[status][0]
+			if status_name != "None":
+				unit.unit_owner.get_parent().battle_gui.addEffectText(status_name,unit)
+
+#func setStatusMultipliers(agent:Node, blackboard:Blackboard, target_unit:HexUnit) -> void:
+#	if target_unit.statuses.size() > 0:
+#		for status in target_unit.statuses:
+#			match status[0]:
+#	#--------------------------- RESISTANCE-----------------------------------#
+#				BattleDictionary.STATUS.PHYSICALDEFENSEUP:
+#					if agent.card_type == 1:
+#						attack_multiplier -= .25
+#						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEUP)
+#				BattleDictionary.STATUS.PHYSICALDEFENSEUP2:
+#					if agent.card_type == 1:
+#						attack_multiplier -= .5
+#						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEUP2)
+#				BattleDictionary.STATUS.MAGICDEFENSEUP:
+#					if agent.card_type == 2:
+#						attack_multiplier -= .25
+#						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEUP)
+#				BattleDictionary.STATUS.MAGICDEFENSEUP2:
+#					if agent.card_type == 2:
+#						attack_multiplier -= .5
+#						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEUP2)
+#				BattleDictionary.STATUS.FIREDEFENSEUP:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 1:
+#							attack_multiplier -= .25
+#							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEUP)
+#				BattleDictionary.STATUS.FIREDEFENSEUP2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 1:
+#							attack_multiplier -= .5
+#							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEUP2)
+#				BattleDictionary.STATUS.ICEDEFENSEUP:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 2:
+#							attack_multiplier -= .25
+#							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEUP)
+#				BattleDictionary.STATUS.ICEDEFENSEUP2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 2:
+#							attack_multiplier -= .5
+#							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEUP2)
+#				BattleDictionary.STATUS.ELECTRICDEFENSEUP:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 3:
+#							attack_multiplier -= .25
+#							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEUP)
+#				BattleDictionary.STATUS.ELECTRICDEFENSEUP2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 3:
+#							attack_multiplier -= .5
+#							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEUP2)
+#	#--------------------------- SENSITIVITY --------------------------------------#
+#				BattleDictionary.STATUS.PHYSICALDEFENSEDOWN:
+#					if agent.card_type == 1:
+#						attack_multiplier += .25
+#						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEDOWN)
+#				BattleDictionary.STATUS.PHYSICALDEFENSEDOWN2:
+#					if agent.card_type == 1:
+#						attack_multiplier += .5
+#						multipliers.append(BattleDictionary.STATUS.PHYSICALDEFENSEDOWN2)
+#				BattleDictionary.STATUS.MAGICDEFENSEDOWN:
+#					if agent.card_type == 2:
+#						attack_multiplier += .25
+#						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEDOWN)
+#				BattleDictionary.STATUS.MAGICDEFENSEDOWN2:
+#					if agent.card_type == 2:
+#						attack_multiplier += .5
+#						multipliers.append(BattleDictionary.STATUS.MAGICDEFENSEDOWN2)
+#				BattleDictionary.STATUS.FIREDEFENSEDOWN:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 1:
+#							attack_multiplier += .25
+#							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEDOWN)
+#				BattleDictionary.STATUS.FIREDEFENSEDOWN2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 1:
+#							attack_multiplier += .5
+#							multipliers.append(BattleDictionary.STATUS.FIREDEFENSEDOWN2)
+#				BattleDictionary.STATUS.ICEDEFENSEDOWN:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 2:
+#							attack_multiplier += .25
+#							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEDOWN)
+#				BattleDictionary.STATUS.ICEDEFENSEDOWN2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 2:
+#							attack_multiplier += .5
+#							multipliers.append(BattleDictionary.STATUS.ICEDEFENSEDOWN2)
+#				BattleDictionary.STATUS.ELECTRICDEFENSEDOWN:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 3:
+#							attack_multiplier += .25
+#							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEDOWN)
+#				BattleDictionary.STATUS.ELECTRICDEFENSEDOWN2:
+#					for element in agent.elements[agent.card_level]:
+#						if element == 3:
+#							attack_multiplier += .5
+#							multipliers.append(BattleDictionary.STATUS.ELECTRICDEFENSEDOWN2)
+#
+#	for status in agent.card_caster.statuses:
+#		match status[0]:
+#	#------------------------------ STRENGTH --------------------------------------#
+#			BattleDictionary.STATUS.PHYSICALATTACKUP:
+#				if agent.card_type == 1:
+#					attack_multiplier += .25
+#					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKUP)
+#			BattleDictionary.STATUS.PHYSICALATTACKUP2:
+#				if agent.card_type == 1:
+#					attack_multiplier += .50
+#					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKUP2)
+#			BattleDictionary.STATUS.MAGICATTACKUP:
+#				if agent.card_type == 2:
+#					attack_multiplier += .25
+#					multipliers.append(BattleDictionary.STATUS.MAGICATTACKUP)
+#			BattleDictionary.STATUS.MAGICATTACKUP2:
+#				if agent.card_type == 2:
+#					attack_multiplier += .5
+#					multipliers.append(BattleDictionary.STATUS.MAGICATTACKUP2)
+#			BattleDictionary.STATUS.FIREATTACKUP:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 1:
+#						attack_multiplier += .25
+#						multipliers.append(BattleDictionary.STATUS.FIREATTACKUP)
+#			BattleDictionary.STATUS.FIREATTACKUP2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 1:
+#						attack_multiplier += .5
+#						multipliers.append(BattleDictionary.STATUS.FIREATTACKUP2)
+#			BattleDictionary.STATUS.ICEATTACKUP:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 2:
+#						attack_multiplier += .25
+#						multipliers.append(BattleDictionary.STATUS.ICEATTACKUP)
+#			BattleDictionary.STATUS.ICEATTACKUP2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 2:
+#						attack_multiplier += .5
+#						multipliers.append(BattleDictionary.STATUS.ICEATTACKUP2)
+#			BattleDictionary.STATUS.ELECTRICATTACKUP:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 3:
+#						attack_multiplier += .25
+#						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKUP)
+#			BattleDictionary.STATUS.ELECTRICATTACKUP2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 3:
+#						attack_multiplier += .5
+#						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKUP2)
+#	#------------------------------ WEAKNESSES-------------------------------------#
+#			BattleDictionary.STATUS.PHYSICALATTACKDOWN:
+#				if agent.card_type == 1:
+#					attack_multiplier -= .25
+#					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKDOWN)
+#			BattleDictionary.STATUS.PHYSICALATTACKDOWN2:
+#				if agent.card_type == 1:
+#					attack_multiplier -= .50
+#					multipliers.append(BattleDictionary.STATUS.PHYSICALATTACKDOWN2)
+#			BattleDictionary.STATUS.MAGICATTACKDOWN:
+#				if agent.card_type == 2:
+#					attack_multiplier -= .25
+#					multipliers.append(BattleDictionary.STATUS.MAGICATTACKDOWN)
+#			BattleDictionary.STATUS.MAGICATTACKDOWN2:
+#				if agent.card_type == 2:
+#					attack_multiplier -= .5
+#					multipliers.append(BattleDictionary.STATUS.MAGICATTACKDOWN2)
+#			BattleDictionary.STATUS.FIREATTACKDOWN:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 1:
+#						attack_multiplier -= .25
+#						multipliers.append(BattleDictionary.STATUS.FIREATTACKDOWN)
+#			BattleDictionary.STATUS.FIREATTACKDOWN2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 1:
+#						attack_multiplier -= .5
+#						multipliers.append(BattleDictionary.STATUS.FIREATTACKDOWN2)
+#			BattleDictionary.STATUS.ICEATTACKDOWN:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 2:
+#						attack_multiplier -= .25
+#						multipliers.append(BattleDictionary.STATUS.ICEATTACKDOWN)
+#			BattleDictionary.STATUS.ICEATTACKDOWN2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 2:
+#						attack_multiplier -= .5
+#						multipliers.append(BattleDictionary.STATUS.ICEATTACKDOWN2)
+#			BattleDictionary.STATUS.ELECTRICATTACKDOWN:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 3:
+#						attack_multiplier -= .25
+#						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKDOWN)
+#			BattleDictionary.STATUS.ELECTRICATTACKDOWN2:
+#				for element in agent.elements[agent.card_level]:
+#					if element == 3:
+#						attack_multiplier -= .5
+#						multipliers.append(BattleDictionary.STATUS.ELECTRICATTACKDOWN2)
+#	blackboard.set_data("attack_multiplier", attack_multiplier)
 
 func resetMultipliers() -> void:
 	multipliers = []

@@ -9,6 +9,7 @@ const CARD_SAVE_DIR:String = "user://cards/"
 var card_list_file:String = "card_list.dat"
 var card_id
 var unique_id
+var item:Dictionary
 export var card_name:String
 enum CARD_CLASS {WARRIOR,RANGER,MAGE,WARRIORRANGER,RANGERMAGE,MAGEWARRIOR,ALL}
 export(CARD_CLASS) var card_class
@@ -16,14 +17,17 @@ export var action_costs:PoolByteArray = [1,1,1]
 export var card_level:int = 0
 export var upgrade_costs:PoolByteArray = []
 export var card_art:String
-enum CARD_TYPE {SKILL,PHYSICALATTACK,MAGICATTACK,MAGICSPELL,ITEM}
+export var card_icon:String
+enum CARD_TYPE {OFFENSE,DEFENSE,UTILITY}
 export(CARD_TYPE) var card_type
+export var item_type:Array = []
 export var can_attack:PoolByteArray = []
 export var can_defend:PoolByteArray = []
 export var need_los:PoolByteArray = [] # check if this card needs line of sight (los)
 export var is_homing:PoolByteArray = [] # check if this card can home in on target
 export var has_combo:PoolByteArray = [] # check if this card can combo
 export var is_piercing:PoolByteArray = [] # check if this card is piercing
+export var is_shattering:PoolByteArray = [] # check if this card is piercing
 export var is_consumable:PoolByteArray = [] # decide if card is consumed
 export var has_counter:PoolByteArray = [] # decide if card has counter
 export var has_reflex:PoolByteArray = [] # decide if card has reflex
@@ -40,11 +44,15 @@ export var card_max_range:PoolByteArray = [0,0,0]
 export var card_up_vertical_range:PoolByteArray = [0,0,0]
 export var card_down_vertical_range:PoolByteArray = [0,0,0]
 export var card_attack:PoolByteArray = [0,0,0]
+export var card_added_accuracy:PoolByteArray = [0,0,0]
+export var card_added_crit_accuracy:PoolByteArray = [0,0,0]
 export var card_animation:Array = []
 export var card_animation_left_weapon:Array = []
 export var card_animation_right_weapon:Array = []
 export var card_animation_projectile:Array = []
 export var card_counter_anim_tandem:Array = []
+export var bypass_popup:bool
+export var ignore_item_stats:bool
 export var elements:Array = [[BattleDictionary.ELEMENT.NONE,BattleDictionary.ELEMENT.NONE,BattleDictionary.ELEMENT.NONE]]
 #enum ELEMENTS {NONE,FIRE,ICE,ELECTRIC}
 var utility_value:int
@@ -82,19 +90,23 @@ func export_vars() -> Dictionary:
 		"card_id": card_id,
 		"unique_id": unique_id,
 		"card_name": card_name,
+		"item": item,
 		"card_owner": card_owner,
 		"card_class": card_class,
 		"action_costs": action_costs,
 		"card_level": card_level,
 		"upgrade_costs": upgrade_costs,
 		"card_art": card_art,
+		"card_icon": card_icon,
 		"card_type": card_type,
+		"item_type": item_type,
 		"can_attack": can_attack,
 		"can_defend": can_defend,
 		"need_los": need_los,
 		"is_homing": is_homing,
 		"has_combo": has_combo,
 		"is_piercing": is_piercing,
+		"is_shattering": is_shattering,
 		"is_consumable": is_consumable,
 		"has_counter": has_counter,
 		"has_reflex": has_reflex,
@@ -111,6 +123,8 @@ func export_vars() -> Dictionary:
 		"card_up_vertical_range": card_up_vertical_range,
 		"card_down_vertical_range": card_down_vertical_range,
 		"card_attack": card_attack,
+		"card_added_accuracy": card_added_accuracy,
+		"card_added_crit_accuracy": card_added_crit_accuracy,
 		"card_caster": card_caster,
 		"source_cell": source_cell,
 		"target_unit": target_unit,
@@ -119,6 +133,8 @@ func export_vars() -> Dictionary:
 		"card_animation_left_weapon": card_animation_left_weapon,
 		"card_animation_right_weapon": card_animation_right_weapon,
 		"card_animation_projectile": card_animation_projectile,
+		"bypass_popup": bypass_popup,
+		"ignore_item_stats": ignore_item_stats,
 		"elements": elements,
 		"behavior_trees": behavior_trees,
 		"original_card_values": original_card_values
@@ -127,6 +143,8 @@ func export_vars() -> Dictionary:
 
 func load_card(card_data:Dictionary):
 	card_id = self
+	ignore_item_stats = card_data.get("ignore_item_stats")
+	item = card_data.get("item")
 	unique_id = card_data.get("unique_id")
 	card_name = card_data.get("card_name")
 	card_owner = card_data.get("card_owner")
@@ -135,13 +153,16 @@ func load_card(card_data:Dictionary):
 	card_level = card_data.get("card_level")
 	upgrade_costs = card_data.get("upgrade_costs")
 	card_art = CARD_ART_DIR + card_data.get("card_art")
+	card_icon = card_data.get("card_icon")
 	card_type = card_data.get("card_type")
+	item_type = card_data.get("item_type")
 	can_attack = card_data.get("can_attack")
 	can_defend = card_data.get("can_defend")
 	need_los = card_data.get("need_los")
 	is_homing = card_data.get("is_homing")
 	has_combo = card_data.get("has_combo")
 	is_piercing = card_data.get("is_piercing")
+	is_shattering = card_data.get("is_shattering")
 	is_consumable = card_data.get("is_consumable")
 	has_counter = card_data.get("has_counter")
 	has_reflex = card_data.get("has_reflex")
@@ -158,6 +179,8 @@ func load_card(card_data:Dictionary):
 	card_up_vertical_range = card_data.get("card_up_vertical_range")
 	card_down_vertical_range = card_data.get("card_down_vertical_range")
 	card_attack = card_data.get("card_attack")
+	card_added_accuracy = card_data.get("card_added_accuracy")
+	card_added_crit_accuracy = card_data.get("card_added_crit_accuracy")
 	if card_data.get("card_animation") != null:
 		card_animation = card_data.get("card_animation")
 	if card_data.get("card_animation_left_weapon") != null:
@@ -166,6 +189,7 @@ func load_card(card_data:Dictionary):
 		card_animation_right_weapon = card_data.get("card_animation_right_weapon")
 	if card_data.get("card_animation_projectile") != null:
 		card_animation_projectile = card_data.get("card_animation_projectile")
+	bypass_popup = card_data.get("bypass_popup")
 	elements = card_data.get("elements")
 	behavior_trees = card_data.get("behavior_trees")
 	original_card_values = card_data.get("original_card_values")
@@ -242,7 +266,7 @@ func load_behavior_tree_item(parent, bt_node_array) -> void:
 					parent.add_child(bt_decorator)
 					new_parent = bt_decorator
 				"BTCheckLastCard":
-					var bt_decorator = BTConditional.new()
+					var bt_decorator = BTCheckLastCard.new()
 					bt_decorator.name = bt_decorator.get_class()
 					bt_decorator.card_source = bt_node_array[bt_node+1]
 					bt_decorator.target_condition = bt_node_array[bt_node+2]
@@ -254,6 +278,13 @@ func load_behavior_tree_item(parent, bt_node_array) -> void:
 					bt_decorator.name = bt_decorator.get_class()
 					bt_decorator.comparison = bt_node_array[bt_node+1]
 					bt_decorator.array_check = bt_node_array[bt_node+2]
+					parent.add_child(bt_decorator)
+					new_parent = bt_decorator
+				"BTPercentSucceed":
+					var bt_decorator = BTPercentSucceed.new()
+					bt_decorator.name = bt_decorator.get_class()
+					bt_decorator.success_rate = bt_node_array[bt_node+1]
+					bt_decorator.int_arg = bt_node_array[bt_node+2]
 					parent.add_child(bt_decorator)
 					new_parent = bt_decorator
 				#Leaves
@@ -452,7 +483,6 @@ func execute(is_real:bool, initial_cast:bool = false) -> void:
 #				var stat:String = key.right(12)
 #				prints(stat,card_caster.get(stat),blackboard.get_data(key))
 #				utility_value += blackboard.get_data(key) - card_caster.get(stat)
-	print(utility_value)
 
 #if blackboard.has_data("caster_strength"):
 #	print(blackboard.get_data("caster_strength"))

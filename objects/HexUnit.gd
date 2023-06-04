@@ -43,8 +43,6 @@ signal reaction_complete()
 # warning-ignore:unused_signal
 signal blocked(card,amount) #
 # warning-ignore:unused_signal
-signal deflected(card,amount) #
-# warning-ignore:unused_signal
 signal evaded(card) #
 # warning-ignore:unused_signal
 signal missed(card) #
@@ -151,7 +149,6 @@ var current_crit_evasion:float
 var experience:int
 var level:int
 var block:int
-var deflect:int
 var strength:int
 var willpower:int
 var has_combo:bool
@@ -189,7 +186,7 @@ func getDeckSpeed() -> float:
 						deck_AP += max(action_costs[proficiency_value-1],1)
 			else:
 				deck_AP += max(action_costs[0],1)
-		if deck_AP == 0:
+		if deck_AP < 1:
 			deck_AP = 1
 		deck_speed = (max_action_points / (deck_AP / deck.size())) / 2
 	return deck_speed
@@ -630,7 +627,7 @@ func save() -> Dictionary:
 		"level" : level,
 		"traits" : traits,
 		"block" : block,
-		"deflect" : deflect,
+		#"deflect" : deflect,
 #		"statuses" : statuses.duplicate(),
 		"proficiencies" : proficiencies,
 		"player_owned" : player_owned,
@@ -710,7 +707,7 @@ func loadData(data):
 	experience = data.get("experience")
 	level = data.get("level")
 	block = data.get("block")
-	deflect = data.get("deflect")
+	#deflect = data.get("deflect")
 	traits = data.get("traits")
 	
 #	statuses = data.get("statuses")
@@ -789,12 +786,12 @@ func basicLoadData(map_player_data):
 		current_crit_damage = unit_data.get("current_crit_damage")
 		base_crit_chance = unit_data.get("base_crit_chance")
 		current_crit_chance = unit_data.get("current_crit_chance")
-		base_crit_evasion = unit_data.get("base_crit_evasion")
-		current_crit_evasion = unit_data.get("current_crit_evasion")
+		#base_crit_evasion = unit_data.get("base_crit_evasion")
+		#current_crit_evasion = unit_data.get("current_crit_evasion")
 		experience = unit_data.get("experience")
 		level = unit_data.get("level")
 		block = unit_data.get("block")
-		deflect = unit_data.get("deflect")
+		#deflect = unit_data.get("deflect")
 		traits = unit_data.get("traits")
 #		statuses = unit_data.get("statuses")
 		proficiencies = unit_data.get("proficiencies")
@@ -846,22 +843,22 @@ func countdownStatuses() -> void:
 				statuses.remove(i)
 
 func setupTurn() -> void:
-	if block / 2 < 2:
-		block = 0
-	else:
-		block = floor(block / 2)
-	if deflect / 2 < 2:
-		deflect = 0
-	else:
-		deflect  = floor(deflect / 2)
-	if strength / 2 < 2:
-		strength = 0
-	else:
-		strength  = floor(strength / 2)
-	if willpower / 2 < 2:
-		willpower = 0
-	else:
-		willpower = floor(willpower / 2)
+#	if block / 2 < 2:
+#		block = 0
+#	else:
+#		block = floor(block / 2)
+#	if deflect / 2 < 2:
+#		deflect = 0
+#	else:
+#		deflect  = floor(deflect / 2)
+#	if strength / 2 < 2:
+#		strength = 0
+#	else:
+#		strength  = floor(strength / 2)
+#	if willpower / 2 < 2:
+#		willpower = 0
+#	else:
+#		willpower = floor(willpower / 2)
 	has_combo = false
 	current_action_points = min(current_action_points+1, max_action_points)
 	current_draw_points = base_draw_points
@@ -907,7 +904,8 @@ func _on_HexUnit_reflex_targeted(unit,player,card_info,from,to): #self,unit_owne
 #		yield(battle_controller,"turn_ready")
 		emit_signal("reflex_reacted", card_info)
 		battle_controller.stack.push_front([self,unit_owner,reaction.duplicate(true),currentCell,from,true])
-		reaction.action_costs[reaction.card_level] -= 1
+		if !reaction.has_counter[reaction.card_level]:
+			reaction.action_costs[reaction.card_level] -= 1
 		discard_deck.append(reaction.duplicate(true))
 		reaction.clear()
 	elif reaction.card_max_range[reaction.card_level] == 0:
@@ -915,7 +913,8 @@ func _on_HexUnit_reflex_targeted(unit,player,card_info,from,to): #self,unit_owne
 #		yield(battle_controller,"turn_ready")
 		emit_signal("reflex_reacted", card_info)
 		battle_controller.stack.push_front([self,unit_owner,reaction.duplicate(true),currentCell,from,true])
-		reaction.action_costs[reaction.card_level] -= 1
+		if !reaction.has_counter[reaction.card_level]:
+			reaction.action_costs[reaction.card_level] -= 1
 		discard_deck.append(reaction.duplicate(true))
 		reaction.clear()
 	else:

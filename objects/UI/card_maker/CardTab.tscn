@@ -9,8 +9,8 @@
 [node name="CardTab" type="Panel"]
 anchor_right = 0.428
 anchor_bottom = 0.567
-margin_right = 0.159973
-margin_bottom = -0.23999
+margin_right = -242.76
+margin_bottom = 276.64
 rect_min_size = Vector2( 548, 0 )
 theme = ExtResource( 1 )
 custom_styles/panel = ExtResource( 2 )
@@ -25,16 +25,15 @@ margin_right = -8.0
 margin_bottom = -8.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-margin_right = 516.0
-margin_bottom = 788.0
+margin_right = 559.0
+margin_bottom = 838.0
 rect_min_size = Vector2( 516, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 516.0
+margin_right = 559.0
 margin_bottom = 19.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer5"]
@@ -51,18 +50,19 @@ __meta__ = {
 }
 
 [node name="ActionCost" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_right = 516.0
-margin_bottom = 19.0
+margin_top = 25.0
+margin_right = 559.0
+margin_bottom = 44.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/ActionCost"]
-margin_right = 103.0
+margin_right = 51.0
 margin_bottom = 19.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Action Cost (AP)"
+text = "AP Cost"
 
 [node name="ActionCost" type="SpinBox" parent="ScrollContainer/VBoxContainer/ActionCost"]
-margin_left = 109.0
-margin_right = 173.0
+margin_left = 57.0
+margin_right = 121.0
 margin_bottom = 19.0
 max_value = 1000.0
 value = 1.0
@@ -71,9 +71,9 @@ __meta__ = {
 }
 
 [node name="Damage" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 25.0
-margin_right = 516.0
-margin_bottom = 44.0
+margin_top = 50.0
+margin_right = 559.0
+margin_bottom = 69.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Damage"]
 margin_right = 52.0
@@ -88,15 +88,16 @@ margin_bottom = 19.0
 hint_tooltip = "Base damage dealt to target. (Negative values will heal target)"
 min_value = -1000.0
 max_value = 1000.0
+step = 0.01
 value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Delay" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 50.0
-margin_right = 516.0
-margin_bottom = 69.0
+margin_top = 75.0
+margin_right = 559.0
+margin_bottom = 94.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Delay"]
 margin_right = 72.0
@@ -115,9 +116,9 @@ __meta__ = {
 }
 
 [node name="Range" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 75.0
-margin_right = 516.0
-margin_bottom = 94.0
+margin_top = 100.0
+margin_right = 559.0
+margin_bottom = 119.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Range"]
 margin_right = 67.0
@@ -156,9 +157,9 @@ __meta__ = {
 }
 
 [node name="VerticalRange" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 100.0
-margin_right = 516.0
-margin_bottom = 119.0
+margin_top = 125.0
+margin_right = 559.0
+margin_bottom = 144.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VerticalRange"]
 margin_right = 115.0
@@ -198,10 +199,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CardAddedAccuracy" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 559.0
+margin_bottom = 169.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/CardAddedAccuracy"]
+margin_right = 127.0
+margin_bottom = 19.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Additional Accuracy"
+
+[node name="AddedAccuracy" type="SpinBox" parent="ScrollContainer/VBoxContainer/CardAddedAccuracy"]
+margin_left = 133.0
+margin_right = 197.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="ScrollContainer/VBoxContainer/CardAddedAccuracy"]
+margin_left = 203.0
+margin_right = 207.0
+margin_bottom = 19.0
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/CardAddedAccuracy"]
+margin_left = 213.0
+margin_right = 368.0
+margin_bottom = 19.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Additional Crit Accuracy"
+
+[node name="AddedCritAccuracy" type="SpinBox" parent="ScrollContainer/VBoxContainer/CardAddedAccuracy"]
+margin_left = 374.0
+margin_right = 438.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GridContainer2" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 125.0
-margin_right = 516.0
-margin_bottom = 144.0
+margin_top = 175.0
+margin_right = 559.0
+margin_bottom = 194.0
 
 [node name="AddPrerequisite" type="Button" parent="ScrollContainer/VBoxContainer/GridContainer2"]
 margin_right = 115.0
@@ -223,9 +263,9 @@ margin_bottom = 19.0
 text = "Value:"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 150.0
-margin_right = 516.0
-margin_bottom = 169.0
+margin_top = 200.0
+margin_right = 559.0
+margin_bottom = 219.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer4"]
 margin_right = 89.0
@@ -251,9 +291,9 @@ margin_bottom = 19.0
 text = "Card Element 3"
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 175.0
-margin_right = 516.0
-margin_bottom = 194.0
+margin_top = 225.0
+margin_right = 559.0
+margin_bottom = 244.0
 
 [node name="AddSelfStatus" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer6"]
 margin_right = 107.0
@@ -261,9 +301,9 @@ margin_bottom = 19.0
 text = "Add Self Status"
 
 [node name="SelfDuration" type="Label" parent="ScrollContainer/VBoxContainer"]
-margin_top = 200.0
-margin_right = 516.0
-margin_bottom = 219.0
+margin_top = 250.0
+margin_right = 559.0
+margin_bottom = 269.0
 text = "Duration:"
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
@@ -276,9 +316,9 @@ rect_min_size = Vector2( 0, 28 )
 mouse_filter = 2
 
 [node name="HBoxContainer7" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 225.0
-margin_right = 516.0
-margin_bottom = 244.0
+margin_top = 275.0
+margin_right = 559.0
+margin_bottom = 294.0
 
 [node name="AddTargetStatus" type="Button" parent="ScrollContainer/VBoxContainer/HBoxContainer7"]
 margin_right = 124.0
@@ -286,9 +326,9 @@ margin_bottom = 19.0
 text = "Add Target Status"
 
 [node name="TargetDuration" type="Label" parent="ScrollContainer/VBoxContainer"]
-margin_top = 250.0
-margin_right = 516.0
-margin_bottom = 269.0
+margin_top = 300.0
+margin_right = 559.0
+margin_bottom = 319.0
 text = "Duration:"
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
@@ -301,93 +341,105 @@ rect_min_size = Vector2( 0, 28 )
 mouse_filter = 2
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 275.0
-margin_right = 516.0
-margin_bottom = 340.0
+margin_top = 325.0
+margin_right = 559.0
+margin_bottom = 390.0
 columns = 4
 
 [node name="Action" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_right = 109.0
+margin_right = 126.0
 margin_bottom = 19.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 pressed = true
 text = "Action"
 
 [node name="Reaction" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 113.0
-margin_right = 197.0
+margin_left = 130.0
+margin_right = 239.0
 margin_bottom = 19.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Reaction"
 
 [node name="NeedLOS" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 201.0
-margin_right = 362.0
+margin_left = 243.0
+margin_right = 394.0
 margin_bottom = 19.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 pressed = true
 text = "Needs Line of Sight"
 
 [node name="Piercing" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 366.0
-margin_right = 492.0
+margin_left = 398.0
+margin_right = 559.0
 margin_bottom = 19.0
+hint_tooltip = "Ignore Block"
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Piercing"
 
-[node name="Consume" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
+[node name="Shattering" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
 margin_top = 23.0
-margin_right = 109.0
+margin_right = 126.0
+margin_bottom = 42.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Shattering"
+__meta__ = {
+"_editor_description_": "Damage target's block and health."
+}
+
+[node name="Consume" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_left = 130.0
+margin_top = 23.0
+margin_right = 239.0
 margin_bottom = 42.0
 text = "Consumable"
 
 [node name="Homing" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 113.0
+margin_left = 243.0
 margin_top = 23.0
-margin_right = 197.0
+margin_right = 394.0
 margin_bottom = 42.0
 text = "Homing"
 
 [node name="Combo" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 201.0
+margin_left = 398.0
 margin_top = 23.0
-margin_right = 362.0
+margin_right = 559.0
 margin_bottom = 42.0
 text = "Combo"
 
 [node name="SelfEliminating" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 366.0
-margin_top = 23.0
-margin_right = 492.0
-margin_bottom = 42.0
+margin_top = 46.0
+margin_right = 126.0
+margin_bottom = 65.0
 text = "Self Eliminating"
 
 [node name="Counter" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_left = 130.0
 margin_top = 46.0
-margin_right = 109.0
+margin_right = 239.0
 margin_bottom = 65.0
 disabled = true
 text = "Counter"
 
 [node name="Reflex" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 113.0
+margin_left = 243.0
 margin_top = 46.0
-margin_right = 197.0
+margin_right = 394.0
 margin_bottom = 65.0
 disabled = true
 text = "Reflex"
 
 [node name="HexagonalTargeting" type="CheckBox" parent="ScrollContainer/VBoxContainer/GridContainer"]
-margin_left = 201.0
+margin_left = 398.0
 margin_top = 46.0
-margin_right = 362.0
+margin_right = 559.0
 margin_bottom = 65.0
 text = "Hexagonal Targeting"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 346.0
-margin_right = 516.0
-margin_bottom = 365.0
+margin_top = 396.0
+margin_right = 559.0
+margin_bottom = 415.0
 
 [node name="Animation" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_right = 64.0
@@ -422,9 +474,9 @@ disabled = true
 text = "Counter Anim Tandem"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 371.0
-margin_right = 516.0
-margin_bottom = 390.0
+margin_top = 421.0
+margin_right = 559.0
+margin_bottom = 440.0
 
 [node name="LeftHandWeapon" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer3"]
 margin_right = 121.0
@@ -452,24 +504,23 @@ margin_bottom = 19.0
 script = ExtResource( 5 )
 
 [node name="DescriptionLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
-margin_top = 396.0
-margin_right = 516.0
-margin_bottom = 415.0
+margin_top = 446.0
+margin_right = 559.0
+margin_bottom = 465.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Description Text"
 
 [node name="Description" type="TextEdit" parent="ScrollContainer/VBoxContainer"]
-margin_top = 421.0
-margin_right = 516.0
-margin_bottom = 501.0
+margin_top = 471.0
+margin_right = 559.0
+margin_bottom = 551.0
 rect_min_size = Vector2( 0, 80 )
-text = "Description"
 wrap_enabled = true
 
 [node name="BehaviorTree" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 507.0
-margin_right = 516.0
-margin_bottom = 526.0
+margin_top = 557.0
+margin_right = 559.0
+margin_bottom = 576.0
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -505,9 +556,9 @@ text = "Print Tree"
 
 [node name="Tree" type="Tree" parent="ScrollContainer/VBoxContainer"]
 pause_mode = 2
-margin_top = 532.0
-margin_right = 516.0
-margin_bottom = 788.0
+margin_top = 582.0
+margin_right = 559.0
+margin_bottom = 838.0
 rect_min_size = Vector2( 0, 256 )
 __meta__ = {
 "_edit_use_anchors_": false

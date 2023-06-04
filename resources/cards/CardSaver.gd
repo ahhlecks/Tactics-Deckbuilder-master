@@ -21,7 +21,7 @@ export var can_defend:PoolByteArray = []
 export var need_los:PoolByteArray = [] # check if this card needs line of sight (los)
 export var is_homing:PoolByteArray = [] # check if this card needs line of sight (los)
 export var is_unblockable:PoolByteArray = [] # check if this card is unblockable
-export var is_undeflectable:PoolByteArray = [] # check if this card is undeflectable
+#export var is_undeflectable:PoolByteArray = [] # check if this card is undeflectable
 export var is_consumable:PoolByteArray = [] # decide if card is consumed
 export var has_counter:PoolByteArray = [] # decide if card has counter
 export var has_reflex:PoolByteArray = [] # decide if card has reflex counter
@@ -116,7 +116,7 @@ func save_card() -> Dictionary:
 		"need_los" : need_los,
 		"is_homing" : is_homing,
 		"is_unblockable" : is_unblockable,
-		"is_undeflectable" : is_undeflectable,
+#		"is_undeflectable" : is_undeflectable,
 		"is_consumable" : is_consumable,
 		"has_counter" : has_counter,
 		"has_reflex": has_reflex,
@@ -156,7 +156,7 @@ func load_card(card_data:Dictionary):
 	need_los = card_data.get("need_los")
 	is_homing = card_data.get("is_homing")
 	is_unblockable = card_data.get("is_unblockable")
-	is_undeflectable = card_data.get("is_undeflectable")
+#	is_undeflectable = card_data.get("is_undeflectable")
 	is_consumable = card_data.get("is_consumable")
 	has_counter = card_data.get("has_counter")
 	has_reflex = card_data.get("has_reflex")

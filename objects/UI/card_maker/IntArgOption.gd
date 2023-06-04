@@ -1,6 +1,5 @@
 extends OptionButton
 
-
 class_name IntArgOption
 
 func get_class(): return "IntArgOption"
@@ -12,6 +11,7 @@ func _ready():
 	add_item("int_arg2")
 
 func loadValues(values:Array):
+	print(values)
 	var index:int = 0
 	match values[0]:
 		"SetIntArg":

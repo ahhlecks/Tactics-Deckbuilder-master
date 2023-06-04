@@ -14,11 +14,6 @@ var prev_pushed_targets:Array
 
 
 func _tick(agent: Node, blackboard: Blackboard) -> bool:
-	
-	if blackboard.has_data("targets"):
-		targets = blackboard.get_data("targets")
-	else:
-		targets = [agent.target_cell]
 	if blackboard.has_data("targets"):
 		targets = blackboard.get_data("targets")
 	elif agent.target_cell == null:
@@ -51,25 +46,26 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 						targets.erase(target)
 	if targets.size() == 0:
 		return fail()
-	var startCell = agent.target_cell
-	if startCell == null or startCell.get_class() != "HexCell":
-		return fail()
+#	var startCell = agent.target_cell
+#	if startCell == null or startCell.get_class() != "HexCell":
+#		return fail()
 	
 #	elif agent.hexagonal_targeting[agent.card_level] or (agent.card_min_range[agent.card_level] == 1 and agent.card_max_range[agent.card_level] == 1):
 #		return succeed()
 	
-	for i in targets.size():
-		if !(targets[i].cubeCoordinates.x != agent.card_caster.cubeCoordinates.x and targets[i].cubeCoordinates.y != agent.card_caster.cubeCoordinates.y and targets[i].cubeCoordinates.z != agent.card_caster.cubeCoordinates.z):
-			push_targets.append(targets[i])
-	if push_targets.size() == 0:
-		return fail()
-	
+#	for i in targets.size():
+#		if !(targets[i].cubeCoordinates.x != agent.card_caster.cubeCoordinates.x and targets[i].cubeCoordinates.y != agent.card_caster.cubeCoordinates.y and targets[i].cubeCoordinates.z != agent.card_caster.cubeCoordinates.z):
+#			push_targets.append(targets[i])
+#	if push_targets.size() == 0:
+#		return fail()
+
 	if agent.behavior_tree.is_real:
 		for i in range(3): #three maximum layers of push possible
-			for target in push_targets:
+			for target in targets:
 				if target.unit != null and !prev_pushed_targets.has(target.unit):
-					if target.cubeCoordinates.x == agent.card_caster.cubeCoordinates.x: #x-axis
-						if target.cubeCoordinates.y > agent.card_caster.cubeCoordinates.y: #+y -z
+					
+					if target.cubeCoordinates.x == agent.card_caster.currentCell.cubeCoordinates.x: #x-axis
+						if target.cubeCoordinates.y > agent.card_caster.currentCell.cubeCoordinates.y: #+y -z
 							var to_coordinates:Vector3 = Vector3(target.cubeCoordinates.x,target.cubeCoordinates.y+strength,target.cubeCoordinates.z-strength)
 							var to_cell:HexCell = target.grid.findCubeHex(to_coordinates)
 							target.unit.pushTo(to_cell)
@@ -79,8 +75,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							var to_cell:HexCell = target.grid.findCubeHex(to_coordinates)
 							target.unit.pushTo(to_cell)
 							prev_pushed_targets.append(target.unit)
-					if target.cubeCoordinates.y == agent.card_caster.cubeCoordinates.y: #y-axis
-						if target.cubeCoordinates.x > agent.card_caster.cubeCoordinates.x: #+x -z
+					if target.cubeCoordinates.y == agent.card_caster.currentCell.cubeCoordinates.y: #y-axis
+						if target.cubeCoordinates.x > agent.card_caster.currentCell.cubeCoordinates.x: #+x -z
 							var to_coordinates:Vector3 = Vector3(target.cubeCoordinates.x+strength,target.cubeCoordinates.y,target.cubeCoordinates.z-strength)
 							var to_cell:HexCell = target.grid.findCubeHex(to_coordinates)
 							target.unit.pushTo(to_cell)
@@ -90,8 +86,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							var to_cell:HexCell = target.grid.findCubeHex(to_coordinates)
 							target.unit.pushTo(to_cell)
 							prev_pushed_targets.append(target.unit)
-					if target.cubeCoordinates.z == agent.card_caster.cubeCoordinates.z: #y-axis
-						if target.cubeCoordinates.x > agent.card_caster.cubeCoordinates.x: #+x -y
+					if target.cubeCoordinates.z == agent.card_caster.currentCell.cubeCoordinates.z: #y-axis
+						if target.cubeCoordinates.x > agent.card_caster.currentCell.cubeCoordinates.x: #+x -y
 							var to_coordinates:Vector3 = Vector3(target.cubeCoordinates.x+strength,target.cubeCoordinates.y-strength,target.cubeCoordinates.z)
 							var to_cell:HexCell = target.grid.findCubeHex(to_coordinates)
 							target.unit.pushTo(to_cell)

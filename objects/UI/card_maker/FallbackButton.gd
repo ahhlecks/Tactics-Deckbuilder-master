@@ -1,6 +1,5 @@
 extends CheckButton
 
-
 class_name FallbackButton
 
 func get_class(): return "FallbackButton"

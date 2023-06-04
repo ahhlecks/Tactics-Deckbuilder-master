@@ -15,11 +15,15 @@ var path:String = "res://resources/cards/BattleDictionary.json"
 var unitChoices:Array = ["Self Unit", "Target Unit", "Effected Targets", "All Targets"]
 var cellChoices:Array = ["Self Cell", "Target Cell", "Effected Cells", "All Cells"]
 
+var item_type:Array = ["None", "Unarmed", "Sword", "Dagger", "Bludgeon", "Axe", "Polearm", "Gloves",
+ "Bow", "Staff", "Tome", "Magic", "Shield", "Heavy Headwear", "Light Headwear",
+ "Heavy Armor", "Medium Armor", "Light Armor", "Heavy Boots", "Light Boots"]
+
 enum PLAYER {SELF, ALLY, ENEMY}
 
 enum CARD_CLASS {WARRIOR,RANGER,MAGE,WARRIORRANGER,RANGERMAGE,MAGEWARRIOR,ALL}
 
-enum CARD_TYPE {SKILL,PHYSICALATTACK,MAGICATTACK,MAGICSPELL,ITEM}
+enum CARD_TYPE {OFFENSE,DEFENSE,UTILITY}
 
 enum TRIGGER {UNIT_MOVED, UNIT_ACTED, UNIT_DIED, TURN_ENDED, SELF_TURN_ENDED, ENEMY_TURN_ENDED,
 		TURN_STARTED, SELF_TURN_STARTED, ENEMY_TURN_STARTED}
@@ -48,7 +52,7 @@ enum ELEMENT {NONE,FIRE,ICE,ELECTRIC,LIGHT,DARK}
 enum WIN_CONDITION {KILLALLENEMIES,KILLNUMENEMIES,REACHLOCATION,REACHLOCATIONNUMTURNS,KILLUNIT,REVIVEUNIT}
 
 enum PARAMETER {INT, UINT, CARD_NAME, CARD_SOURCE, FALLBACK, INT_SOURCE, TARGET_SOURCE, TARGET_CALCULATION, TARGET_CONDITION, OPERATION, COMPARISON, ARRAY_CHECK, INT_ARG,
-		UNIT_VARIABLE, UNIT_DECK, VALID_TARGETS, CARD_VARIABLE, UNIT_COST_VARIABLE, PLAYER_VARIABLE, UNIT_INT_VARIABLE, UNIT_INT_MODIFIABLE, STATUS}
+		UNIT_VARIABLE, UNIT_DECK, VALID_TARGETS, CARD_VARIABLE, UNIT_COST_VARIABLE, PLAYER_VARIABLE, UNIT_INT_VARIABLE, UNIT_INT_MODIFIABLE, STATUS, FLOAT}
 
 # [Parameter ID, Parameter Description, Parameter Size]
 
@@ -74,7 +78,8 @@ var valid_parameters:Array = [
 	[PARAMETER.PLAYER_VARIABLE, "Player Variable"],
 	[PARAMETER.UNIT_INT_VARIABLE, "Player Integer Variable"],
 	[PARAMETER.UNIT_INT_MODIFIABLE, "Player Integer Variable"],
-	[PARAMETER.STATUS, "Status"]
+	[PARAMETER.STATUS, "Status"],
+	[PARAMETER.FLOAT, "Float"]
 ]
 
 var valid_bt_composites:Array = [
@@ -92,6 +97,7 @@ var valid_bt_decorators:Array = [
 	["BTRepeatUntil", "Repeats until specified state is returned, then sets state to child state.", [PARAMETER.UINT]],
 	["BTCheckLastCard", "Executes the child bt_node if unit's last played card is designated card.", [PARAMETER.TARGET_SOURCE, PARAMETER.TARGET_CONDITION, PARAMETER.CARD_NAME]],
 	["BTConditional", "Succeed or fail based on a conditional check between int_arg1 and int_arg2 that are set with BTSetIntArg", [PARAMETER.COMPARISON,PARAMETER.ARRAY_CHECK]],
+	["BTPercentSucceed", "Succeed or fail based on a 0-100 percentage. (Integer, Int_Arg (Optional))", [PARAMETER.UINT, PARAMETER.INT_ARG]],
 ]
 
 var valid_bt_leaves:Array = [
@@ -107,10 +113,10 @@ var valid_bt_leaves:Array = [
 	["TargetAddStatus", "Add a new status effect with duration to target of this card.", [PARAMETER.STATUS, PARAMETER.UINT, PARAMETER.VALID_TARGETS]],
 	["CasterDrawCard", "Caster draws x amount of cards from designated deck.", [PARAMETER.UINT, PARAMETER.UNIT_DECK, PARAMETER.CARD_VARIABLE, PARAMETER.COMPARISON, PARAMETER.FALLBACK]],
 	["TargetDrawCard", "Target draws x amount of cards from designated deck.", [PARAMETER.UINT, PARAMETER.UNIT_DECK, PARAMETER.CARD_VARIABLE, PARAMETER.VALID_TARGETS, PARAMETER.COMPARISON, PARAMETER.FALLBACK]],
-	["CasterModifyStat", "Modify a stat for the caster of this card.", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.INT, PARAMETER.INT_ARG]],
-	["TargetModifyStat", "Modify a stat for the target of this card.", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.INT, PARAMETER.INT_ARG, PARAMETER.VALID_TARGETS]],
-	["CasterModifyStatDuration", "Modify a stat for the caster of this card with duration. (Operation, Stat, Stat Value, Set Stat Value to Int_Arg (Optional), Duration)", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.INT, PARAMETER.INT_ARG, PARAMETER.UINT]],
-	["TargetModifyStatDuration", "Modify a stat for the target of this card with duration. (Operation, Stat, Stat Value, Set Stat Value to Int_Arg (Optional), Duration, Valid Targets)", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.INT, PARAMETER.INT_ARG, PARAMETER.UINT, PARAMETER.VALID_TARGETS]],
+	["CasterModifyStat", "Modify a stat for the caster of this card.", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.FLOAT, PARAMETER.INT_ARG]],
+	["TargetModifyStat", "Modify a stat for the target of this card.", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.FLOAT, PARAMETER.INT_ARG, PARAMETER.VALID_TARGETS]],
+	["CasterModifyStatDuration", "Modify a stat for the caster of this card with duration. (Operation, Stat, Stat Value, Set Stat Value to Int_Arg (Optional), Duration)", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.FLOAT, PARAMETER.INT_ARG, PARAMETER.UINT]],
+	["TargetModifyStatDuration", "Modify a stat for the target of this card with duration. (Operation, Stat, Stat Value, Set Stat Value to Int_Arg (Optional), Duration, Valid Targets)", [PARAMETER.OPERATION, PARAMETER.UNIT_INT_MODIFIABLE, PARAMETER.FLOAT, PARAMETER.INT_ARG, PARAMETER.UINT, PARAMETER.VALID_TARGETS]],
 	["CasterAddCard", "Caster adds a new card to a designated deck. (Number of cards, card name, card level, to_deck)", [PARAMETER.UINT, PARAMETER.CARD_NAME, PARAMETER.UINT, PARAMETER.UNIT_DECK]],
 	["TargetAddCard", "Target adds a new card to a designated deck. (Number of cards, card name, card level, to_deck, valid targets)", [PARAMETER.UINT, PARAMETER.CARD_NAME, PARAMETER.UINT, PARAMETER.UNIT_DECK, PARAMETER.VALID_TARGETS]],
 	["HandModifyStat", "Modify a stat for the cards in hand until end of turn. (Operation, Stat, Stat Value, Card Requirement, Card Requirement Value, Int Arg)", [PARAMETER.OPERATION, PARAMETER.CARD_VARIABLE, PARAMETER.CARD_VARIABLE, PARAMETER.INT_ARG]],
@@ -125,6 +131,7 @@ var int_source:Array = [
 	"card_target",
 	"card_variable"
 ]
+
 var valid_card_stats:Array = [
 	"none",
 	"card_name",
@@ -133,26 +140,31 @@ var valid_card_stats:Array = [
 	"card_level",
 	"upgrade_costs",
 	"card_type",
-	"can_attack", #7
-	"can_defend", #8
-	"need_los", #9
-	"is_homing", #10
-	"has_combo", #11
-	"is_unblockable", #12
-	"is_undeflectable", #13
-	"is_consumable", #14
-	"has_counter", #15
-	"has_reflex", #16
-	"self_statuses",
-	"target_statuses",
-	"delay",
+	"item_type", #7
+	"can_attack", #8
+	"can_defend", #9
+	"need_los", #10
+	"is_homing", #11
+	"has_combo", #12
+	"is_piercing", #13
+	"is_shattering", #14
+	"is_consumable", #15
+	"has_counter", #16
+	"has_reflex", #17
+	"self_eliminating", #18
+	"hexagonal_targeting",#19
+	"self_statuses",#20
+	"target_statuses",#21
+	"delay",#23
 	"rarity",
 	"card_min_range",
 	"card_max_range",
 	"card_up_vertical_range",
 	"card_down_vertical_range",
 	"card_attack",
-	"elements",
+	"card_added_accuracy",
+	"card_added_crit_accuracy",
+	"elements" #29
 ]
 
 var valid_unit_stats:Array = [
@@ -207,7 +219,6 @@ var valid_unit_cost_stats:Array = [
 	"current_magic_accuracy",
 	"current_draw_points",
 	"block",
-	"deflect",
 	"strength",
 	"willpower",
 	"unit_hand_size",
@@ -248,7 +259,6 @@ var unit_int_vars:Array = [
 	"experience",
 	"level",
 	"block",
-	"deflect",
 	"strength",
 	"willpower",
 	"unit_deck_size",
@@ -289,7 +299,6 @@ var unit_int_modifiable:Array = [
 	"experience",
 	"level",
 	"block",
-	"deflect",
 	"strength",
 	"willpower"
 ]
@@ -305,7 +314,9 @@ var card_int_vars:Array = [
 	"card_max_range",
 	"card_up_vertical_range",
 	"card_down_vertical_range",
-	"card_attack"
+	"card_attack",
+	"card_added_accuracy",
+	"card_added_crit_accuracy"
 ]
 
 var int_arg_vars:Array = [
@@ -316,47 +327,14 @@ var int_arg_vars:Array = [
 
 var valid_statuses:Array = [
 	["None", "None"],
-	["Physical Attack UP", "Physical attacks deal 25% more damage.", "Buff"],
-	["Physical Attack UP 2", "Physical attacks deal 50% more damage.", "Buff"],
-	["Physical Attack DOWN", "Physical attacks deal 25% less damage.", "Debuff"],
-	["Physical Attack DOWN 2", "Physical attacks deal 50% less damage.", "Debuff"],
-	["Physical Defense UP", "Take 25% less damage when damaged by physical attack.", "Buff"],
-	["Physical Defense UP 2", "Take 50% less damage when damaged by physical attack.", "Buff"],
-	["Physical Defense DOWN", "Take 25% more damage when damaged by physical attack.", "Debuff"],
-	["Physical Defense DOWN 2", "Take 50% more damage when damaged by physical attack.", "Debuff"],
-	["Magic Attack UP", "Magic attacks deal 25% more damage.", "Buff"],
-	["Magic Attack UP 2", "Magic attacks deal 50% more damage.", "Buff"],
-	["Magic Attack DOWN", "Magic attacks deal 25% less damage.", "Debuff"],
-	["Magic Attack DOWN 2", "Magic attacks deal 50% less damage.", "Debuff"],
-	["Magic Defense UP", "Take 25% less damage when damaged by magic attack.", "Buff"],
-	["Magic Defense UP 2", "Take 50% less damage when damaged by magic attack.", "Buff"],
-	["Magic Defense DOWN", "Take 25% more damage when damaged by magic attack.", "Debuff"],
-	["Magic Defense DOWN 2", "Take 50% more damage when damaged by magic attack.", "Debuff"],
-	["Fire Attack UP", "Fire elemental attacks deal 25% more damage.", "Buff"],
-	["Fire Attack UP 2", "Fire elemental attacks deal 50% more damage.", "Buff"],
-	["Fire Attack DOWN", "Fire elemental attacks deal 25% less damage.", "Debuff"],
-	["Fire Attack DOWN 2", "Fire elemental attacks deal 50% less damage.", "Debuff"],
-	["Fire Defense UP", "Take 25% less damage when damaged by fire attack.", "Buff"],
-	["Fire Defense UP 2", "Take 50% less damage when damaged by fire attack.", "Buff"],
-	["Fire Defense DOWN", "Take 25% more damage when damaged by fire attack.", "Debuff"],
-	["Fire Defense DOWN 2", "Take 50% more damage when damaged by fire attack.", "Debuff"],
-	["Ice Attack UP", "Ice elemental attacks deal 25% more damage.", "Buff"],
-	["Ice Attack UP 2", "Ice elemental attacks deal 50% more damage.", "Buff"],
-	["Ice Attack DOWN", "Ice elemental attacks deal 25% less damage.", "Debuff"],
-	["Ice Attack DOWN 2", "Ice elemental attacks deal 50% less damage.", "Debuff"],
-	["Ice Defense UP", "Take 25% less damage when damaged by ice attack.", "Buff"],
-	["Ice Defense UP 2", "Take 50% less damage when damaged by ice attack.", "Buff"],
-	["Ice Defense DOWN", "Take 25% more damage when damaged by ice attack.", "Debuff"],
-	["Ice Defense DOWN 2", "Take 50% more damage when damaged by ice attack.", "Debuff"],
-	["Electric Attack UP", "Electric elemental attacks deal 25% more damage.", "Buff"],
-	["Electric Attack UP 2", "Electric elemental attacks deal 50% more damage.", "Buff"],
-	["Electric Attack DOWN", "Electric elemental attacks deal 25% less damage.", "Debuff"],
-	["Electric Attack DOWN 2", "Electric elemental attacks deal 50% less damage.", "Debuff"],
-	["Electric Defense UP", "Take 25% less damage when damaged by electric attack.", "Buff"],
-	["Electric Defense UP 2", "Take 50% less damage when damaged by electric attack.", "Buff"],
-	["Electric Defense DOWN", "Take 25% more damage when damaged by electric attack.", "Debuff"],
-	["Electric Defense DOWN 2", "Take 50% more damage when damaged by electric attack.", "Debuff"],
-	["StatChange", "Description", "Buff or Debuff", "Stat", "Value", "Operation"]
+	["Poisoned", "Unit loses 10% of HP before unit's turn.","Debuff"],
+	["Cowardly", "Unit can not act.", "Debuff"],
+	["Intrepid", "Unable to be cowardly.", "Buff"],
+	["Intimidated", "Unit can not react.", "Debuff"],
+	["Fearless", "Unable to be intimidated.", "Buff"],
+	["Immobilized", "Unit can not move.", "Debuff"],
+	["Steadfast", "Unable to be immobilized.", "Buff"]
+	#["StatChange", "Description", "Buff or Debuff", "Stat", "Value", "Operation"]
 ]
 
 var valid_animations:Array = [

@@ -89,8 +89,8 @@ custom_constants/separation = 0
 anchor_bottom = 1.0
 margin_left = 384.0
 margin_top = 8.0
-margin_right = 960.0
-margin_bottom = -7.99994
+margin_right = 984.0
+margin_bottom = -8.0
 
 [node name="SaveCard" type="Button" parent="CardPanel"]
 margin_left = 8.0
@@ -109,8 +109,8 @@ margin_right = 83.0
 margin_bottom = 64.0
 
 [node name="DeleteUnit" type="Button" parent="CardPanel"]
-margin_left = 480.0
-margin_right = 566.0
+margin_left = 503.0
+margin_right = 589.0
 margin_bottom = 21.0
 text = "Delete Card"
 
@@ -123,87 +123,160 @@ dialog_text = "Are you sure you want to delete?"
 [node name="CardName" type="LineEdit" parent="CardPanel"]
 margin_left = 8.0
 margin_top = 23.0
-margin_right = 568.0
+margin_right = 590.0
 margin_bottom = 42.0
 text = "Card Name"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CardPanel"]
 margin_left = 8.0
 margin_top = 49.0
-margin_right = 568.0
+margin_right = 589.0
 margin_bottom = 87.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CardPanel/ScrollContainer"]
-margin_right = 455.0
+margin_right = 486.0
 margin_bottom = 19.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CardClassLabel" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
+visible = false
 margin_right = 72.0
 margin_bottom = 19.0
 text = "Card Class"
 
 [node name="CardClass" type="OptionButton" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 78.0
-margin_right = 102.0
+visible = false
+margin_right = 24.0
 margin_bottom = 19.0
 
 [node name="VSeparator" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 108.0
-margin_right = 112.0
+visible = false
+margin_right = 4.0
 margin_bottom = 19.0
 
 [node name="CardTypeLabel2" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 118.0
-margin_right = 185.0
+margin_right = 67.0
 margin_bottom = 19.0
 text = "Card Type"
 
 [node name="CardType" type="OptionButton" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 191.0
-margin_right = 215.0
+margin_left = 73.0
+margin_right = 97.0
 margin_bottom = 19.0
 
-[node name="VSeparator2" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 221.0
-margin_right = 225.0
+[node name="VSeparator6" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 103.0
+margin_right = 107.0
+margin_bottom = 19.0
+
+[node name="ItemTypeLabel" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 113.0
+margin_right = 177.0
+margin_bottom = 19.0
+text = "Item Type"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 183.0
+margin_right = 207.0
+margin_bottom = 19.0
+
+[node name="ItemType" type="OptionButton" parent="CardPanel/ScrollContainer/HBoxContainer/HBoxContainer"]
+margin_right = 24.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( -647, 193 )
+
+[node name="VSeparator4" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 213.0
+margin_right = 217.0
+margin_bottom = 19.0
+
+[node name="BypassPopup" type="CheckBox" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 223.0
+margin_right = 341.0
+margin_bottom = 19.0
+text = "Bypass Popup"
+
+[node name="IgnoreItemStats" type="CheckBox" parent="CardPanel/ScrollContainer/HBoxContainer"]
+margin_left = 347.0
+margin_right = 486.0
+margin_bottom = 19.0
+hint_tooltip = "Ignore the stats of the item this card is derived from.n\\(IE: A Fireball attack for a Staff item)"
+pressed = true
+text = "Ignore Item Stats"
+
+[node name="VSeparator5" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
+visible = false
+margin_left = 301.0
+margin_right = 305.0
 margin_bottom = 19.0
 
 [node name="Rarity" type="Label" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 231.0
-margin_right = 305.0
+visible = false
+margin_left = 201.0
+margin_right = 275.0
 margin_bottom = 19.0
 text = "Card Rarity"
 
 [node name="RarityValue" type="SpinBox" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 311.0
-margin_right = 375.0
+visible = false
+margin_left = 281.0
+margin_right = 345.0
 margin_bottom = 19.0
 value = 10.0
 
 [node name="VSeparator3" type="VSeparator" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 381.0
-margin_right = 385.0
+visible = false
+margin_left = 201.0
+margin_right = 205.0
 margin_bottom = 19.0
 
 [node name="CardArt" type="Button" parent="CardPanel/ScrollContainer/HBoxContainer"]
-margin_left = 391.0
-margin_right = 455.0
+visible = false
+margin_left = 311.0
+margin_right = 375.0
 margin_bottom = 19.0
 text = "Card Art"
+
+[node name="CardIcon" type="Button" parent="CardPanel/ScrollContainer/HBoxContainer"]
+visible = false
+margin_left = 311.0
+margin_right = 382.0
+margin_bottom = 19.0
+text = "Card Icon"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CardPanel"]
+margin_left = 8.0
+margin_top = 83.0
+margin_right = 460.0
+margin_bottom = 102.0
+
+[node name="CardArt" type="Button" parent="CardPanel/HBoxContainer2"]
+margin_right = 64.0
+margin_bottom = 19.0
+text = "Card Art"
+
+[node name="CardIcon" type="Button" parent="CardPanel/HBoxContainer2"]
+margin_left = 70.0
+margin_right = 141.0
+margin_bottom = 19.0
+text = "Card Icon"
+
+[node name="TextureRect" type="TextureRect" parent="CardPanel/HBoxContainer2/CardIcon"]
+margin_left = 81.0
+margin_top = -9.0
+margin_right = 121.0
+margin_bottom = 31.0
+expand = true
 
 [node name="TabContainer" type="TabContainer" parent="CardPanel"]
 anchor_bottom = 1.011
 margin_left = 8.0
-margin_top = 88.0
-margin_right = 568.0
-margin_bottom = -9.74408
+margin_top = 122.0
+margin_right = 585.0
+margin_bottom = -9.70398
 custom_styles/panel = SubResource( 1 )
 tab_align = 0
 __meta__ = {
@@ -218,29 +291,29 @@ margin_right = 0.0
 margin_bottom = 0.0
 
 [node name="AddLevel" type="Button" parent="CardPanel"]
-margin_left = 487.0
+margin_left = 528.0
 margin_top = 118.0
-margin_right = 511.0
+margin_right = 552.0
 margin_bottom = 139.0
 hint_tooltip = "Add a level."
 text = " + "
 
 [node name="RemoveLevel" type="Button" parent="CardPanel"]
-margin_left = 519.0
+margin_left = 560.0
 margin_top = 118.0
-margin_right = 543.0
+margin_right = 584.0
 margin_bottom = 139.0
 hint_tooltip = "Remove this level."
 text = " - "
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_left = 404.0
 margin_top = 192.0
 margin_right = 944.0
 margin_bottom = 350.0
+window_title = "Open a File"
+resizable = true
+mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -361,10 +434,16 @@ position = 3
 [connection signal="confirmed" from="CardPanel/TestCard/TestCardAcceptDialog" to="." method="_on_TestCardAcceptDialog_confirmed"]
 [connection signal="pressed" from="CardPanel/DeleteUnit" to="." method="_on_DeleteUnit_pressed"]
 [connection signal="confirmed" from="CardPanel/DeleteUnit/AcceptDialog" to="." method="_on_AcceptDialog_confirmed"]
+[connection signal="item_selected" from="CardPanel/ScrollContainer/HBoxContainer/HBoxContainer/ItemType" to="." method="_on_ItemType_item_selected"]
+[connection signal="toggled" from="CardPanel/ScrollContainer/HBoxContainer/IgnoreItemStats" to="." method="_on_IgnoreItemStats_toggled"]
 [connection signal="pressed" from="CardPanel/ScrollContainer/HBoxContainer/CardArt" to="." method="_on_CardArt_pressed"]
+[connection signal="pressed" from="CardPanel/ScrollContainer/HBoxContainer/CardIcon" to="." method="_on_CardIcon_pressed"]
+[connection signal="pressed" from="CardPanel/HBoxContainer2/CardArt" to="." method="_on_CardArt_pressed"]
+[connection signal="pressed" from="CardPanel/HBoxContainer2/CardIcon" to="." method="_on_CardIcon_pressed"]
 [connection signal="tab_selected" from="CardPanel/TabContainer" to="." method="_on_TabContainer_tab_selected"]
 [connection signal="pressed" from="CardPanel/AddLevel" to="." method="_on_AddLevel_pressed"]
 [connection signal="pressed" from="CardPanel/RemoveLevel" to="." method="_on_RemoveLevel_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="pressed" from="BehaviorTree/AddItem" to="." method="_on_AddItem_pressed"]
 [connection signal="pressed" from="BehaviorTree/RemoveItem" to="." method="_on_RemoveItem_pressed"]
 [connection signal="pressed" from="BehaviorTree/PrintTree" to="." method="_on_PrintTree_pressed"]

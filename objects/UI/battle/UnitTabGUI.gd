@@ -25,7 +25,6 @@ var current_action_points:int
 var max_action_points:int
 var level:int
 var block:int
-var deflect:int
 
 var unit_AP_paths = {
 	0 : "res://assets/images/ui/unit/AP_Warrior.png",
@@ -43,7 +42,6 @@ func loadUnit(u:HexUnit):
 	current_action_points = unit.current_action_points
 	max_action_points = unit.max_action_points
 	block = unit.block
-	deflect = unit.deflect
 	player_owned = unit.player_owned
 	$AP.texture = load(unit_AP_paths.get(unit_class))
 
@@ -72,8 +70,6 @@ func updateGUI(unit) -> void:
 	$AP/AP_Label.hint_tooltip = str(current_action_points) + " Action Points (AP)" 
 	$Block.hint_tooltip = str(block) + " Block"
 	$Block/Label.text = str(block)
-	$Deflect.hint_tooltip = str(deflect) + " Deflect"
-	$Deflect/Label.text = str(deflect)
 	if unit.current_react_card != null:
 		$ReactButtonMini.visible = true
 		$ReactButtonMini.hint_tooltip = unit.current_react_card.card_name

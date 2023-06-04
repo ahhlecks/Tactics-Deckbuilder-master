@@ -123,7 +123,7 @@ func update_position() -> void:
 		card_oval_radius_x = get_viewport().size.x * 1.35
 		card_oval_radius_y = 800
 		card_oval_center.x = get_viewport().size.x * .5
-		card_oval_center.y = get_viewport().size.y + card_oval_radius_y - 18
+		card_oval_center.y = get_viewport().size.y + card_oval_radius_y - 50
 		repositionCards(cards.get_child_count()-1)
 		for prompts in $Prompts.get_children():
 			prompts.update_position()
@@ -239,10 +239,10 @@ func activateCards(act:bool, activate:bool) -> bool:
 			actual_ap_cost = card.card_info.action_costs[card.card_info.card_level]
 		else:
 			check = card.card_info.can_defend[card.card_info.card_level]
-#			var additional_ap = 0
-#			if card.card_info.has_counter[card.card_info.card_level]:
-#				additional_ap = 1
-			actual_ap_cost = card.card_info.action_costs[card.card_info.card_level]
+			var additional_ap = 0
+			if !card.card_info.has_counter[card.card_info.card_level]:
+				additional_ap = 1
+			actual_ap_cost = card.card_info.action_costs[card.card_info.card_level] + additional_ap
 		card_actor.load_card(card.card_info)
 		card_actor.card_caster = active_unit
 #		card_actor.source_cell = active_unit.currentCell
@@ -439,8 +439,8 @@ func setActCard(caster, card, target:HexCell,results:Array) -> void:
 	var delay_turns:float = round(float(card.delay[card.card_level]) * float(battle_controller.turn_queue.get_child_count()) / 100.0) # turns = card delay x total units / 100
 	if delay_turns <= 0:
 		battle_controller.emit_signal("unit_acted",caster,caster.unit_owner,card,caster.currentCell,target)
-	elif card.card_type == 2 or card.card_type == 3 or card.is_homing[card.card_level]:
-		if target.unit != null: # If a unit is standing here and this card is a magic attack or magic spell or homing
+	elif card.item_type.has("Magic") or card.is_homing[card.card_level]:
+		if target.unit != null: # If a unit is standing here and this card is Magic or homing
 			actions.visible = false
 			var action_prompt = NinePatchPrefab.instance()
 			$Prompts.add_child(action_prompt)
@@ -471,9 +471,10 @@ func acceptReact(isReplacing:bool = false) -> void:
 					card_actor.card_caster.unit_owner.moveCards(card_actor.card_caster, p[1], randi() % card_actor.card_caster.consumed_deck.size(), "consumed_deck", "discard_deck", true)
 				_:
 					card_actor.card_caster.set(p[0], card_actor.card_caster.get(p[0]) - p[1])
-	selected_card.reaction_ap_add = false
-	selected_card.card_info.action_costs[selected_card.card_info.card_level] -= 1
-	selected_card.card_ap.text = str(selected_card.card_info.action_costs[selected_card.card_info.card_level])
+#	if selected_card.card_info.has_counter[selected_card.card_info.card_level]:
+#		selected_card.reaction_ap_add = false
+#		selected_card.card_info.action_costs[selected_card.card_info.card_level] -= 1
+#		selected_card.card_ap.text = str(selected_card.card_info.action_costs[selected_card.card_info.card_level])
 	player.unitEliminateCards(active_unit, 1, "hand_deck", "", selected_card.unique_id)
 	selected_card = null
 	removePrompts()
@@ -747,14 +748,14 @@ func actionPopout(panel:Control = null) -> void:
 			wait_button.hint_tooltip = "Choose a facing direction and\nend this unit's turn."
 		if panel == react_panel or panel == null:
 			react_panel.get_node("Label").text = "React"
-			if selected_card != null:
-				yield(decline_target(),"completed")
+#			if selected_card != null:
+#				yield(decline_target(),"completed")
 			activateAllCards(false)
 			react_button.hint_tooltip = "Play a card as a reaction."
 		if panel == act_panel or panel == null:
 			act_panel.get_node("Label").text = "Act"
-			if selected_card != null:
-				yield(decline_target(),"completed")
+#			if selected_card != null:
+#				yield(decline_target(),"completed")
 			activateAllCards(false)
 			act_button.hint_tooltip = "Play a card as an action."
 		if panel == move_panel or panel == null:

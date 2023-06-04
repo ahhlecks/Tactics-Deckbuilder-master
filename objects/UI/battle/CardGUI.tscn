@@ -207,9 +207,6 @@ bbcode_enabled = true
 margin_top = 272.0
 margin_right = 210.0
 margin_bottom = 295.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureButton/HBoxContainer"]
 margin_right = 30.0

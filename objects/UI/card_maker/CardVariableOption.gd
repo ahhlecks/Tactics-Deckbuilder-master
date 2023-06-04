@@ -1,17 +1,17 @@
 extends CompoundOptionButton
 
-
 class_name CardVariableOption
 
 onready var int_option:SpinBox = SpinBox.new() # card_variable_value as int
 onready var name_option:CardNameOption = CardNameOption.new()
 onready var class_option:CardClassOption = CardClassOption.new()
 onready var type_option:CardTypeOption = CardTypeOption.new()
+onready var item_option:CardItemOption = CardItemOption.new()
 onready var status_option:CardStatusOption = CardStatusOption.new()
 onready var element_option:CardElementOption = CardElementOption.new()
 onready var boolean_option:CheckButton = CheckButton.new()
 onready var int_arg_option:IntArgOption = IntArgOption.new()
-onready var option_array:Array = [int_option,name_option,class_option,type_option,status_option,element_option,boolean_option,int_arg_option]
+onready var option_array:Array = [int_option,name_option,class_option,type_option,item_option,status_option,element_option,boolean_option,int_arg_option]
 
 #Node layout
 #[variable, variable value]
@@ -28,10 +28,12 @@ func _ready():
 	for i in BattleDictionary.valid_card_stats:
 		add_item(i)
 	int_option.min_value = -INF
+	int_option.step = 0.01
 	int_option.visible = false
 	name_option.visible = false
 	class_option.visible = false
 	type_option.visible = false
+	item_option.visible = false
 	status_option.visible = false
 	element_option.visible = false
 	boolean_option.visible = false
@@ -42,6 +44,7 @@ func _ready():
 	VBox.add_child(name_option)
 	VBox.add_child(class_option)
 	VBox.add_child(type_option)
+	VBox.add_child(item_option)
 	VBox.add_child(status_option)
 	VBox.add_child(element_option)
 	VBox.add_child(boolean_option)
@@ -53,6 +56,7 @@ func _ready():
 #	pass
 
 
+
 func _on_item_selected(index):
 	match index:
 		0:
@@ -60,6 +64,7 @@ func _on_item_selected(index):
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
@@ -69,6 +74,7 @@ func _on_item_selected(index):
 			name_option.visible = true
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
@@ -78,6 +84,7 @@ func _on_item_selected(index):
 			name_option.visible = false
 			class_option.visible = true
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
@@ -87,58 +94,64 @@ func _on_item_selected(index):
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = true
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
 #			int_arg_option.visible = false
-		7,8,9,10,11,12,13,14,15,16:
+		7:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = true
+			status_option.visible = false
+			element_option.visible = false
+			boolean_option.visible = false
+#			int_arg_option.visible = false
+		8,9,10,11,12,13,14,15,16,17,18,19:
+			int_option.visible = false
+			name_option.visible = false
+			class_option.visible = false
+			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = true
 #			int_arg_option.visible = false
-		17,18:
+		20,21:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = true
 			element_option.visible = false
 			boolean_option.visible = false
 #			int_arg_option.visible = false
-		26:
+		29:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = true
 			boolean_option.visible = false
 #			int_arg_option.visible = false
-#		27,28:
-#			int_option.visible = false
-#			name_option.visible = false
-#			class_option.visible = false
-#			type_option.visible = false
-#			status_option.visible = false
-#			element_option.visible = false
-#			boolean_option.visible = false
-#			int_arg_option.visible = true
 		_:
 			int_option.visible = true
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
 #			int_arg_option.visible = false
 
 func loadValues(values:Array, index):
-	var index_value = BattleDictionary.valid_card_stats.find(values[index])
+	var index_value = BattleDictionary.valid_card_stats.find(values[0])
 	select(index_value)
 	match index_value:
 		0:
@@ -146,6 +159,7 @@ func loadValues(values:Array, index):
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
@@ -154,64 +168,81 @@ func loadValues(values:Array, index):
 			name_option.visible = true
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
-			name_option.select(values[index + 1])
+			name_option.select(values[1])
 		2:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = true
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
-			class_option.select(values[index + 1])
+			class_option.select(values[1])
 		6:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = true
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
-			type_option.select(values[index + 1])
-		7,8,9,10,11,12,13,14,15,16:
+			type_option.select(values[1])
+		7:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = true
+			status_option.visible = false
+			element_option.visible = false
+			boolean_option.visible = false
+			item_option.select(values[1])
+		8,9,10,11,12,13,14,15,16,17,18,19:
+			int_option.visible = false
+			name_option.visible = false
+			class_option.visible = false
+			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = true
-			boolean_option.pressed = values[index + 1]
-		17,18:
+			boolean_option.pressed = values[1]
+		20,21:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = true
 			element_option.visible = false
 			boolean_option.visible = false
-			status_option.select(values[index + 1])
-		26:
+			status_option.select(values[1])
+		29:
 			int_option.visible = false
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = true
 			boolean_option.visible = false
-			element_option.select(values[index + 1])
+			element_option.select(values[1])
 		_:
 			int_option.visible = true
 			name_option.visible = false
 			class_option.visible = false
 			type_option.visible = false
+			item_option.visible = false
 			status_option.visible = false
 			element_option.visible = false
 			boolean_option.visible = false
-			int_option.value = values[index + 1]
+			int_option.value = values[1]
 
 func saveValues() -> Array:
 	var saved_values:Array

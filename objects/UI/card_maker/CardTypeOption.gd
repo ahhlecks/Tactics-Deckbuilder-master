@@ -8,11 +8,9 @@ class_name CardTypeOption
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	add_item("SKILL")
-	add_item("PHYSICALATTACK")
-	add_item("MAGICATTACK")
-	add_item("MAGICSPELL")
-	add_item("ITEM")
+	add_item("OFFENSE")
+	add_item("DEFENSE")
+	add_item("UTILITY")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

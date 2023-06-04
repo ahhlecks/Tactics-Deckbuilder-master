@@ -1,14 +1,77 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=12 format=2]
 
 [ext_resource path="res://data/equipment/Equipment.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/equipment_art/LongSword.png" type="Texture" id=2]
+[ext_resource path="res://data/equipment/CardProficiency.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+card = "res://data/cards/Longsword-High Guard.crd"
+proficiency = 1
+amount = 1
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 3 )
+card = "res://data/cards/Longsword-Defensive Strike.crd"
+proficiency = 1
+amount = 1
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 3 )
+card = "res://data/cards/Strike.crd"
+proficiency = 1
+amount = 4
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 3 )
+card = "res://data/cards/Longsword-Heavy Strike.crd"
+proficiency = 0
+amount = 0
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 3 )
+card = "res://data/cards/Longsword-Quick Strike.crd"
+proficiency = 1
+amount = 2
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 3 )
+card = "res://data/cards/Longsword-Focused Strike.crd"
+proficiency = 0
+amount = 0
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 3 )
+card = "res://data/cards/Sword Ready Stance.crd"
+proficiency = 1
+amount = 1
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 3 )
+card = "res://data/cards/Fortified Fury.crd"
+proficiency = 0
+amount = 0
 
 [resource]
 script = ExtResource( 1 )
-id = "Longsword"
 name = "Longsword"
+type = [ "Sword" ]
+slot = [ "Primary_Hand", "Secondary_Hand" ]
+is_two_handed = false
+rarity = 0
 texture = ExtResource( 2 )
-base_cards = [  ]
-offense = [  ]
-defense = [  ]
-utility = [  ]
+base_damage = 22
+base_ap = 2
+inscriptions = [  ]
+offense_tier1 = [ SubResource( 13 ) ]
+offense_tier2 = [ SubResource( 4 ), SubResource( 5 ) ]
+offense_tier3 = [ SubResource( 6 ) ]
+offense_tier4 = [  ]
+defense_tier1 = [ SubResource( 1 ), SubResource( 9 ) ]
+defense_tier2 = [  ]
+defense_tier3 = [  ]
+defense_tier4 = [  ]
+utility_tier1 = [ SubResource( 7 ) ]
+utility_tier2 = [ SubResource( 8 ) ]
+utility_tier3 = [  ]
+utility_tier4 = [  ]

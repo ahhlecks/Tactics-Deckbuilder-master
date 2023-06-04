@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://assets/images/ui/equipment_ui/horizontal_line_big.png" type="Texture" id=12]
 [ext_resource path="res://assets/images/ui/equipment_ui/horizontal_line.png" type="Texture" id=13]
 [ext_resource path="res://resources/fonts/Fenix_22.tres" type="DynamicFont" id=14]
+[ext_resource path="res://objects/UI/equipment_menu/EquipmentMenu.gd" type="Script" id=15]
+[ext_resource path="res://objects/UI/battle/CardGUI_Static.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -63,6 +65,7 @@ shader_param/wave_length = 130.0
 [node name="EquipmentMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 15 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -94,12 +97,18 @@ __meta__ = {
 [node name="HorizontalLine" type="Sprite" parent="."]
 position = Vector2( 960, 86 )
 texture = ExtResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HorizontalLineBig" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, 90 )
 texture = ExtResource( 12 )
 centered = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Title" type="Label" parent="."]
 anchor_top = 0.006
@@ -112,111 +121,118 @@ custom_fonts/font = ExtResource( 14 )
 text = "Equipment"
 align = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": true
 }
 
-[node name="Utility" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-rect_rotation = 120.0
-
-[node name="Base" type="Sprite" parent="Utility"]
-position = Vector2( 0, -25 )
+[node name="UtilityBase" type="Sprite" parent="."]
+position = Vector2( 981.651, 552.5 )
+rotation = 2.0944
 texture = ExtResource( 7 )
 
-[node name="IconHealth2" type="Sprite" parent="Utility"]
-position = Vector2( -0.819946, -27.759 )
-rotation = -2.0944
+[node name="UtilityIconHealth2" type="Sprite" parent="."]
+position = Vector2( 984.45, 553.169 )
 texture = ExtResource( 6 )
 
-[node name="Tier1" type="Sprite" parent="Utility"]
+[node name="UtilityTier1" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -75 )
+position = Vector2( 1024.95, 577.5 )
+rotation = 2.0944
 texture = ExtResource( 11 )
 
-[node name="Tier2" type="Sprite" parent="Utility"]
+[node name="UtilityTier2" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -131.5 )
+position = Vector2( 1073.88, 605.75 )
+rotation = 2.0944
 texture = ExtResource( 5 )
 
-[node name="Tier3" type="Sprite" parent="Utility"]
+[node name="UtilityTier3" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -187.5 )
+position = Vector2( 1122.38, 633.75 )
+rotation = 2.0944
 texture = ExtResource( 8 )
 
-[node name="Tier4" type="Sprite" parent="Utility"]
+[node name="UtilityTier4" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -244 )
+position = Vector2( 1171.31, 662 )
+rotation = 2.0944
 texture = ExtResource( 9 )
 
-[node name="Defense" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-rect_rotation = -120.0
-
-[node name="Base" type="Sprite" parent="Defense"]
-position = Vector2( 0, -25 )
+[node name="DefenseBase" type="Sprite" parent="."]
+position = Vector2( 938.349, 552.5 )
+rotation = -2.0944
 texture = ExtResource( 7 )
 
-[node name="IconShield" type="Sprite" parent="Defense"]
-position = Vector2( -0.820435, -27.5787 )
-rotation = 2.0944
+[node name="DefenseIconShield" type="Sprite" parent="."]
+position = Vector2( 936.526, 554.5 )
 texture = ExtResource( 10 )
 
-[node name="Tier1" type="Sprite" parent="Defense"]
+[node name="DefenseTier1" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -75 )
+position = Vector2( 895.048, 577.5 )
+rotation = -2.0944
 texture = ExtResource( 11 )
 
-[node name="Tier2" type="Sprite" parent="Defense"]
+[node name="DefenseTier2" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -131.5 )
+position = Vector2( 846.118, 605.75 )
+rotation = -2.0944
 texture = ExtResource( 5 )
 
-[node name="Tier3" type="Sprite" parent="Defense"]
+[node name="DefenseTier3" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -187.5 )
+position = Vector2( 797.62, 633.75 )
+rotation = -2.0944
 texture = ExtResource( 8 )
 
-[node name="Tier4" type="Sprite" parent="Defense"]
+[node name="DefenseTier4" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -244 )
+position = Vector2( 748.69, 662 )
+rotation = -2.0944
 texture = ExtResource( 9 )
 
-[node name="Attack" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-
-[node name="Base" type="Sprite" parent="Attack"]
-position = Vector2( 0, -25 )
+[node name="OffenseBase" type="Sprite" parent="."]
+position = Vector2( 960, 515 )
 texture = ExtResource( 7 )
 
-[node name="IconFist" type="Sprite" parent="Attack"]
-position = Vector2( 0, -26 )
+[node name="OffenseIconFist" type="Sprite" parent="."]
+position = Vector2( 960, 514 )
 texture = ExtResource( 4 )
 
-[node name="Tier1" type="Sprite" parent="Attack"]
+[node name="OffenseTier1" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -75 )
+position = Vector2( 960, 465 )
 texture = ExtResource( 11 )
 
-[node name="Tier2" type="Sprite" parent="Attack"]
+[node name="OffenseTier2" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -131.5 )
+position = Vector2( 960, 408.5 )
 texture = ExtResource( 5 )
 
-[node name="Tier3" type="Sprite" parent="Attack"]
+[node name="OffenseTier3" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -187.5 )
+position = Vector2( 960, 352.5 )
 texture = ExtResource( 8 )
 
-[node name="Tier4" type="Sprite" parent="Attack"]
+[node name="OffenseTier4" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 0, -244 )
+position = Vector2( 960, 296 )
 texture = ExtResource( 9 )
+
+[node name="PopupTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="PopoutTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="Icons" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
+visible = false
+
+[connection signal="timeout" from="PopupTimer" to="." method="_on_PopupTimer_timeout"]
+[connection signal="timeout" from="PopoutTimer" to="." method="_on_PopoutTimer_timeout"]

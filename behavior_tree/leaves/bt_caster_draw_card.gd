@@ -10,33 +10,7 @@ export(int) var draw_amount: int = 1
 export(int, "active_deck", "hand_deck", "discard_deck", "consumed_deck") var deck
 var deck_name:String = "active_deck"
 
-export(String, "none",
-	"card_name",
-	"card_class",
-	"action_costs",
-	"card_level",
-	"upgrade_costs",
-	"card_type",
-	"can_attack", #7
-	"can_defend", #8
-	"need_los", #9
-	"is_homing", #10
-	"has_combo", #11
-	"is_unblockable", #12
-	"is_undeflectable", #13
-	"is_consumable", #14
-	"has_counter", #15
-	"has_reflex", #16
-	"self_statuses",
-	"target_statuses",
-	"delay",
-	"rarity",
-	"card_min_range",
-	"card_max_range",
-	"card_up_vertical_range",
-	"card_down_vertical_range",
-	"card_attack",
-	"elements") var card_variable
+export(String) var card_variable:String
 
 export var card_variable_value:String
 

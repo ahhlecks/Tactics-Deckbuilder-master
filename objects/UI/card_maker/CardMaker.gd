@@ -3,12 +3,13 @@ extends Control
 class_name CardMaker
 
 var card_tab_prefab = preload("res://objects/UI/card_maker/CardTab.tscn")
+var card_item_type_option = preload("res://objects/UI/card_maker/CardItemTypeOption.tscn")
 const CARD_ART_DIR:String = "res://assets/images/card_art/"
 const CARD_SAVE_DIR:String = "user://cards/"
 var card_list:Array
 
 enum CARD_CLASS {WARRIOR,RANGER,MAGE,WARRIORRANGER,RANGERMAGE,MAGEWARRIOR,ALL}
-enum CARD_TYPE {SKILL,PHYSICALATTACK,MAGICATTACK,MAGICSPELL,ITEM}
+enum CARD_TYPE {OFFENSE,DEFENSE,UTILITY}
 
 onready var cardPanel = get_node("CardPanel")
 onready var cardList = get_node("CardListContainer/CardList/VBoxContainer")
@@ -19,6 +20,7 @@ onready var current_tree
 
 onready var card_class_node = get_node("CardPanel/ScrollContainer/HBoxContainer/CardClass")
 onready var card_type_node = get_node("CardPanel/ScrollContainer/HBoxContainer/CardType")
+onready var item_type_node = get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer/ItemType")
 onready var bt_node_list = get_node("BTNodeList")
 onready var bt_node_list_contents = get_node("BTNodeList/ScrollContainer/VBoxContainer")
 onready var bt_node = get_node("BTNode")
@@ -41,6 +43,8 @@ func _ready():
 		card_class_node.add_item(i)
 	for i in CARD_TYPE:
 		card_type_node.add_item(i)
+	for i in BattleDictionary.item_type:
+		item_type_node.add_item(i)
 	current_tree = tab_container.get_tab_control(0).tree
 	setupDefaultTree()
 	get_tree().get_root().connect("size_changed", self, "update_position")
@@ -66,7 +70,7 @@ func populateCards() -> void:
 	for button in cardList.get_children():
 		cardList.remove_child(button)
 		button.queue_free()
-	card_list = CardLoader.loadCardList(true)
+	card_list = CardLoader.loadCardList(false)
 	if card_list != null and card_list.size() > 0:
 		for i in card_list.size():
 			var new_button = Button.new()
@@ -150,7 +154,7 @@ func _on_RemoveLevel_pressed():
 		while new_index < tab_container.get_child_count():
 			tab_container.get_child(new_index).name = "Level " + str(new_index + 1)
 			new_index += 1
-	tab_container.get_child(tab_container.get_child_count()-1).card_upgrade.visible = false
+	#tab_container.get_child(tab_container.get_child_count()-1).card_upgrade.visible = false
 
 func setupDefaultTree() -> void:
 	var root = current_tree.create_item(null)
@@ -351,12 +355,16 @@ func print_items(tree_item:TreeItem) -> String:
 	return output
 
 func loadCardInfo(card:String) -> void:
-	card_info = CardLoader.loadSingleCardFile(card,true)
+	card_info = CardLoader.loadSingleCardFile(card,false)
 	$CardPanel/CardName.text = card_info.card_name
 	$CardPanel/ScrollContainer/HBoxContainer/CardClass.selected = card_info.card_class
 	$CardPanel/ScrollContainer/HBoxContainer/CardType.selected = card_info.card_type
+	#item_type_node.selected = card_info.item_type
+	$CardPanel/ScrollContainer/HBoxContainer/IgnoreItemStats.pressed = card_info.ignore_item_stats
 	$CardPanel/ScrollContainer/HBoxContainer/RarityValue.value = card_info.rarity
-	$CardPanel/ScrollContainer/HBoxContainer/CardArt.set_meta("file_name", card_info.card_art)
+	$CardPanel/HBoxContainer2/CardArt.set_meta("file_name", card_info.card_art)
+	$CardPanel/HBoxContainer2/CardIcon/TextureRect.texture = load(card_info.card_icon)
+	$CardPanel/ScrollContainer/HBoxContainer/BypassPopup.pressed = card_info.bypass_popup
 	resetTabs()
 	yield(get_tree().create_timer(0.1),"timeout")
 	yield(get_tree(),"idle_frame")
@@ -370,27 +378,41 @@ func loadCardInfo(card:String) -> void:
 			tab.loadTreeItem(tab.tree.get_root(), card_info.behavior_tree)
 		else:
 			tab.loadTreeItem(tab.tree.get_root(), card_info.behavior_trees[i])
+	for i in get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_children():
+		if i != get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_child(0):
+			i.call_deferred("queue_free")
+		else:
+			i.selected = 0
+	for i in card_info.item_type.size():
+		get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_child(i).selected = card_info.item_type[i]
+	if !card_info.item_type.empty():
+		if card_info.item_type[max(0,card_info.item_type.size()-1)] != 0:
+			addCardItemTypeOption()
 
 func resetTabs() -> void:
 	for old_tabs in tab_container.get_children():
 		old_tabs.call_deferred("queue_free")
 
 func populateTabs(card_info:Dictionary) -> void:
-	var num_levels:int = card_info.upgrade_costs.size() + 1
+	var num_levels:int = card_info.upgrade_costs.size()
 	for i in range(num_levels):
 		var new_tab = card_tab_prefab.instance()
 		tab_container.add_child(new_tab)
 		new_tab.name = "Level " + str(i+1)
-		if i != num_levels-1:
-			new_tab.card_upgrade_value.value = card_info.upgrade_costs[i]
-			new_tab.card_upgrade_value.get_parent().visible = true
+		new_tab.card_upgrade_value.value = card_info.upgrade_costs[i]
 		new_tab.card_action_cost.value = card_info.action_costs[i]
+		new_tab.card_damage_label.text = "Damage" if card_info.ignore_item_stats else "Damage Multiplier"
 		new_tab.card_damage.value = card_info.card_attack[i]
+		new_tab.card_damage.hint_tooltip = "Base damage dealt to target. (Negative values will heal target)" if card_info.ignore_item_stats else "Damage Multiplier of the Item's Base Damage"
+		new_tab.card_action_cost_label.text = "AP Cost" if card_info.ignore_item_stats else "Added AP Cost"
+		new_tab.card_action_cost.hint_tooltip = "Base AP cost." if card_info.ignore_item_stats else "Added AP on top of Item's base AP cost."
 		new_tab.card_delay.value = card_info.delay[i]
 		new_tab.card_min_range.value = card_info.card_min_range[i]
 		new_tab.card_max_range.value = card_info.card_max_range[i]
 		new_tab.card_up_range.value = card_info.card_up_vertical_range[i]
 		new_tab.card_down_range.value = card_info.card_down_vertical_range[i]
+		new_tab.card_added_accuracy.value = card_info.card_added_accuracy[i]
+		new_tab.card_added_crit_accuracy.value = card_info.card_added_crit_accuracy[i]
 		new_tab.card_element.selected = card_info.elements[i][0]
 		if card_info.elements[i].size() > 1:
 			new_tab.card_element2.selected = card_info.elements[i][1]
@@ -446,7 +468,14 @@ func _on_SaveCard_pressed() -> void:
 	var rarity:int = $CardPanel/ScrollContainer/HBoxContainer/RarityValue.value
 #	var card_art:String = $CardPanel/ScrollContainer/HBoxContainer/CardArt.get_meta("file_name")
 	var card_art:String = "empty.png"
-	var card_type = $CardPanel/ScrollContainer/HBoxContainer/CardType.selected
+	var card_icon:String = $CardPanel/HBoxContainer2/CardIcon/TextureRect.texture.resource_path
+	var card_type:int = $CardPanel/ScrollContainer/HBoxContainer/CardType.selected
+	var item_type:Array = []
+	for item_option in $CardPanel/ScrollContainer/HBoxContainer/HBoxContainer.get_children():
+		if item_option.selected != 0:
+			item_type.append(item_option.selected)
+	var bypass_popup:bool = $CardPanel/ScrollContainer/HBoxContainer/BypassPopup.pressed
+	var ignore_item_stats:bool = $CardPanel/ScrollContainer/HBoxContainer/IgnoreItemStats.pressed
 	#-------------------------
 	var action_costs:Array = []
 	var upgrade_costs:Array = []
@@ -456,6 +485,7 @@ func _on_SaveCard_pressed() -> void:
 	var is_homing:Array = []
 	var has_combo:Array = []
 	var is_piercing:Array = []
+	var is_shattering:Array = []
 	var is_consumable:Array = []
 	var has_counter:Array = []
 	var has_reflex:Array = []
@@ -470,6 +500,8 @@ func _on_SaveCard_pressed() -> void:
 	var card_max_range:Array = []
 	var card_up_vertical_range:Array = []
 	var card_down_vertical_range:Array = []
+	var card_added_accuracy:Array = []
+	var card_added_crit_accuracy:Array = []
 	var card_attack:Array = []
 	var card_animation:Array = []
 	var card_animation_left_weapon:Array = []
@@ -480,14 +512,14 @@ func _on_SaveCard_pressed() -> void:
 	var behavior_trees:Array = []
 	for tab in tab_container.get_children():
 		action_costs.append(tab.card_action_cost.value)
-		if tab.card_upgrade.visible:
-			upgrade_costs.append(tab.card_upgrade_value.value)
+		upgrade_costs.append(tab.card_upgrade_value.value)
 		can_attack.append(tab.card_action.pressed)
 		can_defend.append(tab.card_reaction.pressed)
 		need_los.append(tab.card_need_los.pressed)
 		is_homing.append(tab.card_homing.pressed)
 		has_combo.append(tab.card_combo.pressed)
 		is_piercing.append(tab.card_piercing.pressed)
+		is_shattering.append(tab.card_shattering.pressed)
 		is_consumable.append(tab.card_consumable.pressed)
 		has_counter.append(tab.card_counter.pressed)
 		has_reflex.append(tab.card_reflex.pressed)
@@ -521,6 +553,8 @@ func _on_SaveCard_pressed() -> void:
 		card_max_range.append(tab.card_max_range.value)
 		card_up_vertical_range.append(tab.card_up_range.value)
 		card_down_vertical_range.append(tab.card_down_range.value)
+		card_added_accuracy.append(tab.card_added_accuracy.value)
+		card_added_crit_accuracy.append(tab.card_added_crit_accuracy.value)
 		card_attack.append(tab.card_damage.value)
 		card_animation.append([tab.card_animation.selected,tab.card_animation2.selected])
 		card_animation_left_weapon.append(tab.card_animation_left_weapon.selected)
@@ -536,6 +570,7 @@ func _on_SaveCard_pressed() -> void:
 	card_id.card_level = card_level
 	card_id.upgrade_costs = upgrade_costs
 	card_id.card_art = card_art
+	card_id.card_icon = card_icon
 	card_id.card_type = card_type
 	card_id.can_attack = can_attack
 	card_id.can_defend = can_defend
@@ -543,6 +578,7 @@ func _on_SaveCard_pressed() -> void:
 	card_id.is_homing = is_homing
 	card_id.has_combo = has_combo
 	card_id.is_piercing = is_piercing
+	card_id.is_shattering = is_shattering
 	card_id.is_consumable = is_consumable
 	card_id.has_counter = has_counter
 	card_id.has_reflex = has_reflex
@@ -557,12 +593,16 @@ func _on_SaveCard_pressed() -> void:
 	card_id.card_max_range = card_max_range
 	card_id.card_up_vertical_range = card_up_vertical_range
 	card_id.card_down_vertical_range = card_down_vertical_range
+	card_id.card_added_accuracy = card_added_accuracy
+	card_id.card_added_crit_accuracy = card_added_crit_accuracy
 	card_id.card_attack = card_attack
 	card_id.card_animation = card_animation
 	card_id.card_animation_left_weapon = card_animation_left_weapon
 	card_id.card_animation_right_weapon = card_animation_right_weapon
 	card_id.card_animation_projectile = card_animation_projectile
 	card_id.card_counter_anim_tandem = card_counter_anim_tandem
+	card_id.bypass_popup = bypass_popup
+	card_id.ignore_item_stats = ignore_item_stats
 	card_id.elements = elements
 	var data = {
 		"card_id" : self,
@@ -573,13 +613,16 @@ func _on_SaveCard_pressed() -> void:
 		"card_level": card_level,
 		"upgrade_costs": upgrade_costs,
 		"card_art": card_art,
+		"card_icon": card_icon,
 		"card_type": card_type,
+		"item_type": item_type,
 		"can_attack": can_attack,
 		"can_defend": can_defend,
 		"need_los" : need_los,
 		"is_homing" : is_homing,
 		"has_combo" : has_combo,
 		"is_piercing" : is_piercing,
+		"is_shattering": is_shattering,
 		"is_consumable" : is_consumable,
 		"has_counter" : has_counter,
 		"has_reflex": has_reflex,
@@ -595,12 +638,16 @@ func _on_SaveCard_pressed() -> void:
 		"card_max_range": card_max_range,
 		"card_up_vertical_range": card_up_vertical_range,
 		"card_down_vertical_range": card_down_vertical_range,
+		"card_added_accuracy": card_added_accuracy,
+		"card_added_crit_accuracy": card_added_crit_accuracy,
 		"card_attack": card_attack,
 		"card_animation": card_animation,
 		"card_animation_left_weapon": card_animation_left_weapon,
 		"card_animation_right_weapon": card_animation_right_weapon,
 		"card_animation_projectile": card_animation_projectile,
 		"card_counter_anim_tandem" :card_counter_anim_tandem,
+		"bypass_popup": bypass_popup,
+		"ignore_item_stats": ignore_item_stats,
 		"elements": elements,
 #		"behavior_tree": convertTreeToArray(tree),
 		"behavior_trees": behavior_trees,
@@ -735,3 +782,43 @@ func _on_MenuAcceptDialog_confirmed():
 func menuAcceptNoSave():
 	get_parent().menu.visible = true
 	visible = false
+
+
+func _on_ItemType_item_selected(index):
+	if index != 0:
+		if get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_child_count() == 1:
+			addCardItemTypeOption()
+	else:
+		if get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_child_count() == 2:
+			remove_child(get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").get_child(1))
+
+func addCardItemTypeOption():
+	var new_option = card_item_type_option.instance()
+	get_node("CardPanel/ScrollContainer/HBoxContainer/HBoxContainer").add_child(new_option)
+
+
+func _on_CardIcon_pressed():
+	get_node("FileDialog").window_title = "Load Card Icon"
+	get_node("FileDialog").mode = 0
+	get_node("FileDialog").set_current_dir("res://assets/images/ui/icons/") 
+	get_node("FileDialog").add_filter("*.png ; Image")
+	get_node("FileDialog").visible = true
+
+
+func _on_FileDialog_file_selected(path):
+	get_node("CardPanel/HBoxContainer2/CardIcon/TextureRect").texture = load(path)
+
+
+func _on_IgnoreItemStats_toggled(button_pressed):
+	for tab in tab_container.get_children():
+		if button_pressed:
+			tab.card_damage_label.text = "Damage"
+			tab.card_damage.hint_tooltip = "Base damage dealt to target. (Negative values will heal target)"
+			tab.card_action_cost_label.text = "AP Cost"
+			tab.card_action_cost.hint_tooltip = "Base AP cost."
+		else:
+			tab.card_damage_label.text = "Damage Multiplier"
+			tab.card_damage.hint_tooltip = "Damage Multiplier of the Item's Base Damage"
+			tab.card_action_cost_label.text = "Added AP Cost"
+			tab.card_action_cost.hint_tooltip = "Added AP on top of Item's base AP cost."
+			

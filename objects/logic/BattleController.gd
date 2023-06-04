@@ -181,9 +181,9 @@ func _on_BattleController_unit_acted(unit, player, card, from, to): #self,unit_o
 			yield(card_actor.card_caster,"turned")
 		
 #		DO ANIMATION
-		
-		battle_gui.cardNamePopup(card_vars.card_name + " " + BattleDictionary.toRoman(card_vars.card_level + 1))
-		yield(battle_gui,"card_name_popup_exit")
+		if !card_actor.bypass_popup:
+			battle_gui.cardNamePopup(card_vars.card_name + " " + BattleDictionary.toRoman(card_vars.card_level + 1))
+			yield(battle_gui,"card_name_popup_exit")
 		card_actor.execute(true)
 		yield(get_tree(), "idle_frame")
 		var anim_reacting:bool = false

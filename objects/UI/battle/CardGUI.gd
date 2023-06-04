@@ -40,11 +40,9 @@ var card_front_paths = {
 	}
 
 var card_types = {
-	0 : "Skill",
-	1 : "Physical Attack",
-	2 : "Magic Attack",
-	3 : "Magic Spell",
-	4 : "Item"
+	0 : "Offense",
+	1 : "Defense",
+	2 : "Utility"
 	}
 
 var card_pos:Vector2
@@ -67,6 +65,7 @@ var zoom_time:float = card_speed / 2
 var mouse_time:float = card_speed / 2
 var active_shift:float = 60
 var reaction_ap_add:bool = false
+var dormant_mode:bool = false
 
 onready var card_focus = preload("res://assets/sounds/ui/cards/Card_Focus.wav")
 onready var smooth_step = preload("res://resources/effects/smooth_step_curve.tres")
@@ -113,7 +112,7 @@ func loadNewCardData(data) -> void:
 #	card.load_card(data)
 	card_info = data
 
-func updateCardInfo(unit:HexUnit) -> void:
+func updateCardInfo(unit:HexUnit = null) -> void:
 	card_owner = card_info.card_owner
 	unique_id = card_info.unique_id
 	card_art.texture = load("res://assets/images/card_art/"+card_info.card_art)
@@ -126,14 +125,58 @@ func updateCardInfo(unit:HexUnit) -> void:
 	else:
 		card_ap.text = str(card_info.action_costs[card_info.card_level])
 		$TextureButton/AP_Hint.hint_tooltip = str(card_info.action_costs[card_info.card_level]) + " Action Points are required to play this card."
+		
 	card_name.text = card_info.card_name + " " + BattleDictionary.toRoman(card_info.card_level + 1)
 	card_type.text = card_types.get(card_info.card_type)
-	card_description.bbcode_text = "[center]" + card_info.description[card_info.card_level] + "[/center]"
+	
+	var item_types:String
+	if !card_info.item_type.empty():
+		for type in card_info.item_type:
+			if type != 0:
+				item_types += BattleDictionary.item_type[type] + " "
+	card_type.text = item_types + card_types.get(card_info.card_type)
+	
+	setDescription(card_info)
+	
 	card_delay.text = str(round(float(card_info.delay[card_info.card_level]) * float(battle_controller.turn_queue.get_child_count()) / 100.0))
 	card_range.text = str(card_info.card_min_range[card_info.card_level]) + " - " + str(card_info.card_max_range[card_info.card_level])
 
+func setDescription(card) -> void:
+	var description:String = ""
+	if !card.need_los[card.card_level]:
+		description += "Doesn't require LOS. "
+	if card.hexagonal_targeting[card.card_level]:
+		description += "Hexagonal targeting. "
+	if card.is_homing[card.card_level]:
+		description += "Homing. "
+	
+	if card.has_combo[card.card_level]:
+		description += "Combo. "
+	if card.has_counter[card.card_level]:
+		description += "Counter. "
+	if card.is_piercing[card.card_level]:
+		description += "Pierce. "
+	if card.has_reflex[card.card_level]:
+		description += "Reflex. "
+		
+	if card.is_consumable[card.card_level]:
+		description += "Consume. "
+	if card.self_eliminating[card.card_level]:
+		description += "Eliminate after use. "
+	
+	if card.card_attack[card_info.card_level] > 0:
+		description += "Deal [b]{dmg}[/b] Damage. "
+	if card.card_attack[card_info.card_level] < 0:
+		description += "Heal [b]{dmg}[/b]. "
+	
+	card_description.bbcode_text = "[center]" + description + card.description[card.card_level] + "[/center]"
+	var description_codes = {
+		"dmg" : card.card_attack[card_info.card_level]
+	}
+	card_description.bbcode_text = card_description.bbcode_text.format(description_codes)
+
 func _input(event):
-	if activated:
+	if activated and !dormant_mode:
 		match state:
 			FocusInHand, InMouse:
 				if drag_option:
@@ -467,7 +510,7 @@ func moveToFront() -> void:
 				cards.card_range_hint.mouse_filter = MOUSE_FILTER_IGNORE
 
 func activate() -> void:
-	if battle_gui.active_panel == battle_gui.react_panel and reaction_ap_add == false:
+	if battle_gui.active_panel == battle_gui.react_panel and reaction_ap_add == false and !card_info.has_counter[card_info.card_level]:
 		reaction_ap_add = true
 		card_info.action_costs[card_info.card_level] += 1
 		card_ap.text = str(card_info.action_costs[card_info.card_level])

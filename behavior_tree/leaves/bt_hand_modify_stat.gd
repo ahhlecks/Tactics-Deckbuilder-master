@@ -5,63 +5,11 @@ extends BTLeaf
 
 export(int, "assign", "add", "subtract", "multiply", "divide") var operation
 
-export(String, "none",
-	"card_name",
-	"card_class",
-	"action_costs",
-	"card_level",
-	"upgrade_costs",
-	"card_type",
-	"can_attack", #7
-	"can_defend", #8
-	"need_los", #9
-	"is_homing", #10
-	"has_combo", #11
-	"is_unblockable", #12
-	"is_undeflectable", #13
-	"is_consumable", #14
-	"has_counter", #15
-	"has_reflex", #16
-	"self_statuses",
-	"target_statuses",
-	"delay",
-	"rarity",
-	"card_min_range",
-	"card_max_range",
-	"card_up_vertical_range",
-	"card_down_vertical_range",
-	"card_attack",
-	"elements") var stat:String
+export(String) var stat:String
 
 export(int) var stat_value: int = 0
 
-export(String, "none",
-	"card_name",
-	"card_class",
-	"action_costs",
-	"card_level",
-	"upgrade_costs",
-	"card_type",
-	"can_attack", #7
-	"can_defend", #8
-	"need_los", #9
-	"is_homing", #10
-	"has_combo", #11
-	"is_unblockable", #12
-	"is_undeflectable", #13
-	"is_consumable", #14
-	"has_counter", #15
-	"has_reflex", #16
-	"self_statuses",
-	"target_statuses",
-	"delay",
-	"rarity",
-	"card_min_range",
-	"card_max_range",
-	"card_up_vertical_range",
-	"card_down_vertical_range",
-	"card_attack",
-	"elements") var stat_requirement:String
+export(String) var stat_requirement:String
 
 export(int) var stat_requirement_value: int = 0
 
@@ -113,6 +61,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							card[stat] = stat_value
 						"card_level", "card_type", "rarity":
 							card[stat] += stat_value
+						"item_type":
+							card[stat].append(stat_value)
 						_:
 							card[stat][card.card_level] += stat_value
 				2:
@@ -123,6 +73,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							card[stat] = stat_value
 						"card_level", "card_type", "rarity":
 							card[stat] -= stat_value
+						"item_type":
+							card[stat].erase(stat_value)
 						_:
 							card[stat][card.card_level] -= stat_value
 				3:
@@ -133,6 +85,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							card[stat] = stat_value
 						"card_level", "card_type", "rarity":
 							card[stat] *= stat_value
+						"item_type":
+							pass
 						_:
 							card[stat][card.card_level] *= stat_value
 				4:
@@ -145,6 +99,8 @@ func _tick(agent: Node, blackboard: Blackboard) -> bool:
 							card[stat] = stat_value
 						"card_level", "card_type", "rarity":
 							card[stat] /= stat_value
+						"item_type":
+							pass
 						_:
 							card[stat][card.card_level] /= stat_value
 			agent.card_caster.unit_owner.updateCardGUI(agent.card_caster, card)

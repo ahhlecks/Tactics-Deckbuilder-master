@@ -9,12 +9,16 @@ var card_prerequisite_option = preload("res://objects/UI/card_maker/CardPrerequi
 onready var card_maker:Node = $'../../..'
 onready var card_upgrade_value = $ScrollContainer/VBoxContainer/HBoxContainer5/CardUpgradeCost
 onready var card_action_cost = $ScrollContainer/VBoxContainer/ActionCost/ActionCost
+onready var card_action_cost_label = $ScrollContainer/VBoxContainer/ActionCost/Label
 onready var card_damage = $ScrollContainer/VBoxContainer/Damage/Damage
+onready var card_damage_label = $ScrollContainer/VBoxContainer/Damage/Label
 onready var card_delay = $ScrollContainer/VBoxContainer/Delay/Delay
 onready var card_min_range = $ScrollContainer/VBoxContainer/Range/MinRange
 onready var card_max_range = $ScrollContainer/VBoxContainer/Range/MaxRange
 onready var card_up_range = $ScrollContainer/VBoxContainer/VerticalRange/UpVertRange
 onready var card_down_range = $ScrollContainer/VBoxContainer/VerticalRange/DownVertRange
+onready var card_added_accuracy = $ScrollContainer/VBoxContainer/CardAddedAccuracy/AddedAccuracy
+onready var card_added_crit_accuracy = $ScrollContainer/VBoxContainer/CardAddedAccuracy/AddedCritAccuracy
 onready var card_element = $ScrollContainer/VBoxContainer/HBoxContainer4/CardElement
 onready var card_element2 = $ScrollContainer/VBoxContainer/HBoxContainer4/CardElement2
 onready var card_element3 = $ScrollContainer/VBoxContainer/HBoxContainer4/CardElement3
@@ -25,6 +29,7 @@ onready var card_action = $ScrollContainer/VBoxContainer/GridContainer/Action
 onready var card_reaction = $ScrollContainer/VBoxContainer/GridContainer/Reaction
 onready var card_need_los = $ScrollContainer/VBoxContainer/GridContainer/NeedLOS
 onready var card_piercing = $ScrollContainer/VBoxContainer/GridContainer/Piercing
+onready var card_shattering = $ScrollContainer/VBoxContainer/GridContainer/Shattering
 onready var card_consumable = $ScrollContainer/VBoxContainer/GridContainer/Consume
 onready var card_homing = $ScrollContainer/VBoxContainer/GridContainer/Homing
 onready var card_combo = $ScrollContainer/VBoxContainer/GridContainer/Combo
@@ -104,6 +109,7 @@ func _on_Tree_item_activated():
 		var node_name:String = selected.get_text(0)
 		popupBTNode(node_name,selected.get_meta("description"), selected.get_meta("parameters"), selected.get_meta("parameter_values"), true)
 
+# warning-ignore:unused_argument
 func popupBTNode(btnode, description, params, values, is_edit = false) -> void:
 	card_maker.bt_node_dialog.newBTContainer(btnode,description,values,is_edit)
 	card_maker.bt_node_dialog.popup_centered()
@@ -277,6 +283,14 @@ func loadTreeItem(branch:TreeItem, bt_node_array:Array) -> void:
 					item.set_meta("parameters", BattleDictionary.valid_bt_decorators[6][2])
 					item.set_meta("parameter_values", [bt_node_text,bt_node_array[bt_node+1],bt_node_array[bt_node+2]])
 					new_branch = item
+				"BTPercentSucceed":
+					var item = tree.create_item(branch)
+					var bt_node_text:String = "BTPercentSucceed"
+					item.set_text(0,bt_node_text)
+					item.set_meta("description", BattleDictionary.valid_bt_decorators[7][1])
+					item.set_meta("parameters", BattleDictionary.valid_bt_decorators[7][2])
+					item.set_meta("parameter_values", [bt_node_text,bt_node_array[bt_node+1],bt_node_array[bt_node+2]])
+					new_branch = item
 				#Leaves
 				"Attack":
 					var item = tree.create_item(branch)
@@ -431,3 +445,22 @@ func loadTreeItem(branch:TreeItem, bt_node_array:Array) -> void:
 					item.set_meta("parameters", BattleDictionary.valid_bt_leaves[20][2])
 					item.set_meta("parameter_values", [bt_node_text,bt_node_array[bt_node+1],bt_node_array[bt_node+2]])
 
+
+func _on_ItemAP_toggled(button_pressed):
+	get_node("ScrollContainer/VBoxContainer/ActionCost/DeltaAP").visible = button_pressed
+	get_node("ScrollContainer/VBoxContainer/ActionCost/ActionCost").visible = !button_pressed
+	if button_pressed:
+		get_node("ScrollContainer/VBoxContainer/ActionCost/Label").text = "AP Cost Difference"
+	else:
+		get_node("ScrollContainer/VBoxContainer/ActionCost/Label").text = "AP Cost"
+		get_node("ScrollContainer/VBoxContainer/ActionCost/DeltaAP").value = 0
+
+
+func _on_ItemDamage_toggled(button_pressed):
+	get_node("ScrollContainer/VBoxContainer/Damage/DeltaDamage").visible = button_pressed
+	get_node("ScrollContainer/VBoxContainer/Damage/Damage").visible = !button_pressed
+	if button_pressed:
+		get_node("ScrollContainer/VBoxContainer/Damage/Label").text = "Damage Percentage Modifier"
+	else:
+		get_node("ScrollContainer/VBoxContainer/Damage/Label").text = "Damage"
+		get_node("ScrollContainer/VBoxContainer/Damage/DeltaDamage").value = 0

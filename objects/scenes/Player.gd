@@ -246,6 +246,22 @@ func searchDeck(unit:HexUnit, deck:String = "active_deck", card_variable:String 
 								3:
 									if unit.get(deck)[card].get(card_variable) != card_variable_value:
 										matching_cards.append(card)
+			"item_type":
+				for card in unit.get(deck).size():
+					if (unit.get(deck)[card].unique_id != omit_card_id and omit_card_id != "") or omit_card_id == "":
+						var item_types:Array = unit.get(deck)[card].item_type
+						#for item_type in item_types:
+						match comparison:
+								0:
+									if item_types.has(card_variable_value):
+										matching_cards.append(card)
+								1:
+									pass
+								2:
+									pass
+								3:
+									if !item_types.has(card_variable_value):
+										matching_cards.append(card)
 			_:
 				for card in unit.get(deck).size():
 					if (unit.get(deck)[card].unique_id != omit_card_id and omit_card_id != "") or omit_card_id == "":

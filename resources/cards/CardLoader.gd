@@ -167,7 +167,7 @@ func loadCardList(save_dir:bool) -> Array: # loadAllCards
 #	file.close()
 #	return card_list
 
-func loadSingleCardFile(card_name:String, save_dir:bool) -> Dictionary:
+func loadSingleCardFile(card_name:String, save_dir:bool = false) -> Dictionary:
 	var dir = Directory.new()
 #	if !dir.dir_exists(PlayerVars.CARD_LOAD_DIR):
 #		dir.make_dir_recursive(PlayerVars.CARD_LOAD_DIR)
@@ -183,12 +183,11 @@ func loadSingleCardFile(card_name:String, save_dir:bool) -> Dictionary:
 				return card_data
 			else:
 				file.close()
-		elif dir.file_exists(PlayerVars.CARD_SAVE_DIR + card_name + ".crd"):
+		elif dir.file_exists(card_name):
 			var file:File = File.new()
-			var error = file.open(PlayerVars.CARD_SAVE_DIR + card_name + ".crd", File.READ)
+			var error = file.open(card_name, File.READ)
 			if error == OK:
 				var card_data:Dictionary = file.get_var()
-	#			load_card(card_data)
 				file.close()
 				return card_data
 			else:
@@ -204,12 +203,11 @@ func loadSingleCardFile(card_name:String, save_dir:bool) -> Dictionary:
 				return card_data
 			else:
 				file.close()
-		elif dir.file_exists(PlayerVars.CARD_LOAD_DIR + card_name + ".crd"):
+		elif dir.file_exists(card_name):
 			var file:File = File.new()
-			var error = file.open(PlayerVars.CARD_LOAD_DIR + card_name + ".crd", File.READ)
+			var error = file.open(card_name, File.READ)
 			if error == OK:
 				var card_data:Dictionary = file.get_var()
-	#			load_card(card_data)
 				file.close()
 				return card_data
 			else:
@@ -233,3 +231,154 @@ func getCardFileDirectory(card_name:String) -> String:
 		else:
 			file.close()
 	return ""
+
+#"name": name,
+#		"type": type,
+#		"slot": slot,
+#		"is_two_handed": is_two_handed,
+#		"rarity": rarity,
+#		"texture": texture,
+#		"base_damage": base_damage,
+#		"base_ap": base_ap,
+#		"inscriptions": inscriptions,
+#		"offense_tier1": offense_tier1,
+#		"offense_tier2": offense_tier2,
+#		"offense_tier3": offense_tier3,
+#		"offense_tier4": offense_tier4,
+#		"defense_tier1": defense_tier1,
+#		"defense_tier2": defense_tier2,
+#		"defense_tier3": defense_tier3,
+#		"defense_tier4": defense_tier4,
+#		"utility_tier1": utility_tier1,
+#		"utility_tier2": utility_tier2,
+#		"utility_tier3": utility_tier3,
+#		"utility_tier4": utility_tier4
+func combineCardItem(card_data:Dictionary, item_data:Dictionary) -> Dictionary:
+	#var card_data = card.duplicate()
+	#var item_data = item.duplicate()
+	var ignore_item:bool = card_data.ignore_item_stats
+	
+	var data = {
+		"card_id": card_data.card_id, #
+		"unique_id": card_data.unique_id, #
+		"card_name": card_data.card_name, #
+		"item": item_data, #
+		#"card_owner": card_data.card_owner, #
+		"card_class": card_data.card_class, #
+		"action_costs": card_data.action_costs,
+		"card_level": card_data.card_level, #
+		"upgrade_costs": card_data.upgrade_costs, #
+		"card_art": card_data.card_art, #
+		"card_icon": card_data.card_icon, #
+		"card_type": card_data.card_type, #
+		"item_type": card_data.item_type, #
+		
+		"can_attack": card_data.can_attack,
+		"can_defend": card_data.can_defend,
+		"need_los": card_data.need_los,
+		"is_homing": card_data.is_homing,
+		"has_combo": card_data.has_combo,
+		"is_piercing": card_data.is_piercing,
+		"is_shattering": card_data.is_shattering,
+		"is_consumable": card_data.is_consumable,
+		"has_counter": card_data.has_counter,
+		"has_reflex": card_data.has_reflex,
+		"self_eliminating": card_data.self_eliminating,
+		"hexagonal_targeting": card_data.hexagonal_targeting,
+		"self_statuses": card_data.self_statuses,
+		"target_statuses": card_data.target_statuses,
+		"prerequisites": card_data.prerequisites,
+		"delay": card_data.delay,
+		"rarity": card_data.rarity,
+		"description": card_data.description,
+		"card_min_range": card_data.card_min_range,
+		"card_max_range": card_data.card_max_range,
+		"card_up_vertical_range": card_data.card_up_vertical_range,
+		"card_down_vertical_range": card_data.card_down_vertical_range,
+		"card_attack": card_data.card_attack,
+		"card_added_accuracy": card_data.card_added_accuracy,
+		"card_added_crit_accuracy": card_data.card_added_crit_accuracy,
+#		"card_caster": card_caster,
+#		"source_cell": source_cell,
+#		"target_unit": target_unit,
+#		"target_cell": target_cell,
+		"card_animation": card_data.card_animation,
+		"card_animation_left_weapon": card_data.card_animation_left_weapon,
+		"card_animation_right_weapon": card_data.card_animation_right_weapon,
+		"card_animation_projectile": card_data.card_animation_projectile,
+		"bypass_popup": card_data.bypass_popup,
+		#"ignore_item_stats": card_data.ignore_item_stats,
+		"elements": card_data.elements,
+		#"behavior_trees": card_data.behavior_trees,
+		"original_card_values": card_data
+	}
+	if item_data.base_ap != null:
+		if ignore_item:
+			data.action_costs = card_data.action_costs
+		else:
+			for i in data.action_costs.size():
+				data.action_costs[i] += item_data.base_ap
+	if item_data.base_damage != null:
+		if ignore_item:
+			data.card_attack = card_data.card_attack
+		else:
+			for i in data.card_attack.size():
+				data.card_attack[i] *= item_data.base_damage
+				data.card_attack[i] = round(data.card_attack[i])
+	if item_data.inscriptions.has("can_attack"):
+		data.can_attack = card_data.can_attack if ignore_item else item_data.can_attack
+	if item_data.inscriptions.has("can_defend"):
+		data.can_defend = card_data.can_defend if ignore_item else item_data.can_defend
+	if item_data.inscriptions.has("need_los"):
+		data.need_los = card_data.need_los if ignore_item else item_data.need_los
+	if item_data.inscriptions.has("is_homing"):
+		data.is_homing = card_data.is_homing if ignore_item else item_data.is_homing
+	if item_data.inscriptions.has("has_combo"):
+		data.has_combo = card_data.has_combo if ignore_item else item_data.has_combo
+	if item_data.inscriptions.has("is_piercing"):
+		data.is_piercing = card_data.is_piercing if ignore_item else item_data.is_piercing
+	if item_data.inscriptions.has("is_shattering"):
+		data.is_shattering = card_data.is_shattering if ignore_item else item_data.is_shattering
+	if item_data.inscriptions.has("is_consumable"):
+		data.is_consumable = card_data.is_consumable if ignore_item else item_data.is_consumable
+	if item_data.inscriptions.has("has_counter"):
+		data.has_counter = card_data.has_counter if ignore_item else item_data.has_counter
+	if item_data.inscriptions.has("has_reflex"):
+		data.has_reflex = card_data.has_reflex if ignore_item else item_data.has_reflex
+	if item_data.inscriptions.has("self_eliminating"):
+		data.self_eliminating = card_data.self_eliminating if ignore_item else item_data.self_eliminating
+	if item_data.inscriptions.has("hexagonal_targeting"):
+		data.hexagonal_targeting = card_data.hexagonal_targeting if ignore_item else item_data.hexagonal_targeting
+	if item_data.inscriptions.has("self_statuses"):
+		data.self_statuses = card_data.self_statuses if ignore_item else item_data.self_statuses
+	if item_data.inscriptions.has("target_statuses"):
+		data.target_statuses = card_data.target_statuses if ignore_item else item_data.target_statuses
+	if item_data.inscriptions.has("prerequisites"):
+		data.prerequisites = card_data.prerequisites if ignore_item else item_data.prerequisites
+	if item_data.inscriptions.has("delay"):
+		data.delay = card_data.delay if ignore_item else item_data.delay
+	if item_data.inscriptions.has("card_min_range"):
+		data.card_min_range = card_data.card_min_range if ignore_item else item_data.card_min_range
+	if item_data.inscriptions.has("card_max_range"):
+		data.card_max_range = card_data.card_max_range if ignore_item else item_data.card_max_range
+	if item_data.inscriptions.has("card_up_vertical_range"):
+		data.card_up_vertical_range = card_data.card_up_vertical_range if ignore_item else item_data.card_up_vertical_range
+	if item_data.inscriptions.has("card_down_vertical_range"):
+		data.card_down_vertical_range = card_data.card_down_vertical_range if ignore_item else item_data.card_down_vertical_range
+	if item_data.inscriptions.has("card_added_accuracy"):
+		data.card_added_accuracy = card_data.card_added_accuracy if ignore_item else item_data.card_added_accuracy
+	if item_data.inscriptions.has("card_added_crit_accuracy"):
+		data.card_added_crit_accuracy = card_data.card_added_crit_accuracy if ignore_item else item_data.card_added_crit_accuracy
+	if item_data.inscriptions.has("card_animation"):
+		data.card_animation = card_data.card_animation if ignore_item else item_data.card_animation
+	if item_data.inscriptions.has("card_animation_left_weapon"):
+		data.card_animation_left_weapon = card_data.card_animation_left_weapon if ignore_item else item_data.card_animation_left_weapon
+	if item_data.inscriptions.has("card_animation_right_weapon"):
+		data.card_animation_right_weapon = card_data.card_animation_right_weapon if ignore_item else item_data.card_animation_right_weapon
+	if item_data.inscriptions.has("card_animation_projectile"):
+		data.card_animation_projectile = card_data.card_animation_projectile if ignore_item else item_data.card_animation_projectile
+	if item_data.inscriptions.has("bypass_popup"):
+		data.bypass_popup = card_data.bypass_popup if ignore_item else item_data.bypass_popup
+	if item_data.inscriptions.has("elements"):
+		data.elements = card_data.elements if ignore_item else item_data.elements
+	return data

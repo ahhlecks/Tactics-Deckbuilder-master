@@ -321,6 +321,7 @@ material/0 = ExtResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="CellBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0 )
+visible = false
 cast_shadow = 0
 flip_v = true
 pixel_size = 0.02

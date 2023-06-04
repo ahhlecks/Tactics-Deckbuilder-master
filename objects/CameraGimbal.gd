@@ -168,7 +168,7 @@ func smooth_translate(delta):
 
 func moveTo(target:Spatial) -> void:
 	$InnerGimbal.rotation.x = zoomed_angle
-	printt("Original:",translation)
+#	printt("Original:",translation)
 	translation.x = target.translation.x
 	translation.z = target.translation.z
 	translation.y = target.translation.y
