@@ -298,18 +298,12 @@ func combineCardItem(card_data:Dictionary, item_data:Dictionary) -> Dictionary:
 		"card_attack": card_data.card_attack,
 		"card_added_accuracy": card_data.card_added_accuracy,
 		"card_added_crit_accuracy": card_data.card_added_crit_accuracy,
-#		"card_caster": card_caster,
-#		"source_cell": source_cell,
-#		"target_unit": target_unit,
-#		"target_cell": target_cell,
 		"card_animation": card_data.card_animation,
 		"card_animation_left_weapon": card_data.card_animation_left_weapon,
 		"card_animation_right_weapon": card_data.card_animation_right_weapon,
 		"card_animation_projectile": card_data.card_animation_projectile,
 		"bypass_popup": card_data.bypass_popup,
-		#"ignore_item_stats": card_data.ignore_item_stats,
 		"elements": card_data.elements,
-		#"behavior_trees": card_data.behavior_trees,
 		"original_card_values": card_data
 	}
 	if item_data.base_ap != null:
@@ -325,60 +319,24 @@ func combineCardItem(card_data:Dictionary, item_data:Dictionary) -> Dictionary:
 			for i in data.card_attack.size():
 				data.card_attack[i] *= item_data.base_damage
 				data.card_attack[i] = round(data.card_attack[i])
-	if item_data.inscriptions.has("can_attack"):
-		data.can_attack = card_data.can_attack if ignore_item else item_data.can_attack
-	if item_data.inscriptions.has("can_defend"):
-		data.can_defend = card_data.can_defend if ignore_item else item_data.can_defend
-	if item_data.inscriptions.has("need_los"):
-		data.need_los = card_data.need_los if ignore_item else item_data.need_los
-	if item_data.inscriptions.has("is_homing"):
-		data.is_homing = card_data.is_homing if ignore_item else item_data.is_homing
-	if item_data.inscriptions.has("has_combo"):
-		data.has_combo = card_data.has_combo if ignore_item else item_data.has_combo
-	if item_data.inscriptions.has("is_piercing"):
-		data.is_piercing = card_data.is_piercing if ignore_item else item_data.is_piercing
-	if item_data.inscriptions.has("is_shattering"):
-		data.is_shattering = card_data.is_shattering if ignore_item else item_data.is_shattering
-	if item_data.inscriptions.has("is_consumable"):
-		data.is_consumable = card_data.is_consumable if ignore_item else item_data.is_consumable
-	if item_data.inscriptions.has("has_counter"):
-		data.has_counter = card_data.has_counter if ignore_item else item_data.has_counter
-	if item_data.inscriptions.has("has_reflex"):
-		data.has_reflex = card_data.has_reflex if ignore_item else item_data.has_reflex
-	if item_data.inscriptions.has("self_eliminating"):
-		data.self_eliminating = card_data.self_eliminating if ignore_item else item_data.self_eliminating
-	if item_data.inscriptions.has("hexagonal_targeting"):
-		data.hexagonal_targeting = card_data.hexagonal_targeting if ignore_item else item_data.hexagonal_targeting
-	if item_data.inscriptions.has("self_statuses"):
-		data.self_statuses = card_data.self_statuses if ignore_item else item_data.self_statuses
-	if item_data.inscriptions.has("target_statuses"):
-		data.target_statuses = card_data.target_statuses if ignore_item else item_data.target_statuses
-	if item_data.inscriptions.has("prerequisites"):
-		data.prerequisites = card_data.prerequisites if ignore_item else item_data.prerequisites
-	if item_data.inscriptions.has("delay"):
-		data.delay = card_data.delay if ignore_item else item_data.delay
-	if item_data.inscriptions.has("card_min_range"):
-		data.card_min_range = card_data.card_min_range if ignore_item else item_data.card_min_range
-	if item_data.inscriptions.has("card_max_range"):
-		data.card_max_range = card_data.card_max_range if ignore_item else item_data.card_max_range
-	if item_data.inscriptions.has("card_up_vertical_range"):
-		data.card_up_vertical_range = card_data.card_up_vertical_range if ignore_item else item_data.card_up_vertical_range
-	if item_data.inscriptions.has("card_down_vertical_range"):
-		data.card_down_vertical_range = card_data.card_down_vertical_range if ignore_item else item_data.card_down_vertical_range
-	if item_data.inscriptions.has("card_added_accuracy"):
-		data.card_added_accuracy = card_data.card_added_accuracy if ignore_item else item_data.card_added_accuracy
-	if item_data.inscriptions.has("card_added_crit_accuracy"):
-		data.card_added_crit_accuracy = card_data.card_added_crit_accuracy if ignore_item else item_data.card_added_crit_accuracy
-	if item_data.inscriptions.has("card_animation"):
-		data.card_animation = card_data.card_animation if ignore_item else item_data.card_animation
-	if item_data.inscriptions.has("card_animation_left_weapon"):
-		data.card_animation_left_weapon = card_data.card_animation_left_weapon if ignore_item else item_data.card_animation_left_weapon
-	if item_data.inscriptions.has("card_animation_right_weapon"):
-		data.card_animation_right_weapon = card_data.card_animation_right_weapon if ignore_item else item_data.card_animation_right_weapon
-	if item_data.inscriptions.has("card_animation_projectile"):
-		data.card_animation_projectile = card_data.card_animation_projectile if ignore_item else item_data.card_animation_projectile
-	if item_data.inscriptions.has("bypass_popup"):
-		data.bypass_popup = card_data.bypass_popup if ignore_item else item_data.bypass_popup
-	if item_data.inscriptions.has("elements"):
-		data.elements = card_data.elements if ignore_item else item_data.elements
+	for i in item_data.inscriptions:
+		if i.card_stat != null: #"delay":
+			var stat:String = i.card_stat
+			if ignore_item:
+				data[stat] = card_data[stat]
+			else:
+				for u in data[stat].size():
+					data[stat][u] += i.card_stat_difference
+	
+	var types:Array
+	for t in item_data.type:
+		types.append(BattleDictionary.item_type.find(t))
+	for t2 in range(card_data.item_type.size()-1,-1,-1):
+		if types.has(BattleDictionary.item_type.find(card_data.item_type[t2])):
+			types.remove(t2)
+	card_data.item_type.append_array(types)
+	
+	if card_data.has("card_owner"):
+		data += {"card_owner": card_data.card_owner}
+	
 	return data

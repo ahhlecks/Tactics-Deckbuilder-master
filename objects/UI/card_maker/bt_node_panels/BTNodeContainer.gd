@@ -150,6 +150,8 @@ func loadValues(values):
 		var index:int = 0
 		if vBox.get_child(i).has_meta("index"):
 			index = vBox.get_child(i).get_meta("index")
+		else:
+			index = 0
 		match vBox.get_child(i).get_class():
 			"UnitNameOption":
 				vBox.get_child(i).select(CardLoader.loadCardList(true).find(values[i]))

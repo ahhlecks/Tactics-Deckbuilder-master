@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
@@ -61,6 +61,10 @@ shader_param/offset = 0.0
 shader_param/speed = 2.0
 shader_param/wave_frequency = 10.0
 shader_param/wave_length = 130.0
+
+[sub_resource type="StreamTexture" id=3]
+flags = 4
+load_path = "res://.import/icon_drop.png-b35f0b0378ffadc8babc8937c153c83d.stex"
 
 [node name="EquipmentMenu" type="Control"]
 anchor_right = 1.0
@@ -233,6 +237,10 @@ margin_bottom = 40.0
 
 [node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
 visible = false
+
+[node name="IconDrop" type="Sprite" parent="."]
+position = Vector2( 529, 582 )
+texture = SubResource( 3 )
 
 [connection signal="timeout" from="PopupTimer" to="." method="_on_PopupTimer_timeout"]
 [connection signal="timeout" from="PopoutTimer" to="." method="_on_PopoutTimer_timeout"]

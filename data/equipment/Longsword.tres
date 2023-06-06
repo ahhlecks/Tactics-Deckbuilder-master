@@ -6,13 +6,13 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
-card = "res://data/cards/Longsword-High Guard.crd"
+card = "res://data/cards/High Guard.crd"
 proficiency = 1
 amount = 1
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 3 )
-card = "res://data/cards/Longsword-Defensive Strike.crd"
+card = "res://data/cards/Defensive Strike.crd"
 proficiency = 1
 amount = 1
 
@@ -24,19 +24,19 @@ amount = 4
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 3 )
-card = "res://data/cards/Longsword-Heavy Strike.crd"
+card = "res://data/cards/Heavy Strike.crd"
 proficiency = 0
 amount = 0
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 3 )
-card = "res://data/cards/Longsword-Quick Strike.crd"
+card = "res://data/cards/Quick Strike.crd"
 proficiency = 1
 amount = 2
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 3 )
-card = "res://data/cards/Longsword-Focused Strike.crd"
+card = "res://data/cards/Focused Strike.crd"
 proficiency = 0
 amount = 0
 

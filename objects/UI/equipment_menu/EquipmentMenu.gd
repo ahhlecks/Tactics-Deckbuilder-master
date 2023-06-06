@@ -70,13 +70,6 @@ func addTier(item:Equipment, section:int = 0, tier:int = 1):
 		var new_card_icon = EquipmentIcon.instance()
 		new_card_icon.card_info = CardLoader.loadSingleCardFile(cards[i].card)
 		new_card_icon.card_info = CardLoader.combineCardItem(new_card_icon.card_info,item.save())
-		var types:Array
-		for t in item.type:
-			types.append(BattleDictionary.item_type.find(t))
-		for t2 in range(new_card_icon.card_info.item.type.size()-1,-1,-1):
-			if types.has(BattleDictionary.item_type.find(new_card_icon.card_info.item.type[t2])):
-				types.remove(t2)
-		new_card_icon.card_info.item.type.append_array(types)
 		new_card_icon.section = section_node
 		new_card_icon.prev_section = previous_section
 		var spacing = (((icon_count / 2.0) - i) * ((icon_spread/(radius)) + (radius*.0005))) # Arrange in the tier slot with a gradually spread out spacing the higher the tier gets
