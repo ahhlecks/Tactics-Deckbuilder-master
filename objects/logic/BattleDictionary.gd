@@ -15,8 +15,8 @@ var path:String = "res://resources/cards/BattleDictionary.json"
 var unitChoices:Array = ["Self Unit", "Target Unit", "Effected Targets", "All Targets"]
 var cellChoices:Array = ["Self Cell", "Target Cell", "Effected Cells", "All Cells"]
 
-var item_type:Array = ["None", "Unarmed", "Sword", "Dagger", "Bludgeon", "Axe", "Polearm", "Gloves",
- "Bow", "Staff", "Tome", "Magic", "Shield", "Heavy Headwear", "Light Headwear",
+var item_type:Array = ["None", "Magic", "Unarmed", "Sword", "Dagger", "Bludgeon", "Axe", "Polearm", "Gloves",
+ "Bow", "Staff", "Tome", "Shield", "Heavy Headwear", "Light Headwear",
  "Heavy Armor", "Medium Armor", "Light Armor", "Heavy Boots", "Light Boots"]
 
 enum PLAYER {SELF, ALLY, ENEMY}

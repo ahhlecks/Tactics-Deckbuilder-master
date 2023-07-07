@@ -11,6 +11,7 @@ export(int, 0, 5) var rarity
 export(Texture) var texture
 export(int) var base_damage
 export(int) var base_ap
+export(String) var description
 export(Array, Resource) var inscriptions
 export(Array, Resource) var offense_tier1
 export(Array, Resource) var offense_tier2

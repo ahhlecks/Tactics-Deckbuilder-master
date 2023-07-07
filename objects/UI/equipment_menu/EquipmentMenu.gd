@@ -64,6 +64,11 @@ func addTier(item:Equipment, section:int = 0, tier:int = 1):
 	section_node.set_script(section_script)
 	if tier == 1:
 		section_node.activate()
+	if previous_section != null:
+		if previous_section.active:
+			section_node.unlock()
+		else:
+			section_node.lock()
 	var icon_count = cards.size() - 1
 	# add cards within this section
 	for i in cards.size():
