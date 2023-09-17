@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=12 format=2]
+[gd_resource type="Resource" load_steps=14 format=2]
 
 [ext_resource path="res://data/equipment/Equipment.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/equipment_art/LongSword.png" type="Texture" id=2]
 [ext_resource path="res://data/equipment/CardProficiency.gd" type="Script" id=3]
+[ext_resource path="res://data/equipment/ItemInscription.gd" type="Script" id=4]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
@@ -15,6 +16,13 @@ script = ExtResource( 3 )
 card = "res://data/cards/Defensive Strike.crd"
 proficiency = 1
 amount = 1
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 4 )
+card_stat = "delay"
+card_stat_difference = -5
+unit_stat = ""
+unit_stat_difference = 0
 
 [sub_resource type="Resource" id=13]
 script = ExtResource( 3 )
@@ -63,7 +71,7 @@ texture = ExtResource( 2 )
 base_damage = 22
 base_ap = 2
 description = "A basic longsword."
-inscriptions = [  ]
+inscriptions = [ SubResource( 14 ) ]
 offense_tier1 = [ SubResource( 13 ) ]
 offense_tier2 = [ SubResource( 4 ), SubResource( 5 ) ]
 offense_tier3 = [ SubResource( 6 ) ]

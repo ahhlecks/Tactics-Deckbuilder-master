@@ -325,8 +325,13 @@ func combineCardItem(card_data:Dictionary, item_data:Dictionary) -> Dictionary:
 			if ignore_item:
 				data[stat] = card_data[stat]
 			else:
-				for u in data[stat].size():
-					data[stat][u] += i.card_stat_difference
+				match data[stat]:
+					"card_attack":
+						for u in data[stat].size():
+							data[stat][u] += i.card_stat_difference
+					_:
+						for u in data[stat].size():
+							data[stat][u] = max(data[stat][u] + i.card_stat_difference,0)
 	
 	var types:Array
 	for t in item_data.type:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
@@ -7,9 +7,8 @@
 [ext_resource path="res://objects/UI/character_menu/SectionVerticalLine.png" type="Texture" id=5]
 [ext_resource path="res://objects/UI/character_menu/VerticalLine.png" type="Texture" id=6]
 [ext_resource path="res://objects/UI/character_menu/TopLine.png" type="Texture" id=7]
-[ext_resource path="res://objects/UI/character_menu/SectionLine2.png" type="Texture" id=8]
+[ext_resource path="res://objects/UI/character_menu/charUI6.PNG" type="Texture" id=8]
 [ext_resource path="res://objects/UI/battle/CardGUI_Static.tscn" type="PackedScene" id=16]
-[ext_resource path="res://objects/UI/character_menu/characterUI.PNG" type="Texture" id=17]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -61,6 +60,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 
+[node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
+visible = false
+
 [node name="MenuSimpleBg" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
@@ -78,13 +80,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
-visible = false
-
 [node name="CharacterUi" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.196078 )
 scale = Vector2( 1.19, 1.19 )
-texture = ExtResource( 17 )
+texture = ExtResource( 8 )
 centered = false
 __meta__ = {
 "_edit_lock_": true
@@ -98,17 +97,6 @@ margin_right = 682.0
 margin_bottom = 4.23996
 rect_pivot_offset = Vector2( 258, 2 )
 texture = ExtResource( 4 )
-expand = true
-stretch_mode = 4
-
-[node name="SectionLine2" type="TextureRect" parent="."]
-anchor_bottom = 0.472
-margin_left = 690.0
-margin_top = 510.0
-margin_right = 1174.0
-margin_bottom = 4.23996
-rect_pivot_offset = Vector2( 242, 2 )
-texture = ExtResource( 8 )
 expand = true
 stretch_mode = 4
 
@@ -132,15 +120,6 @@ margin_bottom = 1060.0
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 1
-
-[node name="VerticalLine2" type="TextureRect" parent="."]
-margin_left = 1175.0
-margin_top = 77.0
-margin_right = 1181.0
-margin_bottom = 1060.0
-texture = ExtResource( 6 )
-expand = true
-stretch_mode = 4
 
 [node name="TopLine" type="TextureRect" parent="."]
 margin_top = 76.0
