@@ -8,13 +8,13 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 card = "res://data/cards/High Guard.crd"
-proficiency = 1
+proficiency = 0
 amount = 1
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 3 )
 card = "res://data/cards/Defensive Strike.crd"
-proficiency = 1
+proficiency = 0
 amount = 1
 
 [sub_resource type="Resource" id=14]
@@ -27,7 +27,7 @@ unit_stat_difference = 0
 [sub_resource type="Resource" id=13]
 script = ExtResource( 3 )
 card = "res://data/cards/Strike.crd"
-proficiency = 1
+proficiency = 0
 amount = 4
 
 [sub_resource type="Resource" id=4]
@@ -51,7 +51,7 @@ amount = 0
 [sub_resource type="Resource" id=7]
 script = ExtResource( 3 )
 card = "res://data/cards/Sword Ready Stance.crd"
-proficiency = 1
+proficiency = 0
 amount = 1
 
 [sub_resource type="Resource" id=8]
@@ -76,11 +76,14 @@ offense_tier1 = [ SubResource( 13 ) ]
 offense_tier2 = [ SubResource( 4 ), SubResource( 5 ) ]
 offense_tier3 = [ SubResource( 6 ) ]
 offense_tier4 = [  ]
+offense_tier5 = [  ]
 defense_tier1 = [ SubResource( 1 ), SubResource( 9 ) ]
 defense_tier2 = [  ]
 defense_tier3 = [  ]
 defense_tier4 = [  ]
+defense_tier5 = [  ]
 utility_tier1 = [ SubResource( 7 ) ]
 utility_tier2 = [ SubResource( 8 ) ]
 utility_tier3 = [  ]
 utility_tier4 = [  ]
+utility_tier5 = [  ]

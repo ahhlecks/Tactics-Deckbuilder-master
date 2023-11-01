@@ -1,13 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
 [ext_resource path="res://objects/UI/character_menu/CharacterMenu.gd" type="Script" id=3]
-[ext_resource path="res://objects/UI/character_menu/SectionLine.png" type="Texture" id=4]
-[ext_resource path="res://objects/UI/character_menu/SectionVerticalLine.png" type="Texture" id=5]
-[ext_resource path="res://objects/UI/character_menu/VerticalLine.png" type="Texture" id=6]
-[ext_resource path="res://objects/UI/character_menu/TopLine.png" type="Texture" id=7]
-[ext_resource path="res://objects/UI/character_menu/charUI6.PNG" type="Texture" id=8]
+[ext_resource path="res://objects/UI/character_menu/UI_Reference.PNG" type="Texture" id=4]
 [ext_resource path="res://objects/UI/battle/CardGUI_Static.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Shader" id=1]
@@ -59,9 +55,9 @@ shader_param/wave_length = 130.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
-
-[node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
-visible = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="MenuSimpleBg" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -80,49 +76,218 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="CharacterUi" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.196078 )
-scale = Vector2( 1.19, 1.19 )
-texture = ExtResource( 8 )
+[node name="UiReference" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.137255 )
+scale = Vector2( 1.18738, 1.18681 )
+texture = ExtResource( 4 )
 centered = false
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="SectionLine" type="TextureRect" parent="."]
-anchor_bottom = 0.472
-margin_left = 166.0
-margin_top = 510.0
-margin_right = 682.0
-margin_bottom = 4.23996
-rect_pivot_offset = Vector2( 258, 2 )
-texture = ExtResource( 4 )
-expand = true
-stretch_mode = 4
-
-[node name="SectionVerticalLine" type="TextureRect" parent="."]
-margin_left = 424.0
-margin_top = 515.0
-margin_right = 428.0
-margin_bottom = 1063.0
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 4
+[node name="CardGUI_Static" parent="." instance=ExtResource( 16 )]
+visible = false
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_lock_": true
 }
 
-[node name="VerticalLine" type="TextureRect" parent="."]
-margin_left = 683.0
-margin_top = 77.0
-margin_right = 689.0
-margin_bottom = 1060.0
-texture = ExtResource( 6 )
-expand = true
-stretch_mode = 1
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="TopLine" type="TextureRect" parent="."]
-margin_top = 76.0
-margin_right = 1926.0
-margin_bottom = 82.0
-texture = ExtResource( 7 )
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+ratio = 1.7778
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Stats" type="VBoxContainer" parent="Control"]
+modulate = Color( 1, 1, 1, 0.313726 )
+anchor_left = 0.088
+anchor_top = 0.076
+anchor_right = 0.356
+anchor_bottom = 0.471
+margin_left = 0.0399933
+margin_top = -0.0800018
+margin_right = -0.52002
+margin_bottom = 0.319977
+rect_min_size = Vector2( 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Stats"]
+margin_right = 514.0
+margin_bottom = 190.0
+rect_min_size = Vector2( 0, 190 )
+
+[node name="ColorRect" type="ColorRect" parent="Control/Stats/HBoxContainer"]
+margin_right = 187.0
+margin_bottom = 190.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.58
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Stats/HBoxContainer"]
+margin_left = 191.0
+margin_right = 514.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+
+[node name="ColorRect2" type="ColorRect" parent="Control/Stats/HBoxContainer/VBoxContainer"]
+margin_right = 323.0
+margin_bottom = 77.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.72
+color = Color( 1, 0, 0, 1 )
+
+[node name="ColorRect3" type="ColorRect" parent="Control/Stats/HBoxContainer/VBoxContainer"]
+margin_top = 81.0
+margin_right = 323.0
+margin_bottom = 190.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 0.960784, 0, 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Stats"]
+margin_top = 194.0
+margin_right = 514.0
+margin_bottom = 427.0
+rect_min_size = Vector2( 0, 233 )
+size_flags_horizontal = 3
+scroll_horizontal_enabled = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Stats/ScrollContainer"]
+margin_right = 502.0
+margin_bottom = 300.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect4" type="ColorRect" parent="Control/Stats/ScrollContainer/HBoxContainer2"]
+margin_right = 249.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 64, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.360784, 1, 0, 1 )
+
+[node name="ColorRect5" type="ColorRect" parent="Control/Stats/ScrollContainer/HBoxContainer2"]
+margin_left = 253.0
+margin_right = 502.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 64, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.360784, 1, 0, 1 )
+
+[node name="Proficiencies" type="HBoxContainer" parent="Control"]
+modulate = Color( 1, 1, 1, 0.313726 )
+margin_left = 169.0
+margin_top = 513.0
+margin_right = 683.0
+margin_bottom = 1072.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Proficiencies"]
+margin_right = 255.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect5" type="ColorRect" parent="Control/Proficiencies/VBoxContainer"]
+margin_right = 255.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+color = Color( 0, 1, 0.811765, 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Proficiencies/VBoxContainer"]
+margin_top = 54.0
+margin_right = 255.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect4" type="ColorRect" parent="Control/Proficiencies/VBoxContainer/ScrollContainer"]
+margin_right = 255.0
+margin_bottom = 505.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.360784, 1, 0, 1 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/Proficiencies"]
+margin_left = 259.0
+margin_right = 514.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect5" type="ColorRect" parent="Control/Proficiencies/VBoxContainer2"]
+margin_right = 255.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+color = Color( 0, 1, 0.811765, 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Proficiencies/VBoxContainer2"]
+margin_top = 54.0
+margin_right = 255.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect4" type="ColorRect" parent="Control/Proficiencies/VBoxContainer2/ScrollContainer"]
+margin_right = 255.0
+margin_bottom = 505.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.360784, 1, 0, 1 )
+
+[node name="ColorRect6" type="ColorRect" parent="Control"]
+margin_left = 1405.0
+margin_top = 927.0
+margin_right = 1919.0
+margin_bottom = 962.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+color = Color( 0, 0.156863, 1, 1 )
+
+[node name="ColorRect7" type="ColorRect" parent="Control"]
+margin_left = 1405.0
+margin_top = 966.0
+margin_right = 1919.0
+margin_bottom = 1002.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+color = Color( 0.968627, 0, 1, 1 )
+
+[node name="ColorRect8" type="ColorRect" parent="Control"]
+margin_left = 1405.0
+margin_top = 1006.0
+margin_right = 1919.0
+margin_bottom = 1041.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 1 )
+
+[node name="ColorRect9" type="ColorRect" parent="Control"]
+margin_left = 1405.0
+margin_top = 1045.0
+margin_right = 1919.0
+margin_bottom = 1081.0
+rect_min_size = Vector2( 64, 32 )
+size_flags_vertical = 3
+color = Color( 1, 0.513726, 0, 1 )

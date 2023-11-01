@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/images/backgrounds/menu_simple_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/images/backgrounds/menu_fog_bg.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://resources/fonts/Fenix_22.tres" type="DynamicFont" id=14]
 [ext_resource path="res://objects/UI/equipment_menu/EquipmentMenu.gd" type="Script" id=15]
 [ext_resource path="res://objects/UI/battle/CardGUI_Static.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/images/ui/equipment_ui/tier5.png" type="Texture" id=17]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -88,6 +89,7 @@ __meta__ = {
 }
 
 [node name="EquipmentChartBase" type="Sprite" parent="."]
+visible = false
 position = Vector2( 960, 540 )
 texture = ExtResource( 3 )
 __meta__ = {
@@ -158,6 +160,12 @@ position = Vector2( 1171.31, 662 )
 rotation = 2.0944
 texture = ExtResource( 9 )
 
+[node name="UtilityTier5" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 1220, 690 )
+rotation = 2.0944
+texture = ExtResource( 17 )
+
 [node name="DefenseBase" type="Sprite" parent="."]
 position = Vector2( 938.349, 552.5 )
 rotation = -2.0944
@@ -191,6 +199,12 @@ position = Vector2( 748.69, 662 )
 rotation = -2.0944
 texture = ExtResource( 9 )
 
+[node name="DefenseTier5" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 700, 690 )
+rotation = -2.0944
+texture = ExtResource( 17 )
+
 [node name="OffenseBase" type="Sprite" parent="."]
 position = Vector2( 960, 515 )
 texture = ExtResource( 7 )
@@ -218,6 +232,11 @@ texture = ExtResource( 8 )
 modulate = Color( 1, 1, 1, 0.247059 )
 position = Vector2( 960, 296 )
 texture = ExtResource( 9 )
+
+[node name="OffenseTier5" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 960, 239 )
+texture = ExtResource( 17 )
 
 [node name="PopupTimer" type="Timer" parent="."]
 wait_time = 0.2

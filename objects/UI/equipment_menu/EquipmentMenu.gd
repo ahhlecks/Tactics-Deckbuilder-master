@@ -25,8 +25,8 @@ func loadItem(item_name):
 	var item:Equipment = load(PlayerVars.EQUIPMENT_LOAD_DIR + item_name + ".tres")
 	get_node("Title").text = item.name
 	# loop through all sections
-	for i in sections.size():
-		for t in range(1,5):
+	for i in range(3): # 3 sections
+		for t in range(1,6): # 5 tiers
 			addTier(item,i,t)
 
 func addTier(item:Equipment, section:int = 0, tier:int = 1):
@@ -58,7 +58,10 @@ func addTier(item:Equipment, section:int = 0, tier:int = 1):
 		4: 
 			radius = 312
 			previous_section = get_node(prev_name+"3")
-		_: radius = 312
+		5:
+			radius = 387
+			previous_section = get_node(prev_name+"4")
+		_: radius = 387
 		
 	var section_node = get_node(section_name)
 	section_node.set_script(section_script)

@@ -192,7 +192,7 @@ func getDeckSpeed() -> float:
 	return deck_speed
 
 func getUnitSpeed(speed = base_speed) -> float:
-	return speed + getDeckSpeed()
+	return speed# + getDeckSpeed()
 
 func searchCellDistance(cells:Array):
 	for i in cells.size():

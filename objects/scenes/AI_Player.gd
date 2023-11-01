@@ -17,7 +17,7 @@ var best_actions:Array = []
 #var hand:Array
 #var discard:Array
 #var shuffled:bool = false
-#------Extended Func---------#
+#-------Extended Func---------#
 #moveCards(unit:HexUnit, draw_amount:int = 1, index:int = 0, from_deck:String = "active_deck", to_deck:String = "hand_deck", fallback:bool = true)
 
 signal ai_complete()
@@ -245,18 +245,20 @@ func actionResults(card_info:Dictionary, unit:HexUnit, from:HexCell, to:HexCell,
 		for result in card.results:
 			if result[2] != null and result[0] != null and result[1] != null and result[6] != null:
 				if result[2] >= 0 and (result[0].team != result[1].team):
-					card_damage_value += result[2] * (1+(result[6] / 100.0))
+					card_damage_value += result[2] * (1+(result[6] / 100.0)) # Multiples Crit Chance by Damage Value
 					if result[1].current_health - (result[2] * (1+(result[6] / 100.0))) <= 0: #if this action kills a bad guy
-						card_damage_value += 10
+						card_damage_value += 15
 				elif result[2] >= 0 and !(result[0].team != result[1].team):
 					card_damage_value -= result[2] * (1+(result[6] / 100.0))
 				if result[2] < 0 and (result[0].team == result[1].team):
-					card_damage_value += result[2]
+					card_damage_value += result[2] # Healing AI
 					if result[1].max_health - result[1].current_health >= result[2]:
 						card_utility += 5
-					if result[1].max_health - result[1].current_health < result[2]:
-						card_utility -= 5
-					if float(result[1].current_health) / float(result[1].max_health) < .5:
+					if result[1].max_health - result[1].current_health < result[2]: # Heal Amount > Recipient Max Health - Recipient Current Health
+						card_utility -= 2
+					if float(result[1].current_health) / float(result[1].max_health) < .3: # If recipient has less than 30% health
+						card_utility += 2
+					if float(result[1].current_health) / float(result[1].max_health) < .15: # If recipient has less than 15% health
 						card_utility += 5
 				elif result[2] < 0 and !(result[0].team == result[1].team):
 					card_damage_value -= result[2]

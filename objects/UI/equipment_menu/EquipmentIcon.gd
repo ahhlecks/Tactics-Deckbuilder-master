@@ -49,6 +49,7 @@ func updateData(data):
 	
 	var icon_count = amount - 1
 	# add cards within this section
+	"""
 	for i in range(amount):
 		var amount_sprite = Sprite.new()
 		var spacing = (((icon_count / 2.0) - i) * ((icon_spread/(radius)) + (radius*.0005))) # Arrange in the tier slot with a gradually spread out spacing the higher the tier gets
@@ -58,6 +59,7 @@ func updateData(data):
 		#amount_sprite.rotation = PI - angle
 		amount_sprite.texture = load("res://assets/images/ui/orb_count.png")
 		add_child(amount_sprite)
+	"""
 	
 	if prev_section != null:
 		if prev_section.active:
